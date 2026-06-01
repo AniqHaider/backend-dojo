@@ -1,9 +1,17 @@
+from datetime import date
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 from . import deps
 from .config import FRONTEND_ORIGIN
 from .diagram import COMPONENTS
+from .grading import process_run
+
+
+class RunRequest(BaseModel):
+    code: str
 
 app = FastAPI(title="Backend Dojo")
 
@@ -58,6 +66,17 @@ def get_exercise(exercise_id: str):
     ex["solved"] = prog["status"] == "solved"
     ex["best_code"] = prog.get("best_code")
     return ex
+
+
+@app.post("/exercises/{exercise_id}/run")
+def run_exercise(exercise_id: str, req: RunRequest):
+    loader = deps.get_loader()
+    store = deps.get_store()
+    try:
+        return process_run(store, loader, exercise_id, req.code,
+                           today=date.today().isoformat())
+    except KeyError:
+        raise HTTPException(status_code=404, detail="exercise not found")
 
 
 @app.get("/progress")
