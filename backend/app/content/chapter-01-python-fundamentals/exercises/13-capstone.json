@@ -1,0 +1,20 @@
+{
+  "id": "ch1-ex13-capstone",
+  "title": "Mini-capstone: order total",
+  "type": "python",
+  "prompt_md": "**Mini-capstone.** This is exactly the shape of data a backend receives in a request body.\n\nWrite `order_total(orders)` where `orders` is a **list of dicts**, each like `{\"name\": \"Mug\", \"qty\": 2, \"price\": 50}`. Return the total of `qty * price` summed across every order.\n\nFor example, `order_total([{\"name\": \"Mug\", \"qty\": 2, \"price\": 50}, {\"name\": \"Pen\", \"qty\": 3, \"price\": 10}])` returns `130`.\n\nAn empty list returns `0`. If an item is missing `qty` or `price`, treat the missing value as `0` (use `.get(key, 0)`).",
+  "starter_code": "def order_total(orders):\n    pass\n",
+  "hints": [
+    "Start total = 0, then loop: for order in orders.",
+    "For each order, read order.get('qty', 0) and order.get('price', 0), multiply them, and add to the total. .get with a default of 0 avoids crashing on missing keys."
+  ],
+  "tests": [
+    {"call": "order_total([{'name': 'Mug', 'qty': 2, 'price': 50}, {'name': 'Pen', 'qty': 3, 'price': 10}])", "expect": 130},
+    {"call": "order_total([])", "expect": 0},
+    {"call": "order_total([{'name': 'Hat', 'price': 20}])", "expect": 0},
+    {"call": "order_total([{'name': 'Box', 'qty': 4, 'price': 25}])", "expect": 100}
+  ],
+  "reference_solution": "def order_total(orders):\n    total = 0\n    for order in orders:\n        total += order.get('qty', 0) * order.get('price', 0)\n    return total\n",
+  "xp": 20,
+  "concept_tags": ["dicts", "lists", "loops", "capstone"]
+}

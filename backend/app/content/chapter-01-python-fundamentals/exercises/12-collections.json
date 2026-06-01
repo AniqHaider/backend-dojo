@@ -1,0 +1,19 @@
+{
+  "id": "ch1-ex12-collections",
+  "title": "Unique, sorted values",
+  "type": "python",
+  "prompt_md": "Write `unique_sorted(items)` that returns a **sorted list** of the unique values in `items` (duplicates removed).\n\nFor example, `unique_sorted([3, 1, 2, 1, 3])` returns `[1, 2, 3]`. An empty list returns `[]`.\n\nReturn a **list** (not a set) so the order is predictable.",
+  "starter_code": "def unique_sorted(items):\n    pass\n",
+  "hints": [
+    "set(items) removes duplicates, but a set has no order.",
+    "Wrap it in sorted(...) to get back an ordered list: sorted(set(items))."
+  ],
+  "tests": [
+    {"call": "unique_sorted([3, 1, 2, 1, 3])", "expect": [1, 2, 3]},
+    {"call": "unique_sorted([])", "expect": []},
+    {"call": "unique_sorted(['b', 'a', 'b'])", "expect": ["a", "b"]}
+  ],
+  "reference_solution": "def unique_sorted(items):\n    return sorted(set(items))\n",
+  "xp": 15,
+  "concept_tags": ["collections", "sets", "dedup"]
+}

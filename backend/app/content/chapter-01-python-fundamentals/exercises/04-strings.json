@@ -1,0 +1,18 @@
+{
+  "id": "ch1-ex04-strings",
+  "title": "Initials from a full name",
+  "type": "python",
+  "prompt_md": "Write `initials(full_name)` that returns the **uppercase initials** of a person's name.\n\nFor example, `initials('Asha Roy')` returns `'AR'`, and `initials('jane mary watson')` returns `'JMW'`.\n\nAssume words are separated by single spaces.",
+  "starter_code": "def initials(full_name):\n    pass\n",
+  "hints": [
+    "Split the name into words with full_name.split() — this returns a list of words.",
+    "Take the first character of each word (word[0]), uppercase it with .upper(), and join them together."
+  ],
+  "tests": [
+    {"call": "initials('Asha Roy')", "expect": "AR"},
+    {"call": "initials('jane mary watson')", "expect": "JMW"}
+  ],
+  "reference_solution": "def initials(full_name):\n    return ''.join(word[0].upper() for word in full_name.split())\n",
+  "xp": 15,
+  "concept_tags": ["strings", "slicing", "methods"]
+}

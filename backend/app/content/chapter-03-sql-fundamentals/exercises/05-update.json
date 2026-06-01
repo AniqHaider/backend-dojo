@@ -1,0 +1,19 @@
+{
+  "id": "ch3-ex05-update",
+  "title": "Updating a row",
+  "type": "sql",
+  "prompt_md": "Set the `rating` of the movie with `id` `3` (Tenet) to `8.0`. Return the `title` and new `rating` with `RETURNING`.",
+  "schema_key": "ticketpay",
+  "starter_code": "UPDATE movies SET rating = 8.0 WHERE id = 3 RETURNING title, rating;",
+  "hints": [
+    "`UPDATE table SET col = value WHERE ...` changes matching rows.",
+    "Never forget the `WHERE` — without it, every row is updated!"
+  ],
+  "expected_query_result": [
+    {"title": "Tenet", "rating": 8.0}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "UPDATE movies SET rating = 8.0 WHERE id = 3 RETURNING title, rating;",
+  "xp": 15,
+  "concept_tags": ["update", "returning"]
+}

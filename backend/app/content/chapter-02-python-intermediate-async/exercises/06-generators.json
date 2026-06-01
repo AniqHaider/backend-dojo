@@ -1,0 +1,20 @@
+{
+  "id": "ch2-ex06-generators",
+  "title": "Generators",
+  "type": "python",
+  "prompt_md": "Write `first_n_squares(n)` that returns the list `[0, 1, 4, 9, ...]` of the first `n` square numbers. Use a **generator** with `yield` internally, then wrap it in `list(...)` to return a list.",
+  "starter_code": "def first_n_squares(n):\n    pass\n",
+  "hints": [
+    "Define an inner generator: `def gen():` with `for i in range(n): yield i * i`.",
+    "A generator produces values lazily; `list(gen())` materializes them.",
+    "`return list(gen())`."
+  ],
+  "tests": [
+    {"call": "first_n_squares(4)", "expect": [0, 1, 4, 9]},
+    {"call": "first_n_squares(1)", "expect": [0]},
+    {"call": "first_n_squares(0)", "expect": []}
+  ],
+  "reference_solution": "def first_n_squares(n):\n    def gen():\n        for i in range(n):\n            yield i * i\n    return list(gen())\n",
+  "xp": 15,
+  "concept_tags": ["generators"]
+}

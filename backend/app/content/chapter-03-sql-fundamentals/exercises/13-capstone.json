@@ -1,0 +1,21 @@
+{
+  "id": "ch3-ex13-capstone",
+  "title": "Mini-capstone: available seats for a showtime",
+  "type": "sql",
+  "prompt_md": "This is the real query a booking backend runs constantly: **which seats are still available for a given showtime?**\n\nFor showtime `3`, return the `label` of every seat that has not been booked *for that showtime*. A seat is taken if its `id` appears in `bookings` where `showtime_id = 3`. Use a `NOT IN` subquery scoped to showtime 3, and `ORDER BY label`.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT label\nFROM seats\nWHERE showtime_id = 3\n  AND id NOT IN (SELECT seat_id FROM bookings WHERE showtime_id = 3)\nORDER BY label;",
+  "hints": [
+    "Filter the outer query to `showtime_id = 3` so you only consider that showtime's seats.",
+    "Scope the subquery too: `SELECT seat_id FROM bookings WHERE showtime_id = 3`.",
+    "`ORDER BY label` makes the result deterministic — C2 before C3."
+  ],
+  "expected_query_result": [
+    {"label": "C2"},
+    {"label": "C3"}
+  ],
+  "order_sensitive": true,
+  "reference_solution": "SELECT label FROM seats WHERE showtime_id = 3 AND id NOT IN (SELECT seat_id FROM bookings WHERE showtime_id = 3) ORDER BY label;",
+  "xp": 20,
+  "concept_tags": ["subquery", "not-in", "capstone"]
+}

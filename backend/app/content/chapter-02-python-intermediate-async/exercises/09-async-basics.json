@@ -1,0 +1,18 @@
+{
+  "id": "ch2-ex09-async-basics",
+  "title": "Async Basics: `async`/`await`",
+  "type": "python",
+  "prompt_md": "Write an async function `solve()` using `async def`. Inside, define a helper `async def get_value(): return 42`, then `await` it and return the result. The harness runs the coroutine for you, so `solve()` should resolve to `42`. This mirrors JS `async`/`await`.",
+  "starter_code": "async def solve():\n    pass\n",
+  "hints": [
+    "Declare with `async def get_value():` and just `return 42`.",
+    "Get its value with `value = await get_value()`.",
+    "Return `value` from `solve`."
+  ],
+  "tests": [
+    {"call": "solve()", "expect": 42}
+  ],
+  "reference_solution": "async def solve():\n    async def get_value():\n        return 42\n    value = await get_value()\n    return value\n",
+  "xp": 15,
+  "concept_tags": ["async", "await"]
+}

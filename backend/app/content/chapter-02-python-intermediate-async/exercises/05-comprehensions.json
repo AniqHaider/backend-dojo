@@ -1,0 +1,20 @@
+{
+  "id": "ch2-ex05-comprehensions",
+  "title": "Dict Comprehension",
+  "type": "python",
+  "prompt_md": "Write `word_lengths(words)` that takes a list of strings and returns a dict mapping each word to its length, using a **dict comprehension**. e.g. `word_lengths([\"a\", \"bb\"])` -> `{\"a\": 1, \"bb\": 2}`.",
+  "starter_code": "def word_lengths(words):\n    pass\n",
+  "hints": [
+    "Dict comprehension shape: `{key: value for item in iterable}`.",
+    "Here the key is `word` and the value is `len(word)`.",
+    "`return {word: len(word) for word in words}`."
+  ],
+  "tests": [
+    {"call": "word_lengths([\"a\", \"bb\", \"ccc\"])", "expect": {"a": 1, "bb": 2, "ccc": 3}},
+    {"call": "word_lengths([])", "expect": {}},
+    {"call": "word_lengths([\"hello\"])", "expect": {"hello": 5}}
+  ],
+  "reference_solution": "def word_lengths(words):\n    return {word: len(word) for word in words}\n",
+  "xp": 10,
+  "concept_tags": ["comprehensions"]
+}

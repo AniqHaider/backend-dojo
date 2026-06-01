@@ -1,0 +1,18 @@
+{
+  "id": "ch1-ex02-types",
+  "title": "Convert a string to an int",
+  "type": "python",
+  "prompt_md": "Write `to_int(s)` that takes a numeric **string** and returns it as an `int`.\n\nFor example, `to_int('42')` returns the number `42`. It should also handle negative numbers like `'-7'`.\n\nPython does **not** auto-convert types like JavaScript does — you must convert on purpose.",
+  "starter_code": "def to_int(s):\n    pass\n",
+  "hints": [
+    "The built-in int() function converts a numeric string to an integer: int('42') -> 42.",
+    "int() understands a leading minus sign, so int('-7') works too."
+  ],
+  "tests": [
+    {"call": "to_int('42')", "expect": 42},
+    {"call": "to_int('-7')", "expect": -7}
+  ],
+  "reference_solution": "def to_int(s):\n    return int(s)\n",
+  "xp": 10,
+  "concept_tags": ["types", "conversion"]
+}

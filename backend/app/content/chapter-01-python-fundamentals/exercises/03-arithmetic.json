@@ -1,0 +1,18 @@
+{
+  "id": "ch1-ex03-arithmetic",
+  "title": "Total price",
+  "type": "python",
+  "prompt_md": "Write `total_price(qty, unit)` that returns the total cost: the quantity multiplied by the unit price.\n\nFor example, `total_price(3, 50)` returns `150`. If the quantity is `0`, the total is `0`.\n\nThis is the kind of math a backend does on every order.",
+  "starter_code": "def total_price(qty, unit):\n    pass\n",
+  "hints": [
+    "Multiply the two arguments with the * operator.",
+    "Return the result — qty * unit."
+  ],
+  "tests": [
+    {"call": "total_price(3, 50)", "expect": 150},
+    {"call": "total_price(0, 99)", "expect": 0}
+  ],
+  "reference_solution": "def total_price(qty, unit):\n    return qty * unit\n",
+  "xp": 10,
+  "concept_tags": ["arithmetic", "functions"]
+}

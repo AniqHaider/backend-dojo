@@ -1,0 +1,19 @@
+{
+  "id": "ch1-ex09-comprehensions",
+  "title": "Squares with a comprehension",
+  "type": "python",
+  "prompt_md": "Write `squares(n)` that returns a list of the squares of the numbers from `0` up to (but not including) `n`.\n\nFor example, `squares(4)` returns `[0, 1, 4, 9]`. `squares(0)` returns the empty list `[]`.\n\nUse a **list comprehension** — Python's compact version of `.map()`.",
+  "starter_code": "def squares(n):\n    pass\n",
+  "hints": [
+    "range(n) gives the numbers 0, 1, ..., n-1.",
+    "A comprehension looks like [x * x for x in range(n)]."
+  ],
+  "tests": [
+    {"call": "squares(4)", "expect": [0, 1, 4, 9]},
+    {"call": "squares(0)", "expect": []},
+    {"call": "squares(1)", "expect": [0]}
+  ],
+  "reference_solution": "def squares(n):\n    return [x * x for x in range(n)]\n",
+  "xp": 15,
+  "concept_tags": ["comprehensions", "lists"]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "ch2-ex01-typehints",
+  "title": "Add Type Hints",
+  "type": "python",
+  "prompt_md": "Write a function `double(n)` that returns `n * 2`. Add **type hints**: the parameter `n` is an `int` and the function returns an `int`. Hints don't change behavior in Python, but they document the contract (like TypeScript types).",
+  "starter_code": "def double(n):\n    pass\n",
+  "hints": [
+    "Type hint syntax: `def double(n: int) -> int:`",
+    "The `-> int` part describes the return type.",
+    "Just return `n * 2` in the body."
+  ],
+  "tests": [
+    {"call": "double(2)", "expect": 4},
+    {"call": "double(0)", "expect": 0},
+    {"call": "double(-5)", "expect": -10}
+  ],
+  "reference_solution": "def double(n: int) -> int:\n    return n * 2\n",
+  "xp": 10,
+  "concept_tags": ["typing"]
+}

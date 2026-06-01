@@ -1,0 +1,20 @@
+{
+  "id": "ch2-ex03-class",
+  "title": "A Basic Class & Method",
+  "type": "python",
+  "prompt_md": "Define a `Counter` class with a `value` attribute starting at `0` and an `inc()` method that adds 1 to `value`. Then write `count_to(n)` that creates a `Counter`, calls `inc()` `n` times, and returns the final `value`.",
+  "starter_code": "class Counter:\n    pass\n\ndef count_to(n):\n    pass\n",
+  "hints": [
+    "In `__init__(self)` set `self.value = 0`.",
+    "`inc(self)` does `self.value += 1`.",
+    "In `count_to`, loop `for _ in range(n): c.inc()` then return `c.value`."
+  ],
+  "tests": [
+    {"call": "count_to(3)", "expect": 3},
+    {"call": "count_to(0)", "expect": 0},
+    {"call": "count_to(10)", "expect": 10}
+  ],
+  "reference_solution": "class Counter:\n    def __init__(self):\n        self.value = 0\n    def inc(self):\n        self.value += 1\n\ndef count_to(n):\n    c = Counter()\n    for _ in range(n):\n        c.inc()\n    return c.value\n",
+  "xp": 10,
+  "concept_tags": ["classes", "oop"]
+}

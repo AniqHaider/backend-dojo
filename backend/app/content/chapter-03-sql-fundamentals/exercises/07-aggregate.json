@@ -1,0 +1,21 @@
+{
+  "id": "ch3-ex07-aggregate",
+  "title": "Counting per group",
+  "type": "sql",
+  "prompt_md": "How many bookings does each user have? Return `user_id` and the count aliased as `bookings`. Use `GROUP BY` and cast the count to int with `::int`.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT user_id, COUNT(*)::int AS bookings FROM bookings GROUP BY user_id;",
+  "hints": [
+    "`GROUP BY user_id` collapses rows into one group per user.",
+    "`COUNT(*)::int AS bookings` counts rows in each group and names the column."
+  ],
+  "expected_query_result": [
+    {"user_id": 1, "bookings": 2},
+    {"user_id": 2, "bookings": 1},
+    {"user_id": 3, "bookings": 1}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "SELECT user_id, COUNT(*)::int AS bookings FROM bookings GROUP BY user_id;",
+  "xp": 15,
+  "concept_tags": ["aggregate", "count", "group-by"]
+}
