@@ -1,0 +1,18 @@
+{
+  "id": "ch1-ex05-lists",
+  "title": "Second largest",
+  "type": "python",
+  "prompt_md": "Write `second_largest(nums)` that returns the **second largest** value in a list of numbers.\n\nFor example, `second_largest([3, 1, 2])` returns `2`. Duplicates count as the same value, so `second_largest([5, 5, 3])` returns `3`.\n\nYou may assume the list has at least two distinct values.",
+  "starter_code": "def second_largest(nums):\n    pass\n",
+  "hints": [
+    "First get the unique values. set(nums) removes duplicates.",
+    "Sort the unique values (sorted(...) returns a list) and pick the second-from-last item with index [-2]."
+  ],
+  "tests": [
+    {"call": "second_largest([3, 1, 2])", "expect": 2},
+    {"call": "second_largest([5, 5, 3])", "expect": 3}
+  ],
+  "reference_solution": "def second_largest(nums):\n    unique = sorted(set(nums))\n    return unique[-2]\n",
+  "xp": 15,
+  "concept_tags": ["lists", "sorting"]
+}

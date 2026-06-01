@@ -1,0 +1,20 @@
+{
+  "id": "ch3-ex12-subquery",
+  "title": "Subquery: unbooked seats",
+  "type": "sql",
+  "prompt_md": "Find the `label` of seats for showtime `1` that have **not** been booked. A seat is booked if its `id` appears in the `bookings` table's `seat_id`. Use a subquery with `NOT IN`, and `ORDER BY label`.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT label\nFROM seats\nWHERE showtime_id = 1\n  AND id NOT IN (SELECT seat_id FROM bookings)\nORDER BY label;",
+  "hints": [
+    "A subquery `(SELECT seat_id FROM bookings)` returns the list of booked seat ids.",
+    "`id NOT IN (...)` keeps seats whose id is not in that list."
+  ],
+  "expected_query_result": [
+    {"label": "A3"},
+    {"label": "A4"}
+  ],
+  "order_sensitive": true,
+  "reference_solution": "SELECT label FROM seats WHERE showtime_id = 1 AND id NOT IN (SELECT seat_id FROM bookings) ORDER BY label;",
+  "xp": 20,
+  "concept_tags": ["subquery", "not-in"]
+}

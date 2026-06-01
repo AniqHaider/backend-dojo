@@ -1,0 +1,19 @@
+{
+  "id": "ch3-ex06-delete",
+  "title": "Deleting a row",
+  "type": "sql",
+  "prompt_md": "Delete the seat with `id` `9` from the `seats` table. Return its `label` with `RETURNING`.",
+  "schema_key": "ticketpay",
+  "starter_code": "DELETE FROM seats WHERE id = 9 RETURNING label;",
+  "hints": [
+    "`DELETE FROM table WHERE ...` removes matching rows.",
+    "Like UPDATE, a `DELETE` without `WHERE` wipes the whole table — always filter."
+  ],
+  "expected_query_result": [
+    {"label": "C3"}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "DELETE FROM seats WHERE id = 9 RETURNING label;",
+  "xp": 15,
+  "concept_tags": ["delete", "returning"]
+}

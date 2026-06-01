@@ -1,0 +1,20 @@
+{
+  "id": "ch3-ex03-orderlimit",
+  "title": "Sorting and limiting",
+  "type": "sql",
+  "prompt_md": "Return the `title` of the **top 2** movies by `rating`, highest first.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT title FROM movies ORDER BY rating DESC LIMIT 2;",
+  "hints": [
+    "`ORDER BY rating DESC` sorts from highest to lowest.",
+    "`LIMIT 2` keeps only the first 2 rows after sorting."
+  ],
+  "expected_query_result": [
+    {"title": "Dune"},
+    {"title": "Inside Out"}
+  ],
+  "order_sensitive": true,
+  "reference_solution": "SELECT title FROM movies ORDER BY rating DESC LIMIT 2;",
+  "xp": 15,
+  "concept_tags": ["order-by", "limit"]
+}

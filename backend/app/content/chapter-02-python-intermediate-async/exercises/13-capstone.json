@@ -1,0 +1,20 @@
+{
+  "id": "ch2-ex13-capstone",
+  "title": "Mini-Capstone: Concurrent Dashboard Fetch",
+  "type": "python",
+  "prompt_md": "Build `async def fetch_dashboard()` that concurrently calls three async helpers with `asyncio.gather`:\n\n- `get_user()` returns `{\"id\": 1, \"name\": \"Aniq\"}`\n- `get_orders()` returns `[{\"id\": 101}, {\"id\": 102}]`\n- `get_order_count()` returns `2`\n\nThen return an aggregated dict: `{\"user\": <user>, \"orders\": <orders>, \"order_count\": <count>}`. Also write `async def dashboard_order_count()` that awaits `fetch_dashboard()` and returns just its `order_count`. This foreshadows a real endpoint hitting a DB and third-party services in parallel.",
+  "starter_code": "import asyncio\n\nasync def fetch_dashboard():\n    pass\n\nasync def dashboard_order_count():\n    pass\n",
+  "hints": [
+    "Define the three `async def` helpers returning the values above, then gather them.",
+    "`user, orders, count = await asyncio.gather(get_user(), get_orders(), get_order_count())`.",
+    "Assemble and return the dict with keys `user`, `orders`, `order_count`.",
+    "`dashboard_order_count` should `data = await fetch_dashboard()` then `return data[\"order_count\"]`."
+  ],
+  "tests": [
+    {"call": "fetch_dashboard()", "expect": {"user": {"id": 1, "name": "Aniq"}, "orders": [{"id": 101}, {"id": 102}], "order_count": 2}},
+    {"call": "dashboard_order_count()", "expect": 2}
+  ],
+  "reference_solution": "import asyncio\n\nasync def fetch_dashboard():\n    async def get_user():\n        return {\"id\": 1, \"name\": \"Aniq\"}\n    async def get_orders():\n        return [{\"id\": 101}, {\"id\": 102}]\n    async def get_order_count():\n        return 2\n    user, orders, count = await asyncio.gather(\n        get_user(), get_orders(), get_order_count()\n    )\n    return {\"user\": user, \"orders\": orders, \"order_count\": count}\n\nasync def dashboard_order_count():\n    data = await fetch_dashboard()\n    return data[\"order_count\"]\n",
+  "xp": 20,
+  "concept_tags": ["async", "asyncio", "gather", "capstone"]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "ch2-ex10-async-gather",
+  "title": "Concurrency with `asyncio.gather`",
+  "type": "python",
+  "prompt_md": "Write `async def fetch_all()` that runs three async helpers concurrently with `asyncio.gather` and returns a list of their results `[1, 2, 3]`. Each helper (`one`, `two`, `three`) is an `async def` that returns its number. `gather` is Python's `Promise.all`.",
+  "starter_code": "import asyncio\n\nasync def fetch_all():\n    pass\n",
+  "hints": [
+    "Define `async def one(): return 1` and similar for two and three.",
+    "`results = await asyncio.gather(one(), two(), three())`.",
+    "`gather` already returns a list — just return it."
+  ],
+  "tests": [
+    {"call": "fetch_all()", "expect": [1, 2, 3]}
+  ],
+  "reference_solution": "import asyncio\n\nasync def fetch_all():\n    async def one():\n        return 1\n    async def two():\n        return 2\n    async def three():\n        return 3\n    results = await asyncio.gather(one(), two(), three())\n    return results\n",
+  "xp": 15,
+  "concept_tags": ["async", "asyncio", "gather"]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "ch2-ex07-decorators",
+  "title": "Write & Apply a Decorator",
+  "type": "python",
+  "prompt_md": "Write a decorator `double_result` that doubles whatever the wrapped function returns. Apply it to `add(a, b)` (which returns `a + b`) using `@double_result`. So `add(2, 3)` returns `(2 + 3) * 2 = 10`.",
+  "starter_code": "def double_result(fn):\n    pass\n\n@double_result\ndef add(a, b):\n    return a + b\n",
+  "hints": [
+    "A decorator takes a function and returns a new function that wraps it.",
+    "Inside, define `def wrapper(*args, **kwargs): return fn(*args, **kwargs) * 2` and `return wrapper`.",
+    "The `@double_result` line is just `add = double_result(add)`."
+  ],
+  "tests": [
+    {"call": "add(2, 3)", "expect": 10},
+    {"call": "add(0, 0)", "expect": 0},
+    {"call": "add(-1, 4)", "expect": 6}
+  ],
+  "reference_solution": "def double_result(fn):\n    def wrapper(*args, **kwargs):\n        return fn(*args, **kwargs) * 2\n    return wrapper\n\n@double_result\ndef add(a, b):\n    return a + b\n",
+  "xp": 15,
+  "concept_tags": ["decorators"]
+}

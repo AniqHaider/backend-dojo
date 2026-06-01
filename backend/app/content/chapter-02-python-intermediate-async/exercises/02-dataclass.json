@@ -1,0 +1,19 @@
+{
+  "id": "ch2-ex02-dataclass",
+  "title": "Use a Dataclass",
+  "type": "python",
+  "prompt_md": "Define a `@dataclass` named `User` with fields `name: str` and `age: int`. Then write `user_label(name, age)` that builds a `User` and returns the string `\"{name} ({age})\"`, e.g. `user_label(\"Aniq\", 30)` -> `\"Aniq (30)\"`.",
+  "starter_code": "from dataclasses import dataclass\n\n# define User here\n\ndef user_label(name, age):\n    pass\n",
+  "hints": [
+    "Decorate the class: `@dataclass` on the line above `class User:`.",
+    "Declare fields with type hints: `name: str` and `age: int`.",
+    "Build it with `u = User(name, age)`, then return an f-string `f\"{u.name} ({u.age})\"`."
+  ],
+  "tests": [
+    {"call": "user_label(\"Aniq\", 30)", "expect": "Aniq (30)"},
+    {"call": "user_label(\"Bo\", 5)", "expect": "Bo (5)"}
+  ],
+  "reference_solution": "from dataclasses import dataclass\n\n@dataclass\nclass User:\n    name: str\n    age: int\n\ndef user_label(name, age):\n    u = User(name, age)\n    return f\"{u.name} ({u.age})\"\n",
+  "xp": 10,
+  "concept_tags": ["dataclass", "typing"]
+}

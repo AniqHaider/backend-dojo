@@ -1,0 +1,20 @@
+{
+  "id": "ch2-ex04-modules",
+  "title": "Using the Standard Library",
+  "type": "python",
+  "prompt_md": "Import the `math` module and write `circle_area(r)` that returns the area of a circle (`pi * r * r`) rounded to 2 decimal places using `round(..., 2)`.",
+  "starter_code": "import math\n\ndef circle_area(r):\n    pass\n",
+  "hints": [
+    "`math.pi` is the constant pi.",
+    "Area is `math.pi * r * r`.",
+    "Wrap it: `round(math.pi * r * r, 2)`."
+  ],
+  "tests": [
+    {"call": "circle_area(1)", "expect": 3.14},
+    {"call": "circle_area(2)", "expect": 12.57},
+    {"call": "circle_area(0)", "expect": 0.0}
+  ],
+  "reference_solution": "import math\n\ndef circle_area(r):\n    return round(math.pi * r * r, 2)\n",
+  "xp": 10,
+  "concept_tags": ["modules", "stdlib"]
+}

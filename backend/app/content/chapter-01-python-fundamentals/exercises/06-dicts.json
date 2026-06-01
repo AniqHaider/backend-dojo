@@ -1,0 +1,19 @@
+{
+  "id": "ch1-ex06-dicts",
+  "title": "Price lookup with default",
+  "type": "python",
+  "prompt_md": "Write `price_of(catalog, item, default=0)` that looks up `item` in the `catalog` dict and returns its price.\n\nIf the item is **not** in the catalog, return `default` (which is `0` unless the caller provides another value).\n\nFor example, with `catalog = {'mug': 50, 'pen': 10}`, `price_of(catalog, 'mug')` returns `50`, and `price_of(catalog, 'hat')` returns `0`.\n\nReading a possibly-missing key safely is something backends do constantly.",
+  "starter_code": "def price_of(catalog, item, default=0):\n    pass\n",
+  "hints": [
+    "Dicts have a .get(key, fallback) method that returns the fallback when the key is missing — instead of crashing.",
+    "Return catalog.get(item, default)."
+  ],
+  "tests": [
+    {"call": "price_of({'mug': 50, 'pen': 10}, 'mug')", "expect": 50},
+    {"call": "price_of({'mug': 50, 'pen': 10}, 'hat')", "expect": 0},
+    {"call": "price_of({'mug': 50}, 'hat', 99)", "expect": 99}
+  ],
+  "reference_solution": "def price_of(catalog, item, default=0):\n    return catalog.get(item, default)\n",
+  "xp": 15,
+  "concept_tags": ["dicts", "defaults"]
+}

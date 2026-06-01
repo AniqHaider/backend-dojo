@@ -1,0 +1,20 @@
+{
+  "id": "ch2-ex08-context-manager",
+  "title": "Using `with` (Context Managers)",
+  "type": "python",
+  "prompt_md": "Write `count_lines(text)` that counts how many non-empty lines are in `text`. Use `io.StringIO` (an in-memory text stream) opened with a `with` block, iterate its lines, and return the count as an `int`.",
+  "starter_code": "import io\n\ndef count_lines(text):\n    pass\n",
+  "hints": [
+    "`with io.StringIO(text) as f:` gives you a file-like object.",
+    "Iterate `for line in f:` and count lines where `line.strip()` is non-empty.",
+    "Return the running count."
+  ],
+  "tests": [
+    {"call": "count_lines(\"a\\nb\\nc\")", "expect": 3},
+    {"call": "count_lines(\"one line\")", "expect": 1},
+    {"call": "count_lines(\"x\\n\\ny\")", "expect": 2}
+  ],
+  "reference_solution": "import io\n\ndef count_lines(text):\n    count = 0\n    with io.StringIO(text) as f:\n        for line in f:\n            if line.strip():\n                count += 1\n    return count\n",
+  "xp": 15,
+  "concept_tags": ["context-managers"]
+}

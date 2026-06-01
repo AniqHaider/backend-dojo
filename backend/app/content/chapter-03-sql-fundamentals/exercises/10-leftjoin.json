@@ -1,0 +1,21 @@
+{
+  "id": "ch3-ex10-leftjoin",
+  "title": "LEFT JOIN: include movies with zero showtimes",
+  "type": "sql",
+  "prompt_md": "Count how many showtimes each movie has — **including movies that have none**. Return the movie `title` and the count aliased as `showtimes`. Use a `LEFT JOIN` from `movies` to `showtimes` so zero-showtime movies still appear.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT m.title, COUNT(s.id)::int AS showtimes\nFROM movies m\nLEFT JOIN showtimes s ON s.movie_id = m.id\nGROUP BY m.title;",
+  "hints": [
+    "A `LEFT JOIN` keeps every row from the left table (`movies`) even with no match.",
+    "Count `s.id` (not `*`) so unmatched movies count as 0, then `GROUP BY m.title`."
+  ],
+  "expected_query_result": [
+    {"title": "Dune", "showtimes": 2},
+    {"title": "Inside Out", "showtimes": 1},
+    {"title": "Tenet", "showtimes": 0}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "SELECT m.title, COUNT(s.id)::int AS showtimes FROM movies m LEFT JOIN showtimes s ON s.movie_id = m.id GROUP BY m.title;",
+  "xp": 20,
+  "concept_tags": ["join", "left-join", "group-by"]
+}

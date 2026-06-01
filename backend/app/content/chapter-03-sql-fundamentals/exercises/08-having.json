@@ -1,0 +1,19 @@
+{
+  "id": "ch3-ex08-having",
+  "title": "Filtering groups with HAVING",
+  "type": "sql",
+  "prompt_md": "Find users who have **more than 1** booking. Return `user_id` and the count aliased as `bookings`. Filter the groups with `HAVING`.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT user_id, COUNT(*)::int AS bookings FROM bookings GROUP BY user_id HAVING COUNT(*) > 1;",
+  "hints": [
+    "`WHERE` filters rows before grouping; `HAVING` filters groups after.",
+    "Use `HAVING COUNT(*) > 1` to keep only groups with more than one row."
+  ],
+  "expected_query_result": [
+    {"user_id": 1, "bookings": 2}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "SELECT user_id, COUNT(*)::int AS bookings FROM bookings GROUP BY user_id HAVING COUNT(*) > 1;",
+  "xp": 15,
+  "concept_tags": ["having", "group-by", "count"]
+}

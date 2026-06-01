@@ -1,0 +1,19 @@
+{
+  "id": "ch1-ex11-errors",
+  "title": "Safe division",
+  "type": "python",
+  "prompt_md": "Write `safe_div(a, b)` that returns `a / b`, but if `b` is `0` it returns `None` instead of crashing.\n\nFor example, `safe_div(6, 3)` returns `2.0` and `safe_div(1, 0)` returns `None`.\n\n(Note: Python's `/` always produces a `float`, so `6 / 3` is `2.0`.) Use `try` / `except` to catch the error.",
+  "starter_code": "def safe_div(a, b):\n    pass\n",
+  "hints": [
+    "Wrap the division in a try block: try: return a / b.",
+    "Catch the specific error with except ZeroDivisionError: return None."
+  ],
+  "tests": [
+    {"call": "safe_div(6, 3)", "expect": 2.0},
+    {"call": "safe_div(1, 0)", "expect": null},
+    {"call": "safe_div(10, 4)", "expect": 2.5}
+  ],
+  "reference_solution": "def safe_div(a, b):\n    try:\n        return a / b\n    except ZeroDivisionError:\n        return None\n",
+  "xp": 15,
+  "concept_tags": ["errors", "try-except"]
+}

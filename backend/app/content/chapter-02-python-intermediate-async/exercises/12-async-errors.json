@@ -1,0 +1,20 @@
+{
+  "id": "ch2-ex12-async-errors",
+  "title": "Custom Exceptions & Async Error Handling",
+  "type": "python",
+  "prompt_md": "Define a custom exception `class ValidationError(Exception)`. Then write `async def safe_parse(s)` that tries to return `int(s)`. If `int(s)` raises a `ValueError`, catch it and return `-1` instead. e.g. `safe_parse(\"7\")` -> `7`, `safe_parse(\"x\")` -> `-1`.",
+  "starter_code": "class ValidationError(Exception):\n    pass\n\nasync def safe_parse(s):\n    pass\n",
+  "hints": [
+    "Custom exceptions subclass `Exception`: `class ValidationError(Exception): pass`.",
+    "Use `try: return int(s)` and `except ValueError: return -1`.",
+    "`int(\"x\")` raises `ValueError`, while `int(\"7\")` succeeds."
+  ],
+  "tests": [
+    {"call": "safe_parse(\"7\")", "expect": 7},
+    {"call": "safe_parse(\"x\")", "expect": -1},
+    {"call": "safe_parse(\"-12\")", "expect": -12}
+  ],
+  "reference_solution": "class ValidationError(Exception):\n    pass\n\nasync def safe_parse(s):\n    try:\n        return int(s)\n    except ValueError:\n        return -1\n",
+  "xp": 15,
+  "concept_tags": ["async", "exceptions", "error-handling"]
+}

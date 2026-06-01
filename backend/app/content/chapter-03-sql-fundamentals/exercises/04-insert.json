@@ -1,0 +1,19 @@
+{
+  "id": "ch3-ex04-insert",
+  "title": "Inserting a row",
+  "type": "sql",
+  "prompt_md": "Add a new user to the `users` table with `id` `4`, `name` `Dev`, and `email` `dev@example.com`. Use `RETURNING id, name` so the inserted row comes back.",
+  "schema_key": "ticketpay",
+  "starter_code": "INSERT INTO users (id, name, email) VALUES (4, 'Dev', 'dev@example.com') RETURNING id, name;",
+  "hints": [
+    "`INSERT INTO table (columns...) VALUES (...)` adds a row.",
+    "In Postgres, append `RETURNING col1, col2` to get the new row back as a result set."
+  ],
+  "expected_query_result": [
+    {"id": 4, "name": "Dev"}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "INSERT INTO users (id, name, email) VALUES (4, 'Dev', 'dev@example.com') RETURNING id, name;",
+  "xp": 15,
+  "concept_tags": ["insert", "returning"]
+}

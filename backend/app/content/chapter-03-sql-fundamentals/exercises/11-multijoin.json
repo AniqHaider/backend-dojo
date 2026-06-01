@@ -1,0 +1,22 @@
+{
+  "id": "ch3-ex11-multijoin",
+  "title": "Three-table JOIN",
+  "type": "sql",
+  "prompt_md": "Which movie is each booking for? A booking points at a showtime, and a showtime points at a movie. Return the booking's `id` aliased as `booking_id` and the movie `title`. Join `bookings` -> `showtimes` -> `movies`.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT b.id AS booking_id, m.title\nFROM bookings b\nJOIN showtimes s ON b.showtime_id = s.id\nJOIN movies m ON s.movie_id = m.id;",
+  "hints": [
+    "Chain two JOINs: first bookings to showtimes, then showtimes to movies.",
+    "Each `JOIN ... ON ...` links one table's foreign key to the next table's primary key."
+  ],
+  "expected_query_result": [
+    {"booking_id": 1, "title": "Dune"},
+    {"booking_id": 2, "title": "Dune"},
+    {"booking_id": 3, "title": "Inside Out"},
+    {"booking_id": 4, "title": "Dune"}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "SELECT b.id AS booking_id, m.title FROM bookings b JOIN showtimes s ON b.showtime_id = s.id JOIN movies m ON s.movie_id = m.id;",
+  "xp": 20,
+  "concept_tags": ["join", "multi-join"]
+}

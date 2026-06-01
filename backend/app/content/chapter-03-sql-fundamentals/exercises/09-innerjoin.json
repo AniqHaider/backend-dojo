@@ -1,0 +1,22 @@
+{
+  "id": "ch3-ex09-innerjoin",
+  "title": "INNER JOIN: bookings to users",
+  "type": "sql",
+  "prompt_md": "List each booking alongside the name of the user who made it. Return the booking's `id` aliased as `booking_id` and the user's `name`. Join `bookings` to `users` on the foreign key.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT b.id AS booking_id, u.name\nFROM bookings b\nJOIN users u ON b.user_id = u.id;",
+  "hints": [
+    "Give tables short aliases: `bookings b`, `users u`.",
+    "`JOIN users u ON b.user_id = u.id` matches each booking to its user."
+  ],
+  "expected_query_result": [
+    {"booking_id": 1, "name": "Asha"},
+    {"booking_id": 2, "name": "Ben"},
+    {"booking_id": 3, "name": "Asha"},
+    {"booking_id": 4, "name": "Chitra"}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "SELECT b.id AS booking_id, u.name FROM bookings b JOIN users u ON b.user_id = u.id;",
+  "xp": 20,
+  "concept_tags": ["join", "inner-join"]
+}

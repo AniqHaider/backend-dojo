@@ -1,0 +1,19 @@
+{
+  "id": "ch1-ex08-loops",
+  "title": "Sum of even numbers",
+  "type": "python",
+  "prompt_md": "Write `sum_evens(nums)` that loops over a list of integers and returns the **sum of only the even numbers**.\n\nFor example, `sum_evens([1, 2, 3, 4])` returns `6` (that's 2 + 4). An empty list returns `0`.",
+  "starter_code": "def sum_evens(nums):\n    pass\n",
+  "hints": [
+    "Start a running total at 0, then loop: for n in nums.",
+    "Inside the loop, if n % 2 == 0, add n to the total."
+  ],
+  "tests": [
+    {"call": "sum_evens([1, 2, 3, 4])", "expect": 6},
+    {"call": "sum_evens([])", "expect": 0},
+    {"call": "sum_evens([7, 7, 7])", "expect": 0}
+  ],
+  "reference_solution": "def sum_evens(nums):\n    total = 0\n    for n in nums:\n        if n % 2 == 0:\n            total += n\n    return total\n",
+  "xp": 10,
+  "concept_tags": ["loops", "accumulation"]
+}

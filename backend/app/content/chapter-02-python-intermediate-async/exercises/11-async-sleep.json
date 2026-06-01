@@ -1,0 +1,20 @@
+{
+  "id": "ch2-ex11-async-sleep",
+  "title": "Simulated I/O with `asyncio.sleep`",
+  "type": "python",
+  "prompt_md": "Write `async def slow_double(n)` that simulates waiting on I/O by `await asyncio.sleep(0)`, then returns `n * 2`. `asyncio.sleep` is the stand-in for a real network/DB wait — this is exactly the kind of waiting async lets a backend overlap across requests.",
+  "starter_code": "import asyncio\n\nasync def slow_double(n):\n    pass\n",
+  "hints": [
+    "`await asyncio.sleep(0)` yields control to the event loop, then resumes.",
+    "After the await, `return n * 2`.",
+    "`sleep(0)` waits effectively zero time but still demonstrates the await point."
+  ],
+  "tests": [
+    {"call": "slow_double(5)", "expect": 10},
+    {"call": "slow_double(0)", "expect": 0},
+    {"call": "slow_double(-3)", "expect": -6}
+  ],
+  "reference_solution": "import asyncio\n\nasync def slow_double(n):\n    await asyncio.sleep(0)\n    return n * 2\n",
+  "xp": 15,
+  "concept_tags": ["async", "asyncio", "io-bound"]
+}

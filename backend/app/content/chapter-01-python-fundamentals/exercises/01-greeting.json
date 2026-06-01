@@ -1,0 +1,18 @@
+{
+  "id": "ch1-ex01-greeting",
+  "title": "Greeting function",
+  "type": "python",
+  "prompt_md": "Write a function `greet(name)` that **returns** the string `Hello, <name>!`.\n\nFor example, `greet('Asha')` should return `Hello, Asha!`.\n\nRemember: a backend almost always **returns** a value (so it can be sent in a response). Use `return`, not `print`.",
+  "starter_code": "def greet(name):\n    pass\n",
+  "hints": [
+    "Use an f-string: f\"Hello, {name}!\". The f prefix turns on the {} substitution.",
+    "Don't print the value — return it, so the test can read it back."
+  ],
+  "tests": [
+    {"call": "greet('Asha')", "expect": "Hello, Asha!"},
+    {"call": "greet('Sam')", "expect": "Hello, Sam!"}
+  ],
+  "reference_solution": "def greet(name):\n    return f'Hello, {name}!'\n",
+  "xp": 10,
+  "concept_tags": ["functions", "strings"]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "ch3-ex02-where",
+  "title": "Filtering with WHERE",
+  "type": "sql",
+  "prompt_md": "Return the `title` of every movie whose `rating` is greater than `8.0`.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT title FROM movies WHERE rating > 8.0;",
+  "hints": [
+    "`WHERE` keeps only rows that match the condition.",
+    "Use the `>` operator to compare numbers."
+  ],
+  "expected_query_result": [
+    {"title": "Dune"},
+    {"title": "Inside Out"}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "SELECT title FROM movies WHERE rating > 8.0;",
+  "xp": 15,
+  "concept_tags": ["where", "filter"]
+}

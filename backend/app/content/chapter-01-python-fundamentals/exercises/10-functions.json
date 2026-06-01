@@ -1,0 +1,19 @@
+{
+  "id": "ch1-ex10-functions",
+  "title": "Build a URL with query params",
+  "type": "python",
+  "prompt_md": "Write `make_url(base, **params)` that builds a URL with a query string.\n\nIt takes a `base` URL and any number of keyword arguments (collected into the `params` dict via `**params`). It returns `base` followed by `?` and the params joined as `key=value` pairs with `&`.\n\nTo make the output **deterministic**, sort the params by key.\n\nFor example, `make_url('/api', b=2, a=1)` returns `'/api?a=1&b=2'`. With no params, `make_url('/api')` returns just `'/api'`.",
+  "starter_code": "def make_url(base, **params):\n    pass\n",
+  "hints": [
+    "If params is empty, just return base.",
+    "Loop over sorted(params.items()) to get key/value pairs in a stable order, build 'key=value' strings, and '&'.join(...) them. Prepend base + '?'."
+  ],
+  "tests": [
+    {"call": "make_url('/api', b=2, a=1)", "expect": "/api?a=1&b=2"},
+    {"call": "make_url('/api')", "expect": "/api"},
+    {"call": "make_url('/search', q='shoes')", "expect": "/search?q=shoes"}
+  ],
+  "reference_solution": "def make_url(base, **params):\n    if not params:\n        return base\n    pairs = [f'{k}={v}' for k, v in sorted(params.items())]\n    return base + '?' + '&'.join(pairs)\n",
+  "xp": 15,
+  "concept_tags": ["functions", "kwargs", "defaults"]
+}
