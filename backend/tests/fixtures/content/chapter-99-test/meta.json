@@ -1,0 +1,6 @@
+{
+  "id": "ch99",
+  "title": "Test Chapter",
+  "order": 99,
+  "summary": "A fixture chapter used only in tests."
+}
