@@ -6,12 +6,20 @@ from pydantic import BaseModel
 
 from . import deps
 from .config import FRONTEND_ORIGIN
+from .chat import ask_claude, build_context
 from .diagram import COMPONENTS
 from .grading import process_run
 
 
 class RunRequest(BaseModel):
     code: str
+
+
+class ChatRequest(BaseModel):
+    question: str
+    mode: str = "tutor"
+    current_exercise_id: str | None = None
+    model: str | None = None
 
 app = FastAPI(title="Backend Dojo")
 
@@ -93,3 +101,28 @@ def get_progress():
 def diagram_state():
     store = deps.get_store()
     return {"components": COMPONENTS, "unlocked": store.unlocked_components()}
+
+
+@app.post("/chat")
+def chat(req: ChatRequest):
+    loader = deps.get_loader()
+    store = deps.get_store()
+
+    current = None
+    if req.current_exercise_id:
+        try:
+            current = loader.get_exercise_public(req.current_exercise_id)
+            prog = store.get_exercise(req.current_exercise_id)
+            current["best_code"] = prog.get("best_code")
+        except KeyError:
+            current = None
+
+    context = build_context(
+        question=req.question,
+        current_exercise=current,
+        recent_mistakes=store.recent_mistakes(limit=8),
+        solved=sorted(store.solved_ids()),
+    )
+    answer = ask_claude(question=req.question, mode=req.mode,
+                        context=context, model=req.model)
+    return {"answer": answer}
