@@ -1,22 +1,26 @@
 <script>
   import { diagram, justUnlocked } from "../lib/stores.js";
 
-  // Group components into the visual stages of a real backend.
-  const APP_LAYER = ["py-runtime", "functions", "data-structures", "ch1-complete-core",
-                     "type-system", "async-handler", "request-router"];
-  const DB_LAYER = ["postgres-db", "tables", "joins-engine"];
+  const ZONES = [
+    { key: "application", title: "⚙️ Application" },
+    { key: "data", title: "🐘 Data" },
+    { key: "infrastructure", title: "☁️ Infrastructure" },
+  ];
 
-  let byId = $derived(Object.fromEntries(($diagram.components || []).map((c) => [c.id, c])));
+  let comps = $derived($diagram.components || []);
   let unlocked = $derived(new Set($diagram.unlocked || []));
   let popping = $derived(new Set($justUnlocked || []));
 
-  const label = (id) => byId[id]?.label || id;
+  let clientComp = $derived(comps.find((c) => c.group === "client"));
+  let zones = $derived(
+    ZONES.map((z) => ({ ...z, items: comps.filter((c) => c.group === z.key) }))
+  );
+
+  let total = $derived(comps.filter((c) => !c.always).length);
+  let totalOn = $derived(comps.filter((c) => !c.always && unlocked.has(c.id)).length);
+
   const isOn = (id) => unlocked.has(id);
   const isPop = (id) => popping.has(id);
-
-  let connOn = $derived(unlocked.has("db-connection"));
-  let totalOn = $derived(unlocked.size);
-  let total = $derived(($diagram.components || []).filter((c) => !c.always).length);
 </script>
 
 <div class="diagram">
@@ -26,36 +30,22 @@
   </div>
 
   <div class="flow">
-    <!-- Client -->
-    <div class="node client on" class:pop={false}>
-      <div class="icon">🌐</div>
-      <div class="lbl">Client</div>
-    </div>
+    {#if clientComp}
+      <div class="node on"><div class="icon">🌐</div><div class="lbl">Client</div></div>
+      <div class="arrow">→</div>
+    {/if}
 
-    <div class="arrow">→</div>
-
-    <!-- Application server -->
-    <div class="card server" class:dim={totalOn === 0}>
-      <div class="card-title">⚙️ Application</div>
-      <div class="pills">
-        {#each APP_LAYER as id}
-          <div class="pill" class:on={isOn(id)} class:pop={isPop(id)}>{label(id)}</div>
-        {/each}
+    {#each zones as z, zi}
+      <div class="card" class:dim={!z.items.some((c) => isOn(c.id))}>
+        <div class="card-title">{z.title}</div>
+        <div class="pills">
+          {#each z.items as c}
+            <div class="pill" class:on={isOn(c.id)} class:pop={isPop(c.id)}>{c.label}</div>
+          {/each}
+        </div>
       </div>
-    </div>
-
-    <!-- DB connection edge -->
-    <div class="arrow conn" class:on={connOn}>{connOn ? "🔌" : "⋯"}</div>
-
-    <!-- Database -->
-    <div class="card db" class:dim={!DB_LAYER.some(isOn)}>
-      <div class="card-title">🐘 PostgreSQL</div>
-      <div class="pills">
-        {#each DB_LAYER as id}
-          <div class="pill" class:on={isOn(id)} class:pop={isPop(id)}>{label(id)}</div>
-        {/each}
-      </div>
-    </div>
+      {#if zi < zones.length - 1}<div class="arrow">→</div>{/if}
+    {/each}
   </div>
 
   {#if totalOn === 0}
@@ -68,20 +58,19 @@
   .head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
   .head h3 { margin: 0; color: #e8eef6; font-size: 16px; }
   .count { color: #8aa0bd; font-size: 13px; font-weight: 600; }
-  .flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .arrow { color: #4a5a72; font-size: 22px; }
-  .arrow.conn.on { color: #58c6ff; }
+  .flow { display: flex; align-items: stretch; gap: 10px; flex-wrap: wrap; }
+  .arrow { color: #4a5a72; font-size: 20px; align-self: center; }
   .node {
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    padding: 14px 18px; border-radius: 12px; background: #161d29; border: 1px solid #232d3e;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    padding: 14px 16px; border-radius: 12px; background: #161d29; border: 1px solid #232d3e;
   }
-  .node .icon { font-size: 26px; }
+  .node .icon { font-size: 24px; }
   .node .lbl { font-size: 12px; color: #c4d0e0; }
   .card {
-    flex: 1; min-width: 180px; background: #141b26; border: 1px solid #232d3e;
+    flex: 1 1 200px; min-width: 190px; background: #141b26; border: 1px solid #232d3e;
     border-radius: 14px; padding: 14px; transition: opacity .4s, border-color .4s;
   }
-  .card.dim { opacity: 0.45; }
+  .card.dim { opacity: 0.4; }
   .card-title { font-size: 13px; font-weight: 700; color: #aebfd6; margin-bottom: 10px; }
   .pills { display: flex; flex-direction: column; gap: 7px; }
   .pill {

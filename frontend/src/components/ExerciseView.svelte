@@ -11,6 +11,8 @@
   let running = $state(false);
   let error = $state(null);
   let loadedId = $state(null);
+  let selectedChoice = $state(null); // for quiz exercises
+  let isQuiz = $derived(exercise?.type === "quiz");
 
   // Prev/Next within the chapter, derived from the chapter's exercise order.
   let chapter = $derived($chapters.find((c) => c.id === $view.chapterId));
@@ -21,11 +23,14 @@
   let isSolved = $derived(Boolean(result?.all_passed) || Boolean(exercise?.solved));
 
   async function load(id) {
-    exercise = null; result = null; error = null; loadedId = id;
+    exercise = null; result = null; error = null; loadedId = id; selectedChoice = null;
     try {
       const ex = await api.getExercise(id);
       exercise = ex;
       code = ex.best_code || ex.starter_code || "";
+      if (ex.type === "quiz" && ex.best_code != null && ex.best_code !== "") {
+        selectedChoice = Number(ex.best_code);
+      }
     } catch (e) { error = e.message; }
   }
 
@@ -35,8 +40,9 @@
 
   async function run() {
     running = true; result = null;
+    const submission = isQuiz ? String(selectedChoice) : code;
     try {
-      result = await api.runExercise(exercise.id, code);
+      result = await api.runExercise(exercise.id, submission);
       await refreshProgressAndDiagram(result.new_components || []);
     } catch (e) {
       result = { all_passed: false, error_category: "network", detail: e.message };
@@ -65,12 +71,24 @@
 
     <div class="prompt">{@html marked.parse(exercise.prompt_md || "")}</div>
 
-    <CodeEditor {code} language={exercise.type === "sql" ? "sql" : "python"}
-                onChange={(v) => (code = v)} />
+    {#if isQuiz}
+      <div class="options">
+        {#each exercise.options as opt, i}
+          <button class="option" class:sel={selectedChoice === i}
+                  onclick={() => (selectedChoice = i)}>
+            <span class="optmark">{String.fromCharCode(65 + i)}</span>
+            <span class="opttext">{opt}</span>
+          </button>
+        {/each}
+      </div>
+    {:else}
+      <CodeEditor {code} language={exercise.type === "sql" ? "sql" : "python"}
+                  onChange={(v) => (code = v)} />
+    {/if}
 
     <div class="actions">
-      <button class="run" onclick={run} disabled={running}>
-        {running ? "Running…" : "▶ Run"}
+      <button class="run" onclick={run} disabled={running || (isQuiz && selectedChoice === null)}>
+        {running ? "Checking…" : isQuiz ? "✓ Submit answer" : "▶ Run"}
       </button>
       {#if exercise.hints?.length}
         <details class="hints">
@@ -130,6 +148,23 @@
   .hints summary { cursor: pointer; }
   .hints ul { margin: 6px 0 0; color: #8aa0bd; }
   .loading, .err { color: #8aa0bd; }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    display: flex; align-items: center; gap: 12px; text-align: left; width: 100%;
+    background: #11161f; border: 1px solid #232d3e; color: #d6e2f2;
+    padding: 13px 15px; border-radius: 11px; cursor: pointer; font-size: 14.5px; line-height: 1.4;
+    transition: border-color .15s, background .15s;
+  }
+  .option:hover { border-color: #3a4b66; }
+  .option.sel { border-color: #2f6df6; background: #14213a; box-shadow: 0 0 0 2px rgba(47,109,246,0.2); }
+  .optmark {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    display: grid; place-items: center; background: #1c2536; color: #8aa0bd;
+    font-weight: 700; font-size: 13px;
+  }
+  .option.sel .optmark { background: #2f6df6; color: #fff; }
+  .opttext { flex: 1; }
 
   .exnav {
     display: flex; align-items: center; justify-content: space-between;
