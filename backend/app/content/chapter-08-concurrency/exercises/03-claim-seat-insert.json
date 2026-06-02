@@ -1,0 +1,19 @@
+{
+  "id": "ch8-ex03-claim-seat-insert",
+  "title": "Claim an unbooked seat with INSERT ... RETURNING",
+  "type": "sql",
+  "prompt_md": "Booking is really just claiming a seat. Seat `3` (label `A3`, showtime `1`) is currently unbooked. Insert a new row into `bookings` claiming it for user `2` (Ben):\n\n- `id` = `5`, `user_id` = `2`, `showtime_id` = `1`, `seat_id` = `3`, `created_at` = `'2026-06-03 10:00:00'`\n\nReturn the new booking's `id` and `seat_id`. The `RETURNING` clause confirms exactly what got claimed — in a real system you'd add a uniqueness rule on `seat_id` so a second insert for the same seat fails.",
+  "schema_key": "ticketpay",
+  "starter_code": "INSERT INTO bookings (id, user_id, showtime_id, seat_id, created_at)\nVALUES (...)\nRETURNING id, seat_id;",
+  "hints": [
+    "List the columns in order: (id, user_id, showtime_id, seat_id, created_at).",
+    "Values are (5, 2, 1, 3, '2026-06-03 10:00:00'); return id and seat_id."
+  ],
+  "expected_query_result": [
+    {"id": 5, "seat_id": 3}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "INSERT INTO bookings (id, user_id, showtime_id, seat_id, created_at) VALUES (5, 2, 1, 3, '2026-06-03 10:00:00') RETURNING id, seat_id;",
+  "xp": 20,
+  "concept_tags": ["insert", "returning", "claim"]
+}

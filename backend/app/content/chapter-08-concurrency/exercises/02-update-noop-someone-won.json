@@ -1,0 +1,17 @@
+{
+  "id": "ch8-ex02-update-noop-someone-won",
+  "title": "When the guard fails: 0 rows = someone else won",
+  "type": "sql",
+  "prompt_md": "The flip side of a guarded update is the **no-op**. Try to set the `rating` of the movie with `id` `1` (Dune) to `8.0`, but only if its current rating is below `8.0`. Return the `title`.\n\nDune is already `8.5`, so the guard fails — **no rows match**, and you get back an empty result. In a real backend, getting **0 rows affected** is your signal that someone else already won the race; you'd show 'already taken' instead of erroring.",
+  "schema_key": "ticketpay",
+  "starter_code": "UPDATE movies SET rating = 8.0 WHERE id = 1 AND ... RETURNING title;",
+  "hints": [
+    "Use the guard `id = 1 AND rating < 8.0`.",
+    "Dune is 8.5, which is NOT < 8.0, so zero rows match and nothing is returned."
+  ],
+  "expected_query_result": [],
+  "order_sensitive": false,
+  "reference_solution": "UPDATE movies SET rating = 8.0 WHERE id = 1 AND rating < 8.0 RETURNING title;",
+  "xp": 20,
+  "concept_tags": ["conditional-update", "rows-affected", "race-condition"]
+}

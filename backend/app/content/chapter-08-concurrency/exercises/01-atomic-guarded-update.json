@@ -1,0 +1,19 @@
+{
+  "id": "ch8-ex01-atomic-guarded-update",
+  "title": "Atomic guarded update (the winning case)",
+  "type": "sql",
+  "prompt_md": "The safest way to change data under concurrency is to fold the **check** and the **change** into one statement. Update the `rating` of the movie with `id` `3` (Tenet) to `9.0`, but **only if** its current rating is below `9.0`. Return the `title` and new `rating`.\n\nBecause this runs as one indivisible step, two requests can't both pass the check.",
+  "schema_key": "ticketpay",
+  "starter_code": "UPDATE movies SET rating = 9.0 WHERE id = 3 AND ... RETURNING title, rating;",
+  "hints": [
+    "Add a guard to the WHERE: `id = 3 AND rating < 9.0`.",
+    "Tenet starts at 7.4, so the guard passes and one row is updated."
+  ],
+  "expected_query_result": [
+    {"title": "Tenet", "rating": 9.0}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "UPDATE movies SET rating = 9.0 WHERE id = 3 AND rating < 9.0 RETURNING title, rating;",
+  "xp": 20,
+  "concept_tags": ["transactions", "atomic-update", "conditional-update"]
+}

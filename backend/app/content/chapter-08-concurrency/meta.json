@@ -1,0 +1,1 @@
+{"id":"ch8","title":"Concurrency, Locking & Idempotency","order":8,"summary":"Learn why two requests at once cause double-bookings and duplicate charges, and how transactions, locking, and idempotency keys make backends safe."}

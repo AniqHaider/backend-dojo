@@ -1,0 +1,1 @@
+{"id":"ch7","title":"Authentication & Authorization","order":7,"summary":"Prove who a user is and decide what they may do: hash and verify passwords safely with salt, issue and check signed tokens, parse auth headers, enforce role-based access, and avoid common pitfalls like plaintext passwords, timing attacks, and leaking secrets in responses."}

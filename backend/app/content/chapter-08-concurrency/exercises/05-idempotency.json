@@ -1,0 +1,19 @@
+{
+  "id": "ch8-ex05-idempotency",
+  "title": "Idempotency keys (the duplicate-payment fix)",
+  "type": "python",
+  "prompt_md": "A flaky network makes a phone resend the **same** payment twice. The fix is an **idempotency key**: charge only the first time a key is seen; on a repeat, return the same result **without charging again**.\n\nWrite `process_payments(requests)` where `requests` is a list of dicts `{\"key\": str, \"amount\": int}`. Process them **in order** and return a list of dicts `{\"key\": ..., \"amount\": ..., \"charged\": bool}`:\n\n- First time a `key` is seen → `\"charged\": true`.\n- A repeated `key` → `\"charged\": false` (same amount, no second charge).\n\nExample: `process_payments([{\"key\":\"a\",\"amount\":10},{\"key\":\"a\",\"amount\":10},{\"key\":\"b\",\"amount\":5}])` returns `[{\"key\":\"a\",\"amount\":10,\"charged\":true},{\"key\":\"a\",\"amount\":10,\"charged\":false},{\"key\":\"b\",\"amount\":5,\"charged\":true}]`.",
+  "starter_code": "def process_payments(requests):\n    pass\n",
+  "hints": [
+    "Keep a set of keys you've already charged.",
+    "If the key is new, mark charged True and add it to the set; otherwise charged False."
+  ],
+  "tests": [
+    {"call": "process_payments([{\"key\": \"a\", \"amount\": 10}, {\"key\": \"a\", \"amount\": 10}, {\"key\": \"b\", \"amount\": 5}])", "expect": [{"key": "a", "amount": 10, "charged": true}, {"key": "a", "amount": 10, "charged": false}, {"key": "b", "amount": 5, "charged": true}]},
+    {"call": "process_payments([])", "expect": []},
+    {"call": "process_payments([{\"key\": \"x\", \"amount\": 99}, {\"key\": \"x\", \"amount\": 99}, {\"key\": \"x\", \"amount\": 99}])", "expect": [{"key": "x", "amount": 99, "charged": true}, {"key": "x", "amount": 99, "charged": false}, {"key": "x", "amount": 99, "charged": false}]}
+  ],
+  "reference_solution": "def process_payments(requests):\n    seen = set()\n    out = []\n    for r in requests:\n        key = r[\"key\"]\n        charged = key not in seen\n        if charged:\n            seen.add(key)\n        out.append({\"key\": key, \"amount\": r[\"amount\"], \"charged\": charged})\n    return out\n",
+  "xp": 20,
+  "concept_tags": ["idempotency", "duplicate-payment", "dedupe"]
+}

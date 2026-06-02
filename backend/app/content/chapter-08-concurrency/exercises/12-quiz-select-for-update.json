@@ -1,0 +1,16 @@
+{
+  "id": "ch8-ex12-quiz-select-for-update",
+  "title": "Quiz: what does SELECT ... FOR UPDATE do?",
+  "type": "quiz",
+  "prompt_md": "Inside a transaction you run `SELECT id FROM seats WHERE id = 3 FOR UPDATE;`. What does the `FOR UPDATE` part actually do?",
+  "options": [
+    "It immediately updates the row's values",
+    "It locks the selected rows so other transactions that try to lock or modify them must wait until this transaction commits — a pessimistic lock",
+    "It makes the query run faster by using an index",
+    "It deletes the selected rows after reading them"
+  ],
+  "correct_index": 1,
+  "explanation_md": "`SELECT ... FOR UPDATE` is a **pessimistic lock**. It reads the matching rows AND locks them, so any other transaction trying to lock or modify those same rows **waits in line** until your transaction commits or rolls back. This lets you safely read a row, decide something, then write — without another request slipping in between. It does not change, speed up, or delete the data by itself; it only holds the lock.",
+  "xp": 15,
+  "concept_tags": ["for-update", "pessimistic-lock", "locking"]
+}
