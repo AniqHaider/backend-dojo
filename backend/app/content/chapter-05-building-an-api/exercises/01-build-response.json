@@ -1,0 +1,20 @@
+{
+  "id": "ch5-ex01-build-response",
+  "title": "Build a Response Envelope",
+  "type": "python",
+  "prompt_md": "A handler returns a *response*: a status code plus a body. Write `build_response(data)` that wraps any `data` value into the dict `{\"status\": 200, \"body\": data}`. This mirrors what a framework returns when you `return data` from a `GET` handler — a `200 OK` carrying your payload.",
+  "starter_code": "def build_response(data):\n    pass\n",
+  "hints": [
+    "Return a dict with two keys: \"status\" and \"body\".",
+    "\"status\" is always the integer 200 here; \"body\" is whatever was passed in.",
+    "data can be any JSON value: a dict, a list, a number, etc. Don't inspect it — just store it."
+  ],
+  "tests": [
+    {"call": "build_response({\"id\": 1, \"name\": \"Ada\"})", "expect": {"status": 200, "body": {"id": 1, "name": "Ada"}}},
+    {"call": "build_response([1, 2, 3])", "expect": {"status": 200, "body": [1, 2, 3]}},
+    {"call": "build_response(\"ok\")", "expect": {"status": 200, "body": "ok"}}
+  ],
+  "reference_solution": "def build_response(data):\n    return {\"status\": 200, \"body\": data}\n",
+  "xp": 15,
+  "concept_tags": ["http", "responses"]
+}

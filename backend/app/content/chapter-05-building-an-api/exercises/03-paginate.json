@@ -1,0 +1,21 @@
+{
+  "id": "ch5-ex03-paginate",
+  "title": "Paginate a List",
+  "type": "python",
+  "prompt_md": "List endpoints rarely return everything at once — they return one *page* at a time, driven by `?page=` and `?size=` query params. Write `paginate(items, page, size)` that returns the sublist for the given **1-based** page.\n\nExample: `paginate([1,2,3,4,5,6,7,8,9,10], 2, 3)` -> `[4, 5, 6]` (the second group of 3). A page past the end returns an empty list `[]`.",
+  "starter_code": "def paginate(items, page, size):\n    pass\n",
+  "hints": [
+    "Convert the 1-based page to a 0-based start index: start = (page - 1) * size.",
+    "The slice you want is items[start : start + size].",
+    "Python slicing handles out-of-range slices gracefully, returning [] — no special check needed."
+  ],
+  "tests": [
+    {"call": "paginate([1,2,3,4,5,6,7,8,9,10], 2, 3)", "expect": [4, 5, 6]},
+    {"call": "paginate([1,2,3,4,5,6,7,8,9,10], 1, 4)", "expect": [1, 2, 3, 4]},
+    {"call": "paginate([1,2,3], 5, 2)", "expect": []},
+    {"call": "paginate([], 1, 10)", "expect": []}
+  ],
+  "reference_solution": "def paginate(items, page, size):\n    start = (page - 1) * size\n    return items[start:start + size]\n",
+  "xp": 15,
+  "concept_tags": ["pagination", "query-params"]
+}

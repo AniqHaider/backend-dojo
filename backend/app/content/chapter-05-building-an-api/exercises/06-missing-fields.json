@@ -1,0 +1,21 @@
+{
+  "id": "ch5-ex06-missing-fields",
+  "title": "Validate a Request Body",
+  "type": "python",
+  "prompt_md": "Before creating a resource, a handler validates the incoming body. Write `missing_fields(payload, required)` that returns a **sorted list** of the keys in `required` that are *missing or None* in `payload`.\n\nA field counts as missing if the key is absent **or** its value is `None`. Return the result sorted alphabetically (so the output is deterministic). If nothing is missing, return `[]`.",
+  "starter_code": "def missing_fields(payload, required):\n    pass\n",
+  "hints": [
+    "Loop over each key in required. It's missing if key not in payload OR payload[key] is None.",
+    "payload.get(key) is None covers both 'absent' and 'present but None' in one check.",
+    "Collect the missing keys into a list, then return sorted(list)."
+  ],
+  "tests": [
+    {"call": "missing_fields({\"name\": \"Ada\"}, [\"name\", \"email\"])", "expect": ["email"]},
+    {"call": "missing_fields({\"name\": \"Ada\", \"email\": None}, [\"name\", \"email\"])", "expect": ["email"]},
+    {"call": "missing_fields({\"name\": \"Ada\", \"email\": \"a@b.com\"}, [\"email\", \"name\"])", "expect": []},
+    {"call": "missing_fields({}, [\"b\", \"a\", \"c\"])", "expect": ["a", "b", "c"]}
+  ],
+  "reference_solution": "def missing_fields(payload, required):\n    missing = [key for key in required if payload.get(key) is None]\n    return sorted(missing)\n",
+  "xp": 15,
+  "concept_tags": ["validation", "request-body"]
+}

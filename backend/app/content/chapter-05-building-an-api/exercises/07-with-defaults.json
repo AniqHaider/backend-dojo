@@ -1,0 +1,20 @@
+{
+  "id": "ch5-ex07-with-defaults",
+  "title": "Apply Query Param Defaults",
+  "type": "python",
+  "prompt_md": "Query params are usually optional with sensible defaults (e.g. `size` defaults to `10`). Write `with_defaults(query, defaults)` that returns a dict where `defaults` provides the baseline, but any key the client actually sent in `query` **wins**.\n\nExample: defaults `{\"page\": 1, \"size\": 10}` plus query `{\"page\": 3}` -> `{\"page\": 3, \"size\": 10}`. Don't mutate either input.",
+  "starter_code": "def with_defaults(query, defaults):\n    pass\n",
+  "hints": [
+    "Start from the defaults, then overlay the query on top.",
+    "Dict unpacking does this in one line: {**defaults, **query} — later keys override earlier ones.",
+    "Because query comes second, the client's values win. Keys only in query are added too."
+  ],
+  "tests": [
+    {"call": "with_defaults({\"page\": 3}, {\"page\": 1, \"size\": 10})", "expect": {"page": 3, "size": 10}},
+    {"call": "with_defaults({}, {\"page\": 1, \"size\": 10})", "expect": {"page": 1, "size": 10}},
+    {"call": "with_defaults({\"sort\": \"name\"}, {\"page\": 1})", "expect": {"page": 1, "sort": "name"}}
+  ],
+  "reference_solution": "def with_defaults(query, defaults):\n    return {**defaults, **query}\n",
+  "xp": 15,
+  "concept_tags": ["query-params", "defaults"]
+}

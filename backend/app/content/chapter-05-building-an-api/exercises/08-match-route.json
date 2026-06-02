@@ -1,0 +1,21 @@
+{
+  "id": "ch5-ex08-match-route",
+  "title": "Match a Request to a Handler",
+  "type": "python",
+  "prompt_md": "A router maps an incoming path to the handler that should run. Write `match_route(routes, path)` where `routes` is a dict like `{\"/\": \"home\", \"/users\": \"list_users\"}` mapping path -> handler name.\n\nReturn the handler name for an **exact** path match, or the string `\"404\"` if no route matches.",
+  "starter_code": "def match_route(routes, path):\n    pass\n",
+  "hints": [
+    "This is a dict lookup. routes.get(path) returns the handler or None if absent.",
+    "Use the second argument of .get as the fallback: routes.get(path, \"404\").",
+    "Only exact matches count here — no wildcards or path params."
+  ],
+  "tests": [
+    {"call": "match_route({\"/\": \"home\", \"/users\": \"list_users\"}, \"/users\")", "expect": "list_users"},
+    {"call": "match_route({\"/\": \"home\", \"/users\": \"list_users\"}, \"/\")", "expect": "home"},
+    {"call": "match_route({\"/\": \"home\"}, \"/missing\")", "expect": "404"},
+    {"call": "match_route({}, \"/\")", "expect": "404"}
+  ],
+  "reference_solution": "def match_route(routes, path):\n    return routes.get(path, \"404\")\n",
+  "xp": 15,
+  "concept_tags": ["routing", "http"]
+}

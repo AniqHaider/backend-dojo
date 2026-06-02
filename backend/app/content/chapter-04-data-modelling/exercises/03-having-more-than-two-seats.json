@@ -1,0 +1,21 @@
+{
+  "id": "ch4-ex03-having-more-than-two-seats",
+  "title": "HAVING: showtimes with more than 2 seats",
+  "type": "sql",
+  "prompt_md": "Find only the showtimes that have **more than 2** seats. Group `seats` by `showtime_id`, then filter the groups with `HAVING` (you can't use `WHERE` to filter an aggregate). Return `showtime_id` and the count aliased as `seat_count` (cast with `::int`).",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT showtime_id, COUNT(*)::int AS seat_count\nFROM seats\nGROUP BY showtime_id\nHAVING COUNT(*) > 2;",
+  "hints": [
+    "`WHERE` filters individual rows before grouping; `HAVING` filters groups after.",
+    "Put the aggregate condition in `HAVING COUNT(*) > 2`.",
+    "Don't forget to alias the count as `seat_count` and cast it `::int`."
+  ],
+  "expected_query_result": [
+    {"showtime_id": 1, "seat_count": 4},
+    {"showtime_id": 3, "seat_count": 3}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "SELECT showtime_id, COUNT(*)::int AS seat_count FROM seats GROUP BY showtime_id HAVING COUNT(*) > 2;",
+  "xp": 15,
+  "concept_tags": ["group-by", "having", "aggregate"]
+}

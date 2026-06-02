@@ -1,0 +1,16 @@
+{
+  "id": "ch5-ex10-status-201",
+  "title": "200 vs 201 vs 204",
+  "type": "quiz",
+  "prompt_md": "Your `POST /users` handler just created a new user and is returning the newly created user object in the response body. Which status code is most correct?",
+  "options": [
+    "200 OK",
+    "201 Created",
+    "204 No Content",
+    "404 Not Found"
+  ],
+  "correct_index": 1,
+  "explanation_md": "201 Created specifically signals that a new resource was created as a result of the request, and it's appropriate to include the new resource in the body. 200 OK is the generic success used mainly for reads/updates that return data. 204 No Content means success with an empty body — wrong here because you *are* returning the object. 404 is an error.",
+  "xp": 15,
+  "concept_tags": ["http", "status-codes"]
+}

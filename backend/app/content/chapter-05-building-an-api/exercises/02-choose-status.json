@@ -1,0 +1,21 @@
+{
+  "id": "ch5-ex02-choose-status",
+  "title": "Choose the Right Status Code",
+  "type": "python",
+  "prompt_md": "Picking the correct status code is part of API design. Write `choose_status(method, found)` returning the right HTTP status as an **int** for these cases:\n\n- `GET` and the resource exists (`found` is `True`) -> `200`\n- `GET` and it doesn't exist (`found` is `False`) -> `404`\n- `POST` (a create) -> `201`\n- `DELETE` -> `204`\n\nAssume `method` is one of `\"GET\"`, `\"POST\"`, `\"DELETE\"`.",
+  "starter_code": "def choose_status(method, found):\n    pass\n",
+  "hints": [
+    "For \"GET\", branch on the found flag: 200 if found else 404.",
+    "\"POST\" always returns 201 (Created), regardless of found.",
+    "\"DELETE\" always returns 204 (No Content) — there's nothing to send back."
+  ],
+  "tests": [
+    {"call": "choose_status(\"GET\", True)", "expect": 200},
+    {"call": "choose_status(\"GET\", False)", "expect": 404},
+    {"call": "choose_status(\"POST\", False)", "expect": 201},
+    {"call": "choose_status(\"DELETE\", True)", "expect": 204}
+  ],
+  "reference_solution": "def choose_status(method, found):\n    if method == \"GET\":\n        return 200 if found else 404\n    if method == \"POST\":\n        return 201\n    if method == \"DELETE\":\n        return 204\n",
+  "xp": 15,
+  "concept_tags": ["http", "status-codes"]
+}

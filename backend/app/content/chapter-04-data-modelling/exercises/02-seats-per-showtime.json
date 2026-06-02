@@ -1,0 +1,22 @@
+{
+  "id": "ch4-ex02-seats-per-showtime",
+  "title": "GROUP BY: number of seats per showtime",
+  "type": "sql",
+  "prompt_md": "How many seats does each showtime have? Group the `seats` table by `showtime_id` and count the rows in each group. Return `showtime_id` and the count aliased as `seat_count`. Cast the count to a plain integer with `COUNT(*)::int`.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT showtime_id, COUNT(*)::int AS seat_count\nFROM seats\nGROUP BY showtime_id;",
+  "hints": [
+    "`GROUP BY showtime_id` collapses all seats of one showtime into a single group.",
+    "`COUNT(*)` counts the rows in each group; cast it with `::int` so it's a plain integer.",
+    "Alias the count column as `seat_count`."
+  ],
+  "expected_query_result": [
+    {"showtime_id": 1, "seat_count": 4},
+    {"showtime_id": 2, "seat_count": 2},
+    {"showtime_id": 3, "seat_count": 3}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "SELECT showtime_id, COUNT(*)::int AS seat_count FROM seats GROUP BY showtime_id;",
+  "xp": 15,
+  "concept_tags": ["group-by", "aggregate", "count"]
+}
