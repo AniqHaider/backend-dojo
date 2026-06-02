@@ -12,6 +12,8 @@ INSERT INTO exercise_progress VALUES('ch1-ex08-loops','unsolved',13,NULL,unistr(
 INSERT INTO exercise_progress VALUES('ch1-ex02-types','solved',45,'2026-06-01T16:47:36.998269+00:00',unistr('def to_int(s):\u000a  return int(s)'));
 INSERT INTO exercise_progress VALUES('ch1-ex03-arithmetic','solved',10,'2026-06-02T03:36:03.428909+00:00',unistr('def total_price(qty, unit):\u000a    i = qty * unit\u000a    return i\u000a\u000a\u000a# def total_price(qty, unit):\u000a#    return qty * unit\u000a   \u000a'));
 INSERT INTO exercise_progress VALUES('ch1-ex04-strings','unsolved',4,NULL,unistr('def initials(full_name):\u000a    for(i=0, i<full_name.length, i++)\u000a        arr = []\u000a        arr.append[full_name[0]]\u000a        if : full_name[i] == '' ''\u000a            arr.append[full_name[i+1]]\u000a\u000a\u000a     return arr\u000a          \u000a        '));
+INSERT INTO exercise_progress VALUES('ch12-ex01-idempotency-duplicate-payment','solved',1,'2026-06-02T08:37:47.419699+00:00','0');
+INSERT INTO exercise_progress VALUES('ch3-ex01-select','solved',1,'2026-06-02T13:22:48.411879+00:00','SELECT id, title FROM movies;');
 CREATE TABLE mistakes_log (
                     id             INTEGER PRIMARY KEY AUTOINCREMENT,
                     exercise_id    TEXT NOT NULL,
@@ -87,12 +89,14 @@ CREATE TABLE stats (
                     longest_streak  INTEGER NOT NULL DEFAULT 0,
                     last_active_date TEXT
                 );
-INSERT INTO stats VALUES(1,30,1,2,2,'2026-06-02');
+INSERT INTO stats VALUES(1,65,1,2,2,'2026-06-02');
 CREATE TABLE diagram_state (
                     component_id TEXT PRIMARY KEY,
                     unlocked     INTEGER NOT NULL DEFAULT 0,
                     unlocked_at  TEXT
                 );
 INSERT INTO diagram_state VALUES('py-runtime',1,'2026-06-01T08:07:51.266656+00:00');
+INSERT INTO diagram_state VALUES('load-balancer',1,'2026-06-02T08:37:47.430945+00:00');
+INSERT INTO diagram_state VALUES('postgres-db',1,'2026-06-02T13:22:48.439596+00:00');
 INSERT INTO sqlite_sequence VALUES('mistakes_log',60);
 COMMIT;
