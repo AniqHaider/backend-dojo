@@ -4,13 +4,16 @@
   "type": "quiz",
   "prompt_md": "Consider the request `GET /users/42`. What is the `42`?",
   "options": [
+    "Part of the request body",
     "A query parameter",
     "A path parameter identifying which user",
-    "A request header",
-    "Part of the request body"
+    "A request header"
   ],
-  "correct_index": 1,
+  "correct_index": 2,
   "explanation_md": "The 42 is a path parameter — it's embedded in the URL path and identifies *which* specific resource (user #42). Query parameters come after a `?` (like `/users?role=admin`) and modify how a collection is viewed rather than identifying one item. Headers and bodies are separate parts of the request entirely; GET requests typically have no body.",
   "xp": 15,
-  "concept_tags": ["path-params", "query-params"]
+  "concept_tags": [
+    "path-params",
+    "query-params"
+  ]
 }

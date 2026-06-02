@@ -1,1 +1,20 @@
-{"id":"ch7-ex09-quiz-authn-vs-authz","title":"Authentication vs Authorization","type":"quiz","prompt_md":"In web auth, what is the difference between **authentication** and **authorization**?","options":["Authentication decides what a user is allowed to do; authorization proves who the user is","Authentication proves who the user is (identity); authorization decides what that user is allowed to do (permissions)","They are two words for the same thing — verifying a password","Authentication is for APIs and authorization is for websites; otherwise they are identical"],"correct_index":1,"explanation_md":"**Authentication (authn)** answers *who are you?* — proving identity, e.g. checking a password or a valid token (a failure here is HTTP **401**). **Authorization (authz)** answers *what may you do?* — checking permissions, e.g. \"is this user an admin?\" (a failure here is HTTP **403**). Authentication always happens first: you can't decide what someone may do until you know who they are. Think of showing your ID at the building door (authn) versus whether your badge opens the server room (authz).","xp":15,"concept_tags":["authentication","authorization","401-vs-403"]}
+{
+  "id": "ch7-ex09-quiz-authn-vs-authz",
+  "title": "Authentication vs Authorization",
+  "type": "quiz",
+  "prompt_md": "In web auth, what is the difference between **authentication** and **authorization**?",
+  "options": [
+    "Authentication proves who the user is (identity); authorization decides what that user is allowed to do (permissions)",
+    "They are two words for the same thing — verifying a password",
+    "Authentication is for APIs and authorization is for websites; otherwise they are identical",
+    "Authentication decides what a user is allowed to do; authorization proves who the user is"
+  ],
+  "correct_index": 0,
+  "explanation_md": "**Authentication (authn)** answers *who are you?* — proving identity, e.g. checking a password or a valid token (a failure here is HTTP **401**). **Authorization (authz)** answers *what may you do?* — checking permissions, e.g. \"is this user an admin?\" (a failure here is HTTP **403**). Authentication always happens first: you can't decide what someone may do until you know who they are. Think of showing your ID at the building door (authn) versus whether your badge opens the server room (authz).",
+  "xp": 15,
+  "concept_tags": [
+    "authentication",
+    "authorization",
+    "401-vs-403"
+  ]
+}

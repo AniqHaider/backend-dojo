@@ -1,0 +1,20 @@
+{
+  "id": "ch10-ex11-at-least-once",
+  "title": "At-least-once delivery implications",
+  "type": "quiz",
+  "prompt_md": "Most message queues guarantee **at-least-once** delivery, meaning the same job can occasionally be delivered more than once. What must your job consumer therefore be?",
+  "options": [
+    "Synchronous, so the web request waits for the job to finish",
+    "Stateless, so it never stores anything to disk",
+    "Idempotent, so re-processing the same job produces the same end state and doesn't double-apply its effects",
+    "Single-threaded, so only one job runs at a time"
+  ],
+  "correct_index": 2,
+  "explanation_md": "At-least-once means duplicates happen (e.g. a worker finishes but crashes before acknowledging, so the queue redelivers). The consumer must be **idempotent**: detect that it already handled this job — via a unique id / idempotency key or by asking the third party to dedupe — and skip the work the second time. Otherwise a redelivered 'charge $50' job becomes a $100 charge.\n\nStateless, single-threaded, and synchronous don't solve duplicate delivery — only idempotency does.",
+  "xp": 15,
+  "concept_tags": [
+    "idempotency",
+    "at-least-once",
+    "queues"
+  ]
+}

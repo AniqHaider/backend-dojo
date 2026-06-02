@@ -1,1 +1,19 @@
-{"id":"ch9-ex12-bad-fit-for-caching","title":"Which data is a bad fit for caching?","type":"quiz","prompt_md":"Which of these is the **worst** fit for caching?","options":["Data that must always be perfectly up-to-date and changes on nearly every request, such as a live account balance during a transaction","A product catalog page that changes a few times per day","A list of country codes that almost never changes","An expensive analytics report that's identical for all users for an hour"],"correct_index":0,"explanation_md":"Caching trades freshness for speed, so it shines on data that is read often and changes rarely (country codes, catalog pages, hourly reports). Data that must be **perfectly current** and changes on nearly every request — like a live balance during a payment — is a poor fit: any staleness can be wrong or even dangerous, and a value that changes every request gets a near-zero hit rate anyway, so the cache adds risk without saving work.","xp":15,"concept_tags":["caching","cache-suitability"]}
+{
+  "id": "ch9-ex12-bad-fit-for-caching",
+  "title": "Which data is a bad fit for caching?",
+  "type": "quiz",
+  "prompt_md": "Which of these is the **worst** fit for caching?",
+  "options": [
+    "A product catalog page that changes a few times per day",
+    "A list of country codes that almost never changes",
+    "An expensive analytics report that's identical for all users for an hour",
+    "Data that must always be perfectly up-to-date and changes on nearly every request, such as a live account balance during a transaction"
+  ],
+  "correct_index": 3,
+  "explanation_md": "Caching trades freshness for speed, so it shines on data that is read often and changes rarely (country codes, catalog pages, hourly reports). Data that must be **perfectly current** and changes on nearly every request — like a live balance during a payment — is a poor fit: any staleness can be wrong or even dangerous, and a value that changes every request gets a near-zero hit rate anyway, so the cache adds risk without saving work.",
+  "xp": 15,
+  "concept_tags": [
+    "caching",
+    "cache-suitability"
+  ]
+}

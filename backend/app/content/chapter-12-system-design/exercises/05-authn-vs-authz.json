@@ -1,0 +1,22 @@
+{
+  "id": "ch12-ex05-authn-vs-authz",
+  "title": "Quiz: authentication vs authorization",
+  "type": "quiz",
+  "prompt_md": "Which pair correctly describes the difference between authentication and authorization?",
+  "options": [
+    "Authentication verifies who you are (logging in / proving identity); authorization checks what you are allowed to do (permissions / roles)",
+    "Authentication and authorization are two words for the same login step",
+    "Authentication encrypts the request body; authorization decrypts it on the server",
+    "Authentication checks the user's role; authorization verifies the password at login"
+  ],
+  "correct_index": 0,
+  "explanation_md": "**Authentication (authn)** answers *\"who are you?\"* — it verifies identity, e.g. checking a username/password or validating a **JWT** to log a user in. **Authorization (authz)** answers *\"what are you allowed to do?\"* — it checks **permissions**, typically via **roles** or **RBAC**, after identity is already established. The order matters: you authenticate first, then authorize each action. A clean one-liner for the interview: *authn proves identity, authz grants access.* Encryption is a separate concern entirely.",
+  "xp": 20,
+  "concept_tags": [
+    "authentication",
+    "authorization",
+    "rbac",
+    "permissions",
+    "jwt"
+  ]
+}

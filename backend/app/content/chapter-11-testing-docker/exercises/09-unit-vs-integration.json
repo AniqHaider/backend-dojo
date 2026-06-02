@@ -1,0 +1,19 @@
+{
+  "id": "ch11-ex09-unit-vs-integration",
+  "title": "Unit vs integration tests",
+  "type": "quiz",
+  "prompt_md": "You have two tests for an order service. Test A calls a pure `calculate_total()` function with hard-coded inputs and no I/O. Test B spins up a real Postgres database, inserts an order, and reads it back through the repository layer.\n\nWhich test is the **integration test** (the one that crosses a real boundary like a database)?",
+  "options": [
+    "Test B, because it exercises multiple components together and hits a real database",
+    "Both are unit tests; integration tests only run in CI",
+    "Neither — touching a database makes it an end-to-end test, not integration",
+    "Test A, because it tests application logic"
+  ],
+  "correct_index": 0,
+  "explanation_md": "Test B is the integration test: it crosses a real boundary (a live database) and verifies several components working together. Test A is a classic unit test — one function, no I/O, fast and isolated. Integration tests are slower but catch wiring/serialization/SQL bugs that unit tests can't see.",
+  "xp": 15,
+  "concept_tags": [
+    "testing",
+    "integration-tests"
+  ]
+}

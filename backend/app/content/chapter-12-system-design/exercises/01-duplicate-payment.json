@@ -1,0 +1,21 @@
+{
+  "id": "ch12-ex01-idempotency-duplicate-payment",
+  "title": "Quiz: preventing duplicate payments on retry",
+  "type": "quiz",
+  "prompt_md": "A user clicks \"Pay\" once, but a flaky network causes their browser to retry the request, so your payment endpoint receives the same charge twice. How do you make sure the customer is only charged once?",
+  "options": [
+    "Have the client send an idempotency key with the request, store it with a unique DB constraint, and return the original result on any retry instead of charging again",
+    "Disable the Pay button on the frontend after the first click",
+    "Compare the amount and customer ID; if a charge with the same amount happened in the last minute, reject it",
+    "Add a short delay before processing each payment so the duplicate arrives after the first finishes"
+  ],
+  "correct_index": 0,
+  "explanation_md": "The named pattern is an **idempotency key** — a unique token the client generates once per logical operation and resends on every retry. The server records it (often with a **unique constraint** on the payments table) so the first request does the charge and stores the result, while any retry with the same key returns that *same stored result* instead of charging again. This makes the operation **idempotent**: safe to repeat. Disabling a button is client-side only and bypassable; an amount/time heuristic wrongly blocks legitimate identical payments and is a race condition itself.",
+  "xp": 20,
+  "concept_tags": [
+    "idempotency",
+    "idempotency-key",
+    "unique-constraint",
+    "payments"
+  ]
+}

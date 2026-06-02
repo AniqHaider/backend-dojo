@@ -1,0 +1,1 @@
+{"id":"ch10","title":"Background Jobs & Resilience","order":10,"summary":"Move slow or flaky work out of the request path with background jobs, and survive unreliable third-party services using timeouts, retries with backoff, circuit breakers, and dead-letter queues."}

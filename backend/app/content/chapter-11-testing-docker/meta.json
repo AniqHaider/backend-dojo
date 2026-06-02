@@ -1,0 +1,1 @@
+{"id":"ch11","title":"Testing, Docker & Observability","order":11,"summary":"Build confidence to change backend code through automated tests, ship consistent environments with Docker, and understand what your service is doing in production via logs, metrics, and traces."}

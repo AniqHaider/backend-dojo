@@ -1,0 +1,22 @@
+{
+  "id": "ch12-ex12-scale-up-vs-out-shard",
+  "title": "Quiz: scale up vs scale out, and when to shard",
+  "type": "quiz",
+  "prompt_md": "What's the difference between scaling up and scaling out, and when do you reach for sharding?",
+  "options": [
+    "Scale up and scale out are the same thing; sharding is just another word for caching",
+    "Scale out means turning servers off to save cost; you shard to reduce the number of databases",
+    "Scale up means adding more servers; scale out means buying a bigger CPU; you shard whenever traffic increases at all",
+    "Scale up = a bigger single machine (simple but capped); scale out = more machines behind a load balancer; you shard/partition the data only when it's too big or write-heavy for a single node"
+  ],
+  "correct_index": 3,
+  "explanation_md": "**Scaling up (vertical)** means giving one machine more CPU/RAM — simple and needs no code changes, but it hits a **ceiling** and stays a single point of failure. **Scaling out (horizontal)** means adding more machines behind a **load balancer**, which requires the app to be **stateless** so any node can serve any request. **Sharding (partitioning)** splits the *data* across nodes by a **shard key** and is the last resort — you reach for it only when the dataset or write volume genuinely exceeds what one node can hold, because cross-shard queries get complex. The interview-safe ordering: cache and read replicas, then scale out the app, then shard.",
+  "xp": 20,
+  "concept_tags": [
+    "vertical-scaling",
+    "horizontal-scaling",
+    "sharding",
+    "load-balancer",
+    "shard-key"
+  ]
+}

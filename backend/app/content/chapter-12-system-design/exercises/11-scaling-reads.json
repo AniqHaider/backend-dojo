@@ -1,0 +1,22 @@
+{
+  "id": "ch12-ex11-scaling-reads-replicas",
+  "title": "Quiz: scaling reads on a read-heavy app",
+  "type": "quiz",
+  "prompt_md": "Your app is read-heavy — far more reads than writes — and the single database is struggling. What is the common way to scale the reads?",
+  "options": [
+    "Upgrade to a bigger single machine forever as traffic grows",
+    "Shard the database across many nodes immediately, since that always scales best",
+    "Add read replicas and route read queries to them while writes go to the primary, usually combined with caching — keeping replication lag in mind",
+    "Move all reads to the application's memory and stop using the database for queries"
+  ],
+  "correct_index": 2,
+  "explanation_md": "For a **read-heavy** workload the standard move is **read replicas**: copies of the primary that take over read traffic so the **primary** is freed to handle **writes**. You route reads to replicas and writes to the primary, and layer a **cache** (e.g. Redis) in front to absorb the hottest reads — together this is cheap and low-risk. The one caveat to name is **replication lag**: a replica can briefly serve slightly stale data, so a read immediately after a write may not reflect it (**eventual consistency**). **Sharding** is heavier and aimed at write/size limits, and vertical scale-up hits a ceiling.",
+  "xp": 20,
+  "concept_tags": [
+    "read-replicas",
+    "scaling",
+    "replication-lag",
+    "caching",
+    "read-heavy"
+  ]
+}

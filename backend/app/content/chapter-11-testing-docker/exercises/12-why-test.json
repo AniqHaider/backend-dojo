@@ -1,0 +1,20 @@
+{
+  "id": "ch11-ex12-why-test",
+  "title": "Why write tests when changing code?",
+  "type": "quiz",
+  "prompt_md": "You need to refactor a payments module that other teams depend on. Why is having a good automated test suite especially valuable here?",
+  "options": [
+    "Tests make the production code run faster",
+    "Tests remove the need for code review entirely",
+    "Tests guarantee the code has zero bugs forever",
+    "Tests catch regressions, document intended behavior, and let you refactor safely with fast feedback"
+  ],
+  "correct_index": 3,
+  "explanation_md": "Tests give you the confidence to change code: they catch **regressions** the moment behavior drifts, they act as executable **documentation** of intended behavior, and they enable **safe refactoring** with fast feedback. They do not prove the absence of all bugs, speed up runtime, or replace code review.",
+  "xp": 15,
+  "concept_tags": [
+    "testing",
+    "tdd",
+    "refactoring"
+  ]
+}

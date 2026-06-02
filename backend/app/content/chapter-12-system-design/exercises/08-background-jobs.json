@@ -1,0 +1,22 @@
+{
+  "id": "ch12-ex08-background-jobs-queues",
+  "title": "Quiz: why use background jobs / message queues?",
+  "type": "quiz",
+  "prompt_md": "When a user signs up you need to send a welcome email, generate a PDF, and call an analytics API. Why move this work into a background job / message queue instead of doing it all in the request?",
+  "options": [
+    "Because message queues are required by HTTP, so synchronous work isn't allowed",
+    "Queues guarantee the email is delivered instantly, faster than doing it inline",
+    "Background jobs make the code shorter so there's less to maintain",
+    "To keep the HTTP request fast by offloading slow, failure-prone work; the queue makes that work retryable and smooths out load spikes by buffering tasks"
+  ],
+  "correct_index": 3,
+  "explanation_md": "Doing slow or flaky work inside the request blocks the user and risks failing the whole response if one step errors. Pushing it to a **message queue / background worker** lets the request return immediately (**low latency**), **decouples** producer from consumer, and makes each task independently **retryable** with **dead-letter queues** for poison messages. The queue also acts as a buffer that **smooths load spikes** — bursts pile up in the queue and workers drain them at a steady rate (**load leveling**). The tradeoff is that the work becomes **asynchronous** and **eventually consistent**, not instant.",
+  "xp": 20,
+  "concept_tags": [
+    "background-jobs",
+    "message-queue",
+    "asynchronous",
+    "load-leveling",
+    "decoupling"
+  ]
+}

@@ -1,1 +1,21 @@
-{"id":"ch7-ex12-quiz-jwt-tradeoff","title":"The main tradeoff of stateless JWTs","type":"quiz","prompt_md":"A stateless **JWT** carries the user's claims (like `user:42, role:admin`) signed by the server, and the server stores no session data. Compared with classic server-side sessions, what is the main tradeoff?","options":["JWTs can't carry any user information, so you must hit the database on every request anyway","Because nothing is stored server-side, you can't easily revoke a JWT before it expires (e.g. on logout or ban)","JWTs are encrypted, so the client can never read what's inside them","JWTs require a database lookup on every request, making them slower than sessions"],"correct_index":1,"explanation_md":"With a **server session** the server holds the state, so revoking access is trivial — delete the session row and the user is logged out instantly. A **stateless JWT** is trusted purely because its signature verifies, and the server stores nothing to delete. So until the token **expires**, the server keeps honoring it — you can't cleanly revoke it on logout or ban without adding extra machinery (like a denylist), which reintroduces the very server-side state JWTs were meant to avoid. That's why JWTs use short expiry times. Note a JWT payload is only *signed*, not encrypted — anyone can read it, so never put secrets in it.","xp":15,"concept_tags":["jwt","sessions","revocation","stateless-auth"]}
+{
+  "id": "ch7-ex12-quiz-jwt-tradeoff",
+  "title": "The main tradeoff of stateless JWTs",
+  "type": "quiz",
+  "prompt_md": "A stateless **JWT** carries the user's claims (like `user:42, role:admin`) signed by the server, and the server stores no session data. Compared with classic server-side sessions, what is the main tradeoff?",
+  "options": [
+    "JWTs are encrypted, so the client can never read what's inside them",
+    "JWTs require a database lookup on every request, making them slower than sessions",
+    "JWTs can't carry any user information, so you must hit the database on every request anyway",
+    "Because nothing is stored server-side, you can't easily revoke a JWT before it expires (e.g. on logout or ban)"
+  ],
+  "correct_index": 3,
+  "explanation_md": "With a **server session** the server holds the state, so revoking access is trivial — delete the session row and the user is logged out instantly. A **stateless JWT** is trusted purely because its signature verifies, and the server stores nothing to delete. So until the token **expires**, the server keeps honoring it — you can't cleanly revoke it on logout or ban without adding extra machinery (like a denylist), which reintroduces the very server-side state JWTs were meant to avoid. That's why JWTs use short expiry times. Note a JWT payload is only *signed*, not encrypted — anyone can read it, so never put secrets in it.",
+  "xp": 15,
+  "concept_tags": [
+    "jwt",
+    "sessions",
+    "revocation",
+    "stateless-auth"
+  ]
+}

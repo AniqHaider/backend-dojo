@@ -1,0 +1,22 @@
+{
+  "id": "ch12-ex09-normalize-vs-denormalize",
+  "title": "Quiz: one big table vs related tables",
+  "type": "quiz",
+  "prompt_md": "What is the core tradeoff between keeping everything in one big table versus splitting data into related tables joined by foreign keys?",
+  "options": [
+    "Normalizing into related tables avoids duplication and protects integrity but needs joins; denormalizing into fewer/bigger tables avoids joins for faster reads but duplicates data that can drift — you pick per access pattern",
+    "One big table is always faster and uses less storage, so it is the right default",
+    "Normalization and denormalization produce identical performance, so the choice is purely stylistic",
+    "Splitting tables is always wrong because joins are too slow to ever use"
+  ],
+  "correct_index": 0,
+  "explanation_md": "**Normalization** stores each fact exactly once across related tables linked by **foreign keys** — this minimizes duplication and preserves **referential integrity**, at the cost of needing **joins** to reassemble data. **Denormalization** deliberately duplicates or pre-combines data to avoid those joins and speed up **reads**, accepting that the copies can **drift out of sync** and that writes get heavier. There's no universal winner: you choose based on the **access pattern** — normalize for write-heavy/transactional integrity, denormalize for read-heavy hot paths. Saying \"it depends on how the data is read\" is exactly the judgment interviewers want.",
+  "xp": 20,
+  "concept_tags": [
+    "normalization",
+    "denormalization",
+    "foreign-keys",
+    "joins",
+    "data-integrity"
+  ]
+}
