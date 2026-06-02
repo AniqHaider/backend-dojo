@@ -50,6 +50,24 @@ cd backend && uv run uvicorn app.main:app --port 4001 --reload
 cd frontend && npm run dev
 ```
 
+## Cloning on another machine (with your data)
+The repo carries the databases so a fresh clone has the practice data **and** your
+saved progress:
+- `db/ticketpay.sql` — the Postgres practice dataset (movies/showtimes/seats/bookings).
+- `db/progress.sql` — a text dump of your sqlite progress (XP, solved exercises, streak,
+  your code submissions). Auto-refreshed on every commit via a pre-commit hook.
+
+After cloning and doing the one-time setup above, restore both with:
+```bash
+./scripts/db-restore.sh
+```
+This creates the Postgres `backend_dojo` database and rebuilds `backend/progress.db`
+from `db/progress.sql`, so you continue exactly where you left off.
+
+> Note: the binary `backend/progress.db` itself stays git-ignored; the diff-friendly
+> `db/progress.sql` text dump is what's committed. To snapshot manually, run
+> `./scripts/db-dump.sh`.
+
 ## Tests
 ```bash
 cd backend && uv run pytest -q          # backend unit/integration tests
