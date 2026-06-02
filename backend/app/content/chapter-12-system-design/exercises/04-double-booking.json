@@ -1,0 +1,22 @@
+{
+  "id": "ch12-ex04-row-locking-double-book",
+  "title": "Quiz: two users booking the last seat at once",
+  "type": "quiz",
+  "prompt_md": "Two users try to book the last available seat at the exact same moment. Both requests read \"1 seat left\" and both proceed. How do you prevent a double-booking?",
+  "options": [
+    "Trust the frontend to disable the button once one user is mid-checkout",
+    "Add a 200ms random delay to each request so they don't arrive simultaneously",
+    "Use an updated_at timestamp and let the later write win, since it has the freshest data",
+    "Run the read-and-update inside a database transaction using row locking (SELECT ... FOR UPDATE), or do a single atomic conditional UPDATE that only succeeds if seats are still available"
+  ],
+  "correct_index": 3,
+  "explanation_md": "This is a **race condition** on shared state, and the fix is making the check-and-decrement **atomic**. Wrap it in a **transaction** and use **pessimistic locking** — `SELECT ... FOR UPDATE` locks the seat row so the second request blocks until the first commits and then sees zero seats. Equivalently, a single **atomic conditional UPDATE** (`UPDATE seats SET remaining = remaining - 1 WHERE remaining > 0`) lets the database serialize the writes for you. A timestamp 'last write wins' is exactly the wrong instinct — both writes still succeed and you've sold the seat twice; client-side guards and random delays don't enforce correctness on the server.",
+  "xp": 20,
+  "concept_tags": [
+    "race-condition",
+    "pessimistic-locking",
+    "select-for-update",
+    "transactions",
+    "atomicity"
+  ]
+}

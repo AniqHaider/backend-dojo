@@ -4,13 +4,17 @@
   "type": "quiz",
   "prompt_md": "You add a `UNIQUE` constraint to the `users.email` column. What does it prevent?",
   "options": [
+    "It prevents the table from having more than one user total",
     "It prevents the email column from ever being updated",
     "It prevents two different rows from storing the same email value",
-    "It prevents the email value from being null",
-    "It prevents the table from having more than one user total"
+    "It prevents the email value from being null"
   ],
-  "correct_index": 1,
+  "correct_index": 2,
   "explanation_md": "A `UNIQUE` constraint guarantees no two rows share the same value in that column — so the database rejects an insert or update that would create a duplicate email. It doesn't block updates in general, and uniqueness is separate from nullability (`NOT NULL` handles nulls; a unique column can still allow one null). It limits duplicate values, not the total number of rows.",
   "xp": 15,
-  "concept_tags": ["unique-constraint", "constraints", "consistency"]
+  "concept_tags": [
+    "unique-constraint",
+    "constraints",
+    "consistency"
+  ]
 }

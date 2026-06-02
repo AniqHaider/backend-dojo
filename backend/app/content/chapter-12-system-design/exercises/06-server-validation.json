@@ -1,0 +1,16 @@
+{
+  "id": "ch12-ex06-server-side-validation",
+  "title": "Quiz: why validate on the backend if the frontend already does?",
+  "type": "quiz",
+  "prompt_md": "Your React app already validates the form before submitting. Why must the backend validate the same input again?",
+  "options": [
+    "It doesn't need to — duplicating validation is wasted effort if the frontend is correct",
+    "Because the client can be bypassed or tampered with (curl, Postman, modified JS, malicious users), so the server is the only trustworthy boundary and must enforce the rules itself",
+    "Only to show nicer error messages than the frontend can",
+    "Because backend validation makes the database queries run faster"
+  ],
+  "correct_index": 1,
+  "explanation_md": "**Never trust the client.** Frontend validation is purely a UX nicety — anyone can skip your JS and hit the API directly with **curl/Postman**, replay or tamper with requests, or send malformed/malicious payloads. The server is the only **trust boundary** you actually control, so it must independently validate types, ranges, and authorization (and guard against injection). Frame it as *defense in depth*: client validation improves experience, server validation enforces correctness and security.",
+  "xp": 20,
+  "concept_tags": ["validation", "trust-boundary", "security", "never-trust-the-client", "defense-in-depth"]
+}

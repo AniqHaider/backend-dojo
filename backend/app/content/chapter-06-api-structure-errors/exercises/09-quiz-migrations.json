@@ -1,1 +1,20 @@
-{"id":"ch6-ex09-quiz-migrations","title":"What is a database migration?","type":"quiz","prompt_md":"What is a database **migration**, and why would you version your schema with migration scripts instead of editing tables by hand?","options":["A migration is a backup of all your data taken before deploying, used only for disaster recovery","A migration is a versioned, ordered script describing a schema change; versioning makes the schema reproducible across environments, reviewable in git, and safely reversible","A migration moves your database from one cloud provider to another and has nothing to do with table structure","A migration is a cache of frequently-run queries that speeds up reads"],"correct_index":1,"explanation_md":"A migration is a small, ordered, version-controlled script (e.g. \"add column `phone` to `users`\") run by tools like Alembic. Versioning your schema means every environment reaches the same structure by replaying the same scripts, changes are reviewable in a PR, and they can be rolled back — far safer than ad-hoc manual `ALTER TABLE` on a live database. It is like git history for your schema. The other options describe backups, infra moves, and caching — none of which are migrations.","xp":15,"concept_tags":["migrations","schema-evolution","alembic"]}
+{
+  "id": "ch6-ex09-quiz-migrations",
+  "title": "What is a database migration?",
+  "type": "quiz",
+  "prompt_md": "What is a database **migration**, and why would you version your schema with migration scripts instead of editing tables by hand?",
+  "options": [
+    "A migration is a versioned, ordered script describing a schema change; versioning makes the schema reproducible across environments, reviewable in git, and safely reversible",
+    "A migration moves your database from one cloud provider to another and has nothing to do with table structure",
+    "A migration is a cache of frequently-run queries that speeds up reads",
+    "A migration is a backup of all your data taken before deploying, used only for disaster recovery"
+  ],
+  "correct_index": 0,
+  "explanation_md": "A migration is a small, ordered, version-controlled script (e.g. \"add column `phone` to `users`\") run by tools like Alembic. Versioning your schema means every environment reaches the same structure by replaying the same scripts, changes are reviewable in a PR, and they can be rolled back — far safer than ad-hoc manual `ALTER TABLE` on a live database. It is like git history for your schema. The other options describe backups, infra moves, and caching — none of which are migrations.",
+  "xp": 15,
+  "concept_tags": [
+    "migrations",
+    "schema-evolution",
+    "alembic"
+  ]
+}

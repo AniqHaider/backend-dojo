@@ -4,13 +4,17 @@
   "type": "quiz",
   "prompt_md": "You prefix a slow query with `EXPLAIN ANALYZE`. What does it give you?",
   "options": [
-    "It automatically rewrites your query to be faster",
     "It shows the query plan plus real execution timings, so you can spot things like a sequential scan where an index is missing",
     "It permanently caches the query result for next time",
-    "It only estimates the plan without ever running the query"
+    "It only estimates the plan without ever running the query",
+    "It automatically rewrites your query to be faster"
   ],
-  "correct_index": 1,
+  "correct_index": 0,
   "explanation_md": "`EXPLAIN ANALYZE` actually runs the query and prints the plan the database chose along with the real time each step took — letting you catch a Seq Scan on a large table that signals a missing index. Plain `EXPLAIN` only estimates without running; `EXPLAIN ANALYZE` does run it. It diagnoses the problem but doesn't rewrite your query or cache results for you.",
   "xp": 15,
-  "concept_tags": ["explain-analyze", "query-plan", "performance"]
+  "concept_tags": [
+    "explain-analyze",
+    "query-plan",
+    "performance"
+  ]
 }

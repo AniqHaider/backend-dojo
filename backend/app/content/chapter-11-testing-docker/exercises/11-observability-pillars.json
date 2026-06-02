@@ -1,0 +1,18 @@
+{
+  "id": "ch11-ex11-observability-pillars",
+  "title": "The three pillars of observability",
+  "type": "quiz",
+  "prompt_md": "Observability — your ability to understand what a running service is doing from the outside — is commonly described as resting on three pillars.\n\nWhat are the three pillars?",
+  "options": [
+    "CPU, memory, and disk",
+    "Frontend, backend, and database",
+    "Logs, metrics, and traces",
+    "Tests, builds, and deploys"
+  ],
+  "correct_index": 2,
+  "explanation_md": "The three pillars are **logs** (timestamped records of discrete events), **metrics** (numeric measurements aggregated over time, like error rate and latency), and **traces** (the timed path of a single request across services). Together they let you debug production without attaching a debugger.",
+  "xp": 15,
+  "concept_tags": [
+    "observability"
+  ]
+}

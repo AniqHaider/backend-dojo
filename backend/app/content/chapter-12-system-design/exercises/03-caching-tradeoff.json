@@ -1,0 +1,22 @@
+{
+  "id": "ch12-ex03-caching-invalidation-tradeoff",
+  "title": "Quiz: why cache, and what problem does it introduce?",
+  "type": "quiz",
+  "prompt_md": "Why do backends add a cache (e.g. Redis) in front of the database, and what is the main problem caching introduces?",
+  "options": [
+    "Caching is only for storing user passwords securely, and the problem is encryption overhead",
+    "Caching makes the database optional; the problem is it uses more disk",
+    "Caching reduces load, latency, and cost by serving hot data from memory, but it risks serving stale data — so the hard part is cache invalidation",
+    "Caching guarantees the data is always perfectly up to date; there is no real downside"
+  ],
+  "correct_index": 2,
+  "explanation_md": "A cache stores hot data in fast memory, which **reduces database load, lowers latency, and cuts cost** by avoiding repeated expensive queries. The catch is that the cached copy can drift from the source of truth — it becomes **stale** — which is why **cache invalidation** (deciding when to update or evict an entry) is famously one of the two hard problems in computing. You manage it with strategies like **TTL** (time-to-live expiry), write-through, or explicit invalidation on update. Accept the tradeoff: you're trading a small window of staleness (**eventual consistency**) for big performance wins.",
+  "xp": 20,
+  "concept_tags": [
+    "caching",
+    "cache-invalidation",
+    "stale-data",
+    "ttl",
+    "latency"
+  ]
+}

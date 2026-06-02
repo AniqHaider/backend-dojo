@@ -1,0 +1,16 @@
+{
+  "id": "ch12-ex02-explain-analyze-slow-query",
+  "title": "Quiz: a query slowed down as the table grew",
+  "type": "quiz",
+  "prompt_md": "A query that was instant on a few thousand rows now takes seconds after the table grew to millions of rows. What is your first step to investigate?",
+  "options": [
+    "Immediately add more RAM and CPU to the database server",
+    "Run EXPLAIN ANALYZE on the query to see the execution plan, look for a full table (sequential) scan or N+1 pattern, and add the missing index",
+    "Switch the database from PostgreSQL to a NoSQL store that scales better",
+    "Add a cache in front of the query so it only runs once"
+  ],
+  "correct_index": 1,
+  "explanation_md": "Always **measure before you change**. `EXPLAIN ANALYZE` shows the **query execution plan** and real timings, so you can spot a **sequential (full table) scan** where an **index seek** should be — the classic cause of a query that degrades as rows grow. Adding the missing **index** (on the column(s) in the `WHERE`/`JOIN`) turns an O(n) scan into a fast B-tree lookup. Also watch for the **N+1 query** pattern hiding in application code. Throwing hardware, NoSQL, or caching at it without reading the plan is guessing — and caching just hides a fixable indexing problem.",
+  "xp": 20,
+  "concept_tags": ["indexing", "explain-analyze", "query-plan", "full-table-scan", "n-plus-1"]
+}

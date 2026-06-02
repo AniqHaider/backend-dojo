@@ -1,0 +1,22 @@
+{
+  "id": "ch12-ex07-resilience-third-party",
+  "title": "Quiz: staying reliable when a third-party API is flaky",
+  "type": "quiz",
+  "prompt_md": "Your API depends on a third-party service that is sometimes slow and sometimes fails. How do you keep your own service reliable?",
+  "options": [
+    "Cache the third-party's previous response forever so you never have to call it again",
+    "Call it normally and let the request hang until the third-party responds, however long it takes",
+    "Set a timeout on the call, retry transient failures with exponential backoff and jitter, and add a circuit breaker to fail fast when it's down — optionally offloading the work to a queue",
+    "Retry the call immediately in a tight loop until it eventually succeeds"
+  ],
+  "correct_index": 2,
+  "explanation_md": "Layer the standard **resilience patterns**. A **timeout** stops a hung dependency from tying up your threads/connections. **Retries with exponential backoff and jitter** handle transient blips without synchronizing into a **thundering herd**. A **circuit breaker** trips open after repeated failures so you **fail fast** during a cooldown instead of cascading the outage into your service. For non-urgent work, push it onto a **queue/background job** so the request returns immediately and retries happen out-of-band. An immediate tight-loop retry just amplifies the outage; an infinite cache serves dangerously stale data.",
+  "xp": 20,
+  "concept_tags": [
+    "resilience",
+    "timeout",
+    "exponential-backoff",
+    "circuit-breaker",
+    "retries"
+  ]
+}

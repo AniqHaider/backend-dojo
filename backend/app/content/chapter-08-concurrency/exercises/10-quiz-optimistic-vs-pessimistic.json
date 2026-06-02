@@ -4,13 +4,17 @@
   "type": "quiz",
   "prompt_md": "You're updating rows that are **rarely** touched by two requests at once (low contention). Which locking strategy fits best, and why?",
   "options": [
+    "Optimistic locking — because it physically prevents other transactions from reading the row",
     "Optimistic locking — no lock is held; you just check a version number at write time, which is cheap and assumes conflicts are rare",
     "Pessimistic locking — always lock the row up front so no one can ever conflict, regardless of how rare conflicts are",
-    "Neither — low-contention data can never have a race condition",
-    "Optimistic locking — because it physically prevents other transactions from reading the row"
+    "Neither — low-contention data can never have a race condition"
   ],
-  "correct_index": 0,
+  "correct_index": 1,
   "explanation_md": "**Optimistic locking** is the right fit for low contention. You don't hold a lock; you read a `version`, do your work, and at write time check the version is still what you read (`... WHERE version = 5`). If nothing changed — the common case when conflicts are rare — the write succeeds cheaply; if someone got there first, the update hits 0 rows and you retry. Pessimistic locking (`SELECT ... FOR UPDATE`) makes others wait and is overkill when conflicts are unlikely; it's better reserved for high-contention hotspots. Note optimistic locking does NOT block others from reading.",
   "xp": 15,
-  "concept_tags": ["optimistic-lock", "pessimistic-lock", "contention"]
+  "concept_tags": [
+    "optimistic-lock",
+    "pessimistic-lock",
+    "contention"
+  ]
 }

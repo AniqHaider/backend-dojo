@@ -4,13 +4,16 @@
   "type": "quiz",
   "prompt_md": "You're building an endpoint that creates a **new** user from a JSON body the client sends. Which HTTP method should the route use?",
   "options": [
-    "GET",
     "POST",
     "DELETE",
-    "PUT"
+    "PUT",
+    "GET"
   ],
-  "correct_index": 1,
+  "correct_index": 0,
   "explanation_md": "POST is the conventional method for creating a new resource where the server assigns its identity (e.g. POST /users). GET only reads and shouldn't carry a body or cause changes. DELETE removes. PUT is used to create-or-replace a resource *at a client-specified URL* (PUT /users/42) — for creating into a collection where the server picks the id, POST is the standard choice.",
   "xp": 15,
-  "concept_tags": ["http", "methods"]
+  "concept_tags": [
+    "http",
+    "methods"
+  ]
 }

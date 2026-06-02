@@ -1,0 +1,19 @@
+{
+  "id": "ch10-ex12-circuit-breaker-purpose",
+  "title": "What does a circuit breaker do?",
+  "type": "quiz",
+  "prompt_md": "What is the purpose of a circuit breaker around calls to a flaky dependency?",
+  "options": [
+    "It encrypts the traffic between your service and the third party",
+    "It guarantees the dependency will never go down",
+    "It retries a failed call immediately as many times as needed until it succeeds",
+    "After repeated failures it stops calling the dead service for a cooldown period and fails fast, instead of piling up doomed calls"
+  ],
+  "correct_index": 3,
+  "explanation_md": "A circuit breaker watches recent failures. When they cross a threshold it **trips open** and short-circuits further calls for a cooldown — returning an error immediately (fail fast) rather than waiting on a service that's clearly down. This frees your workers and stops you hammering a struggling dependency. After the cooldown it goes **half-open** to test with a single trial call, then closes if that succeeds.\n\nIt's not about retrying forever, encryption, or preventing outages — it's about containing the blast radius of an outage you can't prevent.",
+  "xp": 15,
+  "concept_tags": [
+    "circuit-breaker",
+    "resilience"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "ch12-ex10-debug-slow-at-peak",
+  "title": "Quiz: API slow only at peak traffic",
+  "type": "quiz",
+  "prompt_md": "Your API is fast most of the day but gets slow only during peak traffic. How do you debug it?",
+  "options": [
+    "Assume the code is fine and just add servers until it feels fast again",
+    "Look at metrics and slow-query logs for load-dependent causes: connection-pool exhaustion, lock contention, and missing indexes that only hurt under high concurrency",
+    "Rewrite the slowest endpoint in a faster language",
+    "Restart the server every hour to clear out whatever is slowing it down"
+  ],
+  "correct_index": 1,
+  "explanation_md": "Slowness that appears *only* under load points to a **contention or resource-limit** problem, not a single slow line of code — so you investigate with **monitoring/metrics** and **slow-query logs** rather than guessing. The usual suspects: **connection-pool exhaustion** (requests queuing for a free DB connection), **lock contention** (transactions waiting on the same rows), and **missing indexes** whose full scans only become painful at high concurrency. Measure first, find the bottleneck, then fix it specifically — blindly adding servers or restarting masks the symptom while the real bottleneck (often the database) stays saturated.",
+  "xp": 20,
+  "concept_tags": ["debugging", "connection-pooling", "lock-contention", "slow-query-log", "observability"]
+}

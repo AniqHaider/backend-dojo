@@ -1,0 +1,20 @@
+{
+  "id": "ch10-ex09-why-background-job",
+  "title": "Why offload to a background job?",
+  "type": "quiz",
+  "prompt_md": "Your `POST /checkout` endpoint must charge a slow third-party payment API and then send a confirmation email. Why is it better to enqueue this as a background job rather than doing it all inside the request?",
+  "options": [
+    "Because it keeps the request fast and responsive — the slow, failure-prone work runs asynchronously and can be retried, without blocking or breaking the user's response",
+    "Because queues guarantee the work runs exactly once, removing all need for error handling",
+    "Because you can no longer charge the customer twice once the work is in a queue",
+    "Because background jobs run faster than request handlers do"
+  ],
+  "correct_index": 0,
+  "explanation_md": "The win is **responsiveness and resilience**, not raw speed. The handler does the minimum (enqueue a job) and returns immediately, so the user isn't stuck waiting on a slow payment API and a blocked worker can't take down your whole site. The heavy, flaky work runs in a worker where it can be retried independently of the user's response.\n\nThe others are wrong: jobs don't run faster, queues are typically *at-least-once* (not exactly-once, so you still need idempotency/error handling), and using a queue does not by itself prevent double-charges — that's what idempotency is for.",
+  "xp": 15,
+  "concept_tags": [
+    "background-jobs",
+    "async",
+    "queues"
+  ]
+}

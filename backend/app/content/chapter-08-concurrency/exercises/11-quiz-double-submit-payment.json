@@ -4,13 +4,17 @@
   "type": "quiz",
   "prompt_md": "A user taps 'Pay'. The network is flaky, the phone never sees a response, so it **retries** and sends the same payment request again. What's the best way to make sure the card is charged only once?",
   "options": [
+    "Trust the network to never deliver the same request twice",
     "Make the Pay button slower so users can't tap it twice",
     "Have the client send an idempotency key with each attempt; the server charges only the first time it sees that key and returns the stored result on any retry",
-    "Wrap the charge in a database transaction so it runs faster",
-    "Trust the network to never deliver the same request twice"
+    "Wrap the charge in a database transaction so it runs faster"
   ],
-  "correct_index": 1,
+  "correct_index": 2,
   "explanation_md": "The retry is the **same** payment intent sent again, so the server must recognise it. With an **idempotency key** (a unique id the client generates per payment and resends on every retry), the server charges the first time it sees the key, stores the result under it, and on any repeat returns that stored result **without charging again**. This is exactly why Stripe and other payment APIs require an idempotency key. Slowing the button or speeding up the transaction doesn't stop genuine network retries, and networks absolutely can deliver duplicates.",
   "xp": 15,
-  "concept_tags": ["idempotency", "duplicate-payment", "retries"]
+  "concept_tags": [
+    "idempotency",
+    "duplicate-payment",
+    "retries"
+  ]
 }
