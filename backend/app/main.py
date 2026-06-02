@@ -2,11 +2,12 @@ from datetime import date
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 from . import deps
 from .config import FRONTEND_ORIGIN
-from .chat import ask_claude, build_context
+from .chat import ask_claude, build_context, stream_claude
 from .diagram import COMPONENTS
 from .grading import process_run
 
@@ -103,26 +104,35 @@ def diagram_state():
     return {"components": COMPONENTS, "unlocked": store.unlocked_components()}
 
 
-@app.post("/chat")
-def chat(req: ChatRequest):
+def _build_chat_context(req: ChatRequest) -> str:
     loader = deps.get_loader()
     store = deps.get_store()
-
     current = None
     if req.current_exercise_id:
         try:
             current = loader.get_exercise_public(req.current_exercise_id)
-            prog = store.get_exercise(req.current_exercise_id)
-            current["best_code"] = prog.get("best_code")
+            current["best_code"] = store.get_exercise(req.current_exercise_id).get("best_code")
         except KeyError:
             current = None
-
-    context = build_context(
+    return build_context(
         question=req.question,
         current_exercise=current,
         recent_mistakes=store.recent_mistakes(limit=8),
         solved=sorted(store.solved_ids()),
     )
+
+
+@app.post("/chat")
+def chat(req: ChatRequest):
+    context = _build_chat_context(req)
     answer = ask_claude(question=req.question, mode=req.mode,
                         context=context, model=req.model)
     return {"answer": answer}
+
+
+@app.post("/chat/stream")
+def chat_stream(req: ChatRequest):
+    context = _build_chat_context(req)
+    gen = stream_claude(question=req.question, mode=req.mode,
+                        context=context, model=req.model)
+    return StreamingResponse(gen, media_type="text/plain; charset=utf-8")

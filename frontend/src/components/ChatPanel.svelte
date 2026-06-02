@@ -42,6 +42,17 @@
     persist();
   }
 
+  // Replace the text of the most recent tutor message (the streaming placeholder).
+  function updateLastTutor(id, text) {
+    const arr = [...(threads[id] || [])];
+    for (let i = arr.length - 1; i >= 0; i--) {
+      if (arr[i].role === "tutor") { arr[i] = { ...arr[i], text }; break; }
+    }
+    threads = { ...threads, [id]: arr };
+    persist();
+    scrollToBottom();
+  }
+
   async function scrollToBottom() {
     await tick();
     if (msgsEl) msgsEl.scrollTop = msgsEl.scrollHeight;
@@ -55,12 +66,14 @@
     if (!q || busy) return;
     const id = threadId;
     pushMessage(id, { role: "you", text: q });
+    pushMessage(id, { role: "tutor", text: "" }); // streaming placeholder
     input = ""; busy = true;
     try {
-      const { answer } = await api.chat(q, mode, currentExerciseId);
-      pushMessage(id, { role: "tutor", text: answer });
+      await api.chatStream(q, mode, currentExerciseId, null, (full) => {
+        updateLastTutor(id, full);
+      });
     } catch (e) {
-      pushMessage(id, { role: "tutor", text: "(error: " + e.message + ")" });
+      updateLastTutor(id, "(error: " + e.message + ")");
     } finally { busy = false; }
   }
 
@@ -133,13 +146,16 @@
       {#each messages as m}
         <div class="msg {m.role}">
           {#if m.role === "tutor"}
-            <div class="bubble md">{@html render(m.text)}</div>
+            {#if m.text}
+              <div class="bubble md">{@html render(m.text)}</div>
+            {:else}
+              <div class="bubble thinking"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            {/if}
           {:else}
             <div class="bubble">{m.text}</div>
           {/if}
         </div>
       {/each}
-      {#if busy}<div class="msg tutor"><div class="bubble thinking">thinking…</div></div>{/if}
     </div>
 
     <div class="composer">
@@ -183,7 +199,11 @@
   .bubble { max-width: 88%; padding: 9px 12px; border-radius: 12px; font-size: 13.5px; line-height: 1.5; }
   .msg.you .bubble { background: #2f6df6; color: #fff; border-bottom-right-radius: 3px; white-space: pre-wrap; }
   .msg.tutor .bubble { background: #161d29; color: #d6e2f2; border: 1px solid #232d3e; border-bottom-left-radius: 3px; }
-  .thinking { color: #8aa0bd; font-style: italic; }
+  .thinking { display: flex; gap: 4px; align-items: center; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #6b7d96; animation: blink 1.3s infinite both; }
+  .dot:nth-child(2) { animation-delay: 0.18s; }
+  .dot:nth-child(3) { animation-delay: 0.36s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
   .composer { display: flex; gap: 8px; padding: 10px; border-top: 1px solid #1f2735; }
   .composer textarea { flex: 1; resize: none; background: #0f141d; border: 1px solid #232d3e; border-radius: 9px; color: #e8eef6; padding: 8px; font-size: 13px; font-family: inherit; }
   .composer button { background: #2f6df6; color: #fff; border: none; border-radius: 9px; padding: 0 16px; font-weight: 700; cursor: pointer; }

@@ -25,4 +25,25 @@ export const api = {
   getDiagram: () => get("/diagram-state"),
   chat: (question, mode, currentExerciseId, model) =>
     post("/chat", { question, mode, current_exercise_id: currentExerciseId, model }),
+
+  // Streams the tutor's answer. Calls onChunk(fullTextSoFar) as text arrives.
+  // Returns the complete answer string.
+  chatStream: async (question, mode, currentExerciseId, model, onChunk) => {
+    const r = await fetch(BASE + "/chat/stream", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ question, mode, current_exercise_id: currentExerciseId, model }),
+    });
+    if (!r.ok || !r.body) throw new Error(`/chat/stream -> ${r.status}`);
+    const reader = r.body.getReader();
+    const decoder = new TextDecoder();
+    let full = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      full += decoder.decode(value, { stream: true });
+      if (onChunk) onChunk(full);
+    }
+    return full;
+  },
 };
