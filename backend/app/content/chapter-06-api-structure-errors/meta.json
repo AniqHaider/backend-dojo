@@ -1,0 +1,1 @@
+{"id":"ch6","title":"API Structure, Validation & Errors","order":6,"summary":"Organize an API into routers, models, and services; validate untrusted input; return consistent error shapes with the right HTTP status codes; and evolve your database schema safely with migrations."}

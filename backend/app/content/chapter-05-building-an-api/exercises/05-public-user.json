@@ -1,0 +1,20 @@
+{
+  "id": "ch5-ex05-public-user",
+  "title": "Shape a Public Response (No Secrets)",
+  "type": "python",
+  "prompt_md": "A database row is not your API response. A `user` record often holds a `password` (hash) that must never reach the client. Write `public_user(user)` that returns a copy of the dict **without** the `\"password\"` key.\n\nImportant: do **not** mutate the input dict — the original must still have its `password` afterwards. Copy first, then drop the key.",
+  "starter_code": "def public_user(user):\n    pass\n",
+  "hints": [
+    "Make a shallow copy so you don't change the caller's dict: copy = {**user} or user.copy().",
+    "Remove the key from the copy with copy.pop(\"password\", None) — the None default avoids a KeyError if it's missing.",
+    "Return the copy."
+  ],
+  "tests": [
+    {"call": "public_user({\"id\": 1, \"name\": \"Ada\", \"password\": \"x9\"})", "expect": {"id": 1, "name": "Ada"}},
+    {"call": "public_user({\"id\": 2, \"name\": \"Bo\"})", "expect": {"id": 2, "name": "Bo"}},
+    {"call": "(lambda u: (public_user(u), u))({\"id\": 3, \"password\": \"z\"})[1]", "expect": {"id": 3, "password": "z"}}
+  ],
+  "reference_solution": "def public_user(user):\n    copy = {**user}\n    copy.pop(\"password\", None)\n    return copy\n",
+  "xp": 15,
+  "concept_tags": ["responses", "security"]
+}

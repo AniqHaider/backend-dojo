@@ -1,0 +1,1 @@
+{"id":"ch4","title":"Data Modelling, Indexes & Transactions","order":4,"summary":"Design clean relational schemas with keys, speed up reads with indexes, and keep multi-step writes safe using transactions and ACID guarantees."}

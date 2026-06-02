@@ -1,0 +1,16 @@
+{
+  "id": "ch4-ex11-quiz-foreign-key-purpose",
+  "title": "Quiz: the purpose of a foreign key",
+  "type": "quiz",
+  "prompt_md": "What is the main purpose of declaring a FOREIGN KEY (e.g. `bookings.user_id` referencing `users.id`)?",
+  "options": [
+    "To automatically make the column faster to sort",
+    "To enforce referential integrity — a booking can't point at a user that doesn't exist",
+    "To copy the referenced user's name and email into the bookings table",
+    "To make the column store its values in uppercase"
+  ],
+  "correct_index": 1,
+  "explanation_md": "A foreign key enforces referential integrity: the database refuses to insert a booking whose `user_id` has no matching `users.id`, and won't let you delete a user who still has bookings (unless configured to cascade). It's a correctness guarantee, not an index or sorting feature, and it stores only the reference (the id) — not a copy of the user's data.",
+  "xp": 15,
+  "concept_tags": ["foreign-key", "referential-integrity", "constraints"]
+}

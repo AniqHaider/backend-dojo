@@ -1,0 +1,16 @@
+{
+  "id": "ch4-ex07-quiz-index-downside",
+  "title": "Quiz: the cost of too many indexes",
+  "type": "quiz",
+  "prompt_md": "Indexes make reads faster. What's the main downside of adding many of them to a table?",
+  "options": [
+    "They make `SELECT` queries return incorrect results",
+    "They slow down writes (INSERT/UPDATE/DELETE) and use extra disk space",
+    "They prevent you from adding new columns later",
+    "They have no real downside, so index every column"
+  ],
+  "correct_index": 1,
+  "explanation_md": "Each index is a separate sorted structure the database must keep in sync, so every write has to update the table *and* every index on it — making writes slower and consuming extra storage. Indexes never change query results (they only change speed), and they don't block schema changes. \"Index everything\" is wrong precisely because of the write and space cost.",
+  "xp": 15,
+  "concept_tags": ["index", "write-cost", "tradeoff"]
+}

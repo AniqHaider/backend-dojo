@@ -1,0 +1,21 @@
+{
+  "id": "ch4-ex05-available-seats-subquery",
+  "title": "Subquery: seats still available for showtime 1",
+  "type": "sql",
+  "prompt_md": "Which seats for showtime 1 are still free? Return the `label` of every seat belonging to `showtime_id = 1` whose `id` is **not** among the `seat_id` values already booked. Use a subquery with `NOT IN`. Sort the results by `label` ascending.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT label\nFROM seats\nWHERE showtime_id = 1\n  AND id NOT IN (SELECT seat_id FROM bookings)\nORDER BY label;",
+  "hints": [
+    "The inner query `SELECT seat_id FROM bookings` lists every seat that has been booked.",
+    "`id NOT IN (...)` keeps only seats that are not in that booked list.",
+    "Filter to `showtime_id = 1` and finish with `ORDER BY label`."
+  ],
+  "expected_query_result": [
+    {"label": "A3"},
+    {"label": "A4"}
+  ],
+  "order_sensitive": true,
+  "reference_solution": "SELECT label FROM seats WHERE showtime_id = 1 AND id NOT IN (SELECT seat_id FROM bookings) ORDER BY label;",
+  "xp": 20,
+  "concept_tags": ["subquery", "not-in", "order-by"]
+}

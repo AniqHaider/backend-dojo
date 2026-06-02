@@ -1,0 +1,1 @@
+{"id":"ch5","title":"Building an API with FastAPI","order":5,"summary":"Learn how HTTP requests turn into responses by writing the pure handler logic behind a FastAPI endpoint: status codes, pagination, validation, response shaping, and routing."}

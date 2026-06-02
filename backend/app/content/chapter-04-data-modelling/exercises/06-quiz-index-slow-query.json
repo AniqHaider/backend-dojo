@@ -1,0 +1,16 @@
+{
+  "id": "ch4-ex06-quiz-index-slow-query",
+  "title": "Quiz: speeding up a filtered lookup",
+  "type": "quiz",
+  "prompt_md": "A query runs `SELECT * FROM users WHERE email = ?` on a table with millions of rows, and it's slow. What helps **most**?",
+  "options": [
+    "Rewrite the query to use `SELECT *` more efficiently",
+    "Add more RAM to the server so the whole table fits in memory",
+    "Create an index on the `email` column",
+    "Split the users table into many smaller tables by first letter"
+  ],
+  "correct_index": 2,
+  "explanation_md": "Without an index the database does a sequential scan, checking every row to find the match. An index on `email` lets it jump straight to the matching rows, the way a book's index sends you to the right page. More RAM only helps a bit, and manually splitting the table is a complex, fragile solution to a problem an index solves cleanly.",
+  "xp": 15,
+  "concept_tags": ["index", "performance", "seq-scan"]
+}

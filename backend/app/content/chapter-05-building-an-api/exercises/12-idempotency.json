@@ -1,0 +1,16 @@
+{
+  "id": "ch5-ex12-idempotency",
+  "title": "Which Methods Are Idempotent?",
+  "type": "quiz",
+  "prompt_md": "A method is **idempotent** if making the same request many times has the same effect on the server as making it once. Which statement is correct?",
+  "options": [
+    "POST is idempotent, but GET, PUT, and DELETE are not",
+    "All HTTP methods are idempotent",
+    "GET, PUT, and DELETE are idempotent, but POST is not",
+    "Only GET is idempotent; every other method changes state each time"
+  ],
+  "correct_index": 2,
+  "explanation_md": "GET (just reads), PUT (replaces a resource with the same payload — repeating lands on the same final state), and DELETE (deleting an already-deleted thing leaves it deleted) are all idempotent. POST is not: calling POST /users twice typically creates two users. Idempotency matters for safe retries — a client can resend an idempotent request after a network timeout without fear of duplicating work.",
+  "xp": 15,
+  "concept_tags": ["http", "methods", "idempotency"]
+}

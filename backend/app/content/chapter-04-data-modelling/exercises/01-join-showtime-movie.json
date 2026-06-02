@@ -1,0 +1,22 @@
+{
+  "id": "ch4-ex01-join-showtime-movie",
+  "title": "JOIN: each showtime with its movie title",
+  "type": "sql",
+  "prompt_md": "List every showtime together with the title of the movie it plays and which screen it's on. The foreign key `showtimes.movie_id` points at `movies.id`. Return the showtime's `id` aliased as `showtime_id`, the movie's `title`, and the `screen`.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT s.id AS showtime_id, m.title, s.screen\nFROM showtimes s\nJOIN movies m ON s.movie_id = m.id;",
+  "hints": [
+    "Use short table aliases like `showtimes s` and `movies m`.",
+    "Join on the foreign key: `ON s.movie_id = m.id`.",
+    "Alias the showtime id with `s.id AS showtime_id` so the column name matches."
+  ],
+  "expected_query_result": [
+    {"showtime_id": 1, "title": "Dune", "screen": "A"},
+    {"showtime_id": 2, "title": "Inside Out", "screen": "B"},
+    {"showtime_id": 3, "title": "Dune", "screen": "C"}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "SELECT s.id AS showtime_id, m.title, s.screen FROM showtimes s JOIN movies m ON s.movie_id = m.id;",
+  "xp": 15,
+  "concept_tags": ["join", "foreign-key"]
+}

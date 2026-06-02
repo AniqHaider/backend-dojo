@@ -1,0 +1,21 @@
+{
+  "id": "ch4-ex04-distinct-movies-with-showtimes",
+  "title": "DISTINCT: movies that have at least one showtime",
+  "type": "sql",
+  "prompt_md": "Which movies are actually scheduled? Return the **distinct** `movie_id` values that appear in the `showtimes` table — each one only once, even if a movie has several showtimes. Alias the column as `movie_id`.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT DISTINCT movie_id\nFROM showtimes;",
+  "hints": [
+    "`SELECT DISTINCT` removes duplicate rows from the result.",
+    "Movie 1 (Dune) has two showtimes but should appear only once.",
+    "A movie with no showtimes simply never appears in this table."
+  ],
+  "expected_query_result": [
+    {"movie_id": 1},
+    {"movie_id": 2}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "SELECT DISTINCT movie_id FROM showtimes;",
+  "xp": 15,
+  "concept_tags": ["distinct", "foreign-key"]
+}

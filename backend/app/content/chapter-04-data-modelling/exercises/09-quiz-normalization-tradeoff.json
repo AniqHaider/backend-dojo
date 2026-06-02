@@ -1,0 +1,16 @@
+{
+  "id": "ch4-ex09-quiz-normalization-tradeoff",
+  "title": "Quiz: normalization vs duplicating data",
+  "type": "quiz",
+  "prompt_md": "What is the core tradeoff between normalizing data (each fact stored once) and denormalizing it (copying/duplicating data across tables)?",
+  "options": [
+    "Normalization is always better; duplicating data is never acceptable",
+    "Normalization reduces duplication and keeps data consistent, but may need joins; denormalization speeds up reads at the cost of duplicated, harder-to-keep-in-sync data",
+    "Denormalization uses less storage than normalization in every case",
+    "Normalization makes writes impossible, so you must denormalize to insert rows"
+  ],
+  "correct_index": 1,
+  "explanation_md": "Normalization stores each fact in one place — less duplication, easier consistency — but answering questions may require joining tables. Denormalization copies or pre-computes data to avoid joins and speed up reads, accepting the risk that the duplicated copies drift out of sync. It's a deliberate tradeoff, not an absolute rule; denormalizing typically *increases* storage, and normalized schemas write just fine.",
+  "xp": 15,
+  "concept_tags": ["normalization", "denormalization", "tradeoff"]
+}

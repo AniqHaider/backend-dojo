@@ -1,0 +1,16 @@
+{
+  "id": "ch4-ex08-quiz-transaction-atomicity",
+  "title": "Quiz: what a transaction guarantees",
+  "type": "quiz",
+  "prompt_md": "You wrap two `UPDATE` statements inside a single transaction (`BEGIN ... COMMIT`). What does this guarantee?",
+  "options": [
+    "The two updates run faster than they would separately",
+    "Either both updates apply, or neither does — they can't be left half-done",
+    "Other users are permanently locked out of the database until you commit",
+    "The updates are automatically retried forever until they succeed"
+  ],
+  "correct_index": 1,
+  "explanation_md": "This is atomicity — the 'A' in ACID. A transaction is all-or-nothing: if anything fails before `COMMIT`, the whole group rolls back as if it never happened, so you can't end up with one update applied and the other lost. Transactions are about correctness, not speed; they don't lock everyone out permanently, and they don't auto-retry on their own.",
+  "xp": 15,
+  "concept_tags": ["transaction", "atomicity", "acid"]
+}
