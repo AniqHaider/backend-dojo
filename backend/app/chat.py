@@ -7,7 +7,9 @@ personal — e.g. "you keep forgetting to `return`".
 """
 from __future__ import annotations
 
+import json
 import subprocess
+from collections.abc import Iterator
 
 CLI_TIMEOUT = 180
 
@@ -75,3 +77,54 @@ def ask_claude(*, question: str, mode: str, context: str,
     if proc.returncode != 0:
         return f"(Tutor unavailable: {proc.stderr.strip()[:300]})"
     return proc.stdout.strip()
+
+
+def stream_claude(*, question: str, mode: str, context: str,
+                  model: str | None = None) -> Iterator[str]:
+    """Yield the tutor's answer in text chunks as the CLI produces them.
+
+    Uses `--output-format stream-json --include-partial-messages`, which emits one
+    JSON object per line. We forward the `text_delta` chunks (ignoring the model's
+    thinking deltas) and fall back to the final `result` if no deltas arrived.
+    """
+    cmd = [
+        "claude", "-p", context,
+        "--append-system-prompt", system_prompt_for(mode),
+        "--output-format", "stream-json",
+        "--include-partial-messages",
+        "--verbose",
+    ]
+    if model:
+        cmd += ["--model", model]
+
+    proc = subprocess.Popen(
+        cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        text=True, bufsize=1,
+    )
+    produced = False
+    try:
+        for line in proc.stdout:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                obj = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if obj.get("type") == "stream_event":
+                delta = obj.get("event", {}).get("delta", {})
+                if delta.get("type") == "text_delta":
+                    chunk = delta.get("text", "")
+                    if chunk:
+                        produced = True
+                        yield chunk
+            elif obj.get("type") == "result" and not produced:
+                result = obj.get("result")
+                if result:
+                    produced = True
+                    yield result
+    finally:
+        proc.wait()
+    if not produced:
+        err = (proc.stderr.read() if proc.stderr else "").strip()[:300]
+        yield f"(Tutor unavailable: {err})" if err else "(No response.)"
