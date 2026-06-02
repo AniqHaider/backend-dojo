@@ -17,7 +17,13 @@
 </script>
 
 <div class="lesson">
-  <button class="back" onclick={goDashboard}>← Dashboard</button>
+  <button class="back" onclick={goDashboard}>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M10 3.5 5.5 8l4.5 4.5" stroke="currentColor" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Dashboard
+  </button>
 
   {#if error}
     <p class="err">Couldn't load chapter: {error}</p>
@@ -44,7 +50,9 @@
 
 <style>
   .lesson { max-width: 1100px; }
-  .back { background: none; border: none; color: #6ea8ff; cursor: pointer; font-size: 14px; margin-bottom: 10px; }
+  .back { display: inline-flex; align-items: center; gap: 5px; background: none; border: none; color: #6ea8ff; cursor: pointer; font-size: 14px; margin-bottom: 10px; padding: 4px 6px 4px 0; }
+  .back:hover { color: #9cc4ff; }
+  .back svg { display: block; }
   h1 { color: #eef4fb; font-size: 24px; margin: 4px 0 18px; }
   .layout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start; }
   .theory { color: #c8d4e4; line-height: 1.7; font-size: 15px; }
