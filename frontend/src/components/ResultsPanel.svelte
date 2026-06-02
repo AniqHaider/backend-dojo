@@ -1,8 +1,10 @@
 <script>
+  import { marked } from "marked";
   let { result } = $props();
-  // result: { all_passed, results?|rows?, error_category, detail, awarded_xp, new_components }
+  // result: { all_passed, results?|rows?, error_category, detail, explanation?, awarded_xp, new_components }
   let tests = $derived(result?.results || null);
   let rows = $derived(result?.rows || null);
+  let explanation = $derived(result?.explanation || null);
 </script>
 
 {#if result}
@@ -44,6 +46,10 @@
       </div>
     {/if}
 
+    {#if explanation}
+      <div class="explain md">{@html marked.parse(explanation)}</div>
+    {/if}
+
     {#if result.new_components?.length}
       <div class="unlock">🧩 Unlocked: {result.new_components.join(", ")}</div>
     {/if}
@@ -67,4 +73,9 @@
   th, td { border: 1px solid #232d3e; padding: 5px 10px; color: #cfdbec; text-align: left; }
   th { background: #14304f; color: #eaf2ff; }
   .unlock { margin-top: 12px; color: #58c6ff; font-weight: 600; font-size: 13px; }
+  .explain { margin-top: 12px; padding: 11px 13px; background: #0e131c; border: 1px solid #232d3e; border-radius: 8px; color: #c8d4e4; font-size: 13.5px; line-height: 1.55; }
+  .explain :global(code) { background: #161d29; padding: 1px 5px; border-radius: 4px; color: #8fd0ff; font-size: 12.5px; }
+  .explain :global(p) { margin: 6px 0; }
+  .explain :global(:first-child) { margin-top: 0; }
+  .explain :global(:last-child) { margin-bottom: 0; }
 </style>

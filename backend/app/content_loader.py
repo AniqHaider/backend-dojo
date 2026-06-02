@@ -13,7 +13,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-HIDDEN_FIELDS = ("tests", "expected_query_result", "reference_solution")
+HIDDEN_FIELDS = ("tests", "expected_query_result", "reference_solution", "correct_index")
 
 
 class ContentLoader:
