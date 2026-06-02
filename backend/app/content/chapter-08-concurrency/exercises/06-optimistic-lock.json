@@ -1,0 +1,19 @@
+{
+  "id": "ch8-ex06-optimistic-lock",
+  "title": "Optimistic locking with a version check",
+  "type": "python",
+  "prompt_md": "Optimistic locking assumes conflicts are rare: you don't hold a lock, you just **check at the end** that the version you read is still the current one. If it is, you write and bump the version. If someone else wrote first, your update fails and you'd retry.\n\nWrite `try_update(stored_version, expected_version, new_value)`:\n\n- If `stored_version == expected_version` → return `{\"ok\": true, \"version\": stored_version + 1, \"value\": new_value}`.\n- Otherwise → return `{\"ok\": false, \"version\": stored_version}` (your write is rejected; nothing changes).",
+  "starter_code": "def try_update(stored_version, expected_version, new_value):\n    pass\n",
+  "hints": [
+    "Compare stored_version with expected_version.",
+    "On success bump the version by 1 and include new_value; on failure return the unchanged stored_version."
+  ],
+  "tests": [
+    {"call": "try_update(5, 5, \"hello\")", "expect": {"ok": true, "version": 6, "value": "hello"}},
+    {"call": "try_update(5, 4, \"hello\")", "expect": {"ok": false, "version": 5}},
+    {"call": "try_update(0, 0, 42)", "expect": {"ok": true, "version": 1, "value": 42}}
+  ],
+  "reference_solution": "def try_update(stored_version, expected_version, new_value):\n    if stored_version == expected_version:\n        return {\"ok\": True, \"version\": stored_version + 1, \"value\": new_value}\n    return {\"ok\": False, \"version\": stored_version}\n",
+  "xp": 20,
+  "concept_tags": ["optimistic-lock", "versioning", "concurrency"]
+}

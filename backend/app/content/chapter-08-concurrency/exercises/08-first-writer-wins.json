@@ -1,0 +1,19 @@
+{
+  "id": "ch8-ex08-first-writer-wins",
+  "title": "First writer wins (resolving the race)",
+  "type": "python",
+  "prompt_md": "When several requests race for the same resource, a clean rule is **first writer wins**: whoever arrived earliest gets it. Given a list of attempts, pick the winner by the **smallest `ts`** (earliest timestamp). If two attempts tie on `ts`, break the tie by the **smallest `id`**.\n\nWrite `first_writer_wins(attempts)` where `attempts` is a list of dicts `{\"id\": ..., \"ts\": ...}`. Return the **`id`** of the winning attempt.",
+  "starter_code": "def first_writer_wins(attempts):\n    pass\n",
+  "hints": [
+    "Sort by a tuple (ts, id), or use min() with key=lambda a: (a[\"ts\"], a[\"id\"]).",
+    "Return the winner's id, not the whole dict."
+  ],
+  "tests": [
+    {"call": "first_writer_wins([{\"id\": 1, \"ts\": 30}, {\"id\": 2, \"ts\": 10}, {\"id\": 3, \"ts\": 20}])", "expect": 2},
+    {"call": "first_writer_wins([{\"id\": 9, \"ts\": 5}, {\"id\": 4, \"ts\": 5}])", "expect": 4},
+    {"call": "first_writer_wins([{\"id\": 7, \"ts\": 100}])", "expect": 7}
+  ],
+  "reference_solution": "def first_writer_wins(attempts):\n    winner = min(attempts, key=lambda a: (a[\"ts\"], a[\"id\"]))\n    return winner[\"id\"]\n",
+  "xp": 20,
+  "concept_tags": ["race-condition", "first-wins", "tie-break"]
+}

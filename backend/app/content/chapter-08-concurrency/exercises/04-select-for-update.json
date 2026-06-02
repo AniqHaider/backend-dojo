@@ -1,0 +1,19 @@
+{
+  "id": "ch8-ex04-select-for-update",
+  "title": "Pessimistic lock: SELECT ... FOR UPDATE",
+  "type": "sql",
+  "prompt_md": "When you must read a row, think, then write — and conflicts are likely — you take a **pessimistic lock** so nobody else can touch the row until you commit. Select the `id` and `label` of the seat with `id` `3`, locking it with `FOR UPDATE`.\n\nAny other transaction that tries to lock or update this row will **wait in line** until your transaction finishes.",
+  "schema_key": "ticketpay",
+  "starter_code": "SELECT id, label FROM seats WHERE id = 3 ...;",
+  "hints": [
+    "Append `FOR UPDATE` to the end of the SELECT to lock the matched rows.",
+    "Seat 3 has label 'A3'."
+  ],
+  "expected_query_result": [
+    {"id": 3, "label": "A3"}
+  ],
+  "order_sensitive": false,
+  "reference_solution": "SELECT id, label FROM seats WHERE id = 3 FOR UPDATE;",
+  "xp": 20,
+  "concept_tags": ["pessimistic-lock", "for-update", "locking"]
+}

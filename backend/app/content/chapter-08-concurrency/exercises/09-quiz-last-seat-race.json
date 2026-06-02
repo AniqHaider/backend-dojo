@@ -1,0 +1,16 @@
+{
+  "id": "ch8-ex09-quiz-last-seat-race",
+  "title": "Quiz: two users book the last seat",
+  "type": "quiz",
+  "prompt_md": "Two users hit 'Book' on the **last available seat** at almost the same instant, and both get a confirmation — the seat is double-sold. What is the root cause?",
+  "options": [
+    "The database server was too slow to respond in time",
+    "A race condition: both requests read the seat as 'available' before either one wrote 'booked', so both passed the check",
+    "The frontend forgot to disable the button after the first click",
+    "There wasn't enough memory to hold both bookings"
+  ],
+  "correct_index": 1,
+  "explanation_md": "This is a classic **race condition**. Booking is really read-then-write: check the seat is free, then mark it booked. When two requests overlap, both read 'free' *before* either writes 'booked', so both pass the check and both write — double-selling the seat. The fix is to make 'check it's free AND book it' one indivisible (atomic) step — e.g. `UPDATE ... WHERE seat_id = ? AND booked_by IS NULL` — so only one request can win. It's not about server speed, memory, or the button.",
+  "xp": 15,
+  "concept_tags": ["race-condition", "last-seat", "atomicity"]
+}

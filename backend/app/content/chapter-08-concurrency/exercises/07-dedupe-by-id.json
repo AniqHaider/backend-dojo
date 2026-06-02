@@ -1,0 +1,19 @@
+{
+  "id": "ch8-ex07-dedupe-by-id",
+  "title": "Dedupe events, keeping the first occurrence",
+  "type": "python",
+  "prompt_md": "Retries and at-least-once delivery mean your backend often receives the **same event more than once**. A common fix is to drop duplicates by id, keeping the **first** time you saw each one (order preserved).\n\nWrite `dedupe_by_id(items)` where `items` is a list of dicts each containing an `\"id\"`. Return a new list with only the **first** occurrence of each `id`, in original order.",
+  "starter_code": "def dedupe_by_id(items):\n    pass\n",
+  "hints": [
+    "Track which ids you've already kept in a set.",
+    "Append an item only if its id hasn't been seen yet."
+  ],
+  "tests": [
+    {"call": "dedupe_by_id([{\"id\": 1, \"v\": \"a\"}, {\"id\": 1, \"v\": \"b\"}, {\"id\": 2, \"v\": \"c\"}])", "expect": [{"id": 1, "v": "a"}, {"id": 2, "v": "c"}]},
+    {"call": "dedupe_by_id([])", "expect": []},
+    {"call": "dedupe_by_id([{\"id\": 3}, {\"id\": 3}, {\"id\": 3}])", "expect": [{"id": 3}]}
+  ],
+  "reference_solution": "def dedupe_by_id(items):\n    seen = set()\n    out = []\n    for item in items:\n        if item[\"id\"] not in seen:\n            seen.add(item[\"id\"])\n            out.append(item)\n    return out\n",
+  "xp": 20,
+  "concept_tags": ["dedupe", "idempotency", "first-wins"]
+}

@@ -1,0 +1,1 @@
+{"id":"ch9","title":"Caching & Rate Limiting","order":9,"summary":"Learn why backends cache to cut cost, load, and latency — and the problems caching introduces: stale data, hard invalidation, and cache stampede — plus rate limiting with token bucket and fixed window."}
