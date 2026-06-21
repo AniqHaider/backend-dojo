@@ -2,6 +2,7 @@ from pathlib import Path
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
 CONTENT_DIR = BACKEND_DIR / "app" / "content"
+REFERENCE_DIR = BACKEND_DIR / "app" / "reference"
 SEEDS_DIR = BACKEND_DIR / "seeds"
 PROGRESS_DB = BACKEND_DIR / "progress.db"
 

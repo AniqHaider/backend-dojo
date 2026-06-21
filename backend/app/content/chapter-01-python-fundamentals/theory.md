@@ -49,6 +49,14 @@ Python is **strict about types**. In JS, `"3" + 4` gives `"34"` because JS silen
 
 An **f-string** is Python's template literal. JS `` `Hello, ${name}!` `` becomes Python `f"Hello, {name}!"`. The `f` prefix turns on the `{ }` substitution.
 
+Strings also come with handy **methods** (functions attached to a value, called with a dot — just like in JS). The ones you'll use constantly: `text.upper()` / `text.lower()` change case, `text.split()` breaks a sentence into a **list** of words, `word[0]` reads the first character, and `"".join(parts)` glues a list of strings back into one.
+
+[[exercise:ch1-ex01-greeting]]
+
+[[exercise:ch1-ex02-types]]
+
+[[exercise:ch1-ex04-strings]]
+
 ## Collections: lists & dicts
 
 Most backend work is shuffling **collections** of data around. Two types do almost all the work:
@@ -58,6 +66,14 @@ Most backend work is shuffling **collections** of data around. Two types do almo
 - A **`dict`** ("dictionary") is a set of **key → value** pairs — like a JS object or a `Map`. `user = {"name": "Asha", "age": 30}`. Look up a value with `user["name"]`. Crucially, use `user.get("email", "n/a")` to read a key *that might not exist* and supply a fallback instead of crashing.
 
 If you've used JSON, you already know these: JSON is literally just nested lists and dicts (arrays and objects). When data travels between your frontend and backend, it travels as JSON.
+
+Two more collection tools you'll reach for constantly: `set(items)` throws away duplicates (a **set** is an unordered bag of unique values), and `sorted(items)` returns a brand-new **sorted list**. Combine them — `sorted(set(nums))` — to get the unique values back in order.
+
+[[exercise:ch1-ex06-dicts]]
+
+[[exercise:ch1-ex05-lists]]
+
+[[exercise:ch1-ex12-collections]]
 
 ## Functions, conditionals, loops
 
@@ -69,6 +85,12 @@ def total_price(qty, unit):
 
 Important beginner trap: **`return` vs `print`**. `print(x)` displays text on the screen for a human to read. `return x` *hands the value back* to whatever called the function so the rest of the program can use it. A backend almost always needs to `return` data (to send it in a response), not `print` it. Returning `None` (the default when you forget to return) is a very common bug.
 
+[[exercise:ch1-ex03-arithmetic]]
+
+A parameter can have a **default value** (`def price_of(catalog, item, default=0)`) — the caller can leave it out. And a function can collect *any number* of extra keyword arguments into a dict with `**params`: calling `f(a=1, b=2)` makes `params` become `{"a": 1, "b": 2}` inside the function.
+
+[[exercise:ch1-ex10-functions]]
+
 A **conditional** chooses between paths:
 ```python
 if n % 2 == 0:
@@ -76,15 +98,21 @@ if n % 2 == 0:
 else:
     result = "odd"
 ```
-`%` is the **modulo** (remainder) operator — `10 % 3` is `1`. `==` tests equality.
+`%` is the **modulo** (remainder) operator — `10 % 3` is `1`. `==` tests equality. Combine conditions with `and` / `or` / `not`.
 
-A **loop** repeats work. `for x in nums:` walks through each item in a list. `range(5)` gives the numbers `0,1,2,3,4` — handy for counting.
+[[exercise:ch1-ex07-conditionals]]
+
+A **loop** repeats work. `for x in nums:` walks through each item in a list. `range(5)` gives the numbers `0,1,2,3,4` — handy for counting. A common pattern is a **running total**: start a variable at `0`, then add to it (`total += n`) inside the loop.
+
+[[exercise:ch1-ex08-loops]]
 
 Python also has **comprehensions**, a compact way to build a list from another:
 ```python
 squares = [x * x for x in range(n)]
 ```
 Think of it as `nums.map(...)` and `.filter(...)` fused into one expression.
+
+[[exercise:ch1-ex09-comprehensions]]
 
 When something might fail, wrap it in **`try` / `except`** so your program doesn't crash:
 ```python
@@ -95,6 +123,8 @@ except ZeroDivisionError:
 ```
 This is Python's `try/catch`.
 
+[[exercise:ch1-ex11-errors]]
+
 ## Why this matters for backends
 
 Here's the punchline. A backend's whole life is: **receive data, transform it, send data back.** That incoming data — the body of a `POST /api/orders` request — arrives as exactly the structures in this chapter: **dicts and lists** (parsed from JSON).
@@ -104,5 +134,7 @@ So a request to create an order might arrive as:
 [{"name": "Mug", "qty": 2, "price": 50}, {"name": "Pen", "qty": 3, "price": 10}]
 ```
 A list of dicts. Your job is to loop over it, read each dict's keys (carefully — what if `price` is missing?), do arithmetic (`qty * price`), accumulate a total, and `return` the result. That is precisely the mini-capstone at the end of this chapter.
+
+[[exercise:ch1-ex13-capstone]]
 
 Everything else you'll build — databases, APIs, authentication — sits on top of this. Master moving values through types, lists, dicts, and functions, and you've got the foundation of every backend you'll ever write.

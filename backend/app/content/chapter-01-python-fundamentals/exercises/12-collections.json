@@ -9,11 +9,45 @@
     "Wrap it in sorted(...) to get back an ordered list: sorted(set(items))."
   ],
   "tests": [
-    {"call": "unique_sorted([3, 1, 2, 1, 3])", "expect": [1, 2, 3]},
-    {"call": "unique_sorted([])", "expect": []},
-    {"call": "unique_sorted(['b', 'a', 'b'])", "expect": ["a", "b"]}
+    {
+      "call": "unique_sorted([3, 1, 2, 1, 3])",
+      "expect": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "call": "unique_sorted([])",
+      "expect": []
+    },
+    {
+      "call": "unique_sorted(['b', 'a', 'b'])",
+      "expect": [
+        "a",
+        "b"
+      ]
+    }
   ],
   "reference_solution": "def unique_sorted(items):\n    return sorted(set(items))\n",
   "xp": 15,
-  "concept_tags": ["collections", "sets", "dedup"]
+  "concept_tags": [
+    "collections",
+    "sets",
+    "dedup"
+  ],
+  "syntax_hints": [
+    {
+      "code": "set(items)",
+      "note": "unique values (unordered)"
+    },
+    {
+      "code": "sorted(...)",
+      "note": "return an ordered list"
+    },
+    {
+      "code": "sorted(set(items))",
+      "note": "combine: unique values, in order"
+    }
+  ]
 }

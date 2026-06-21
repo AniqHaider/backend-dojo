@@ -5,8 +5,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
+import re
+
 from . import deps
-from .config import FRONTEND_ORIGIN
+from .config import FRONTEND_ORIGIN, REFERENCE_DIR
 from .chat import ask_claude, build_context, stream_claude
 from .diagram import COMPONENTS
 from .grading import process_run
@@ -102,6 +104,20 @@ def get_progress():
 def diagram_state():
     store = deps.get_store()
     return {"components": COMPONENTS, "unlocked": store.unlocked_components()}
+
+
+@app.get("/reference/{name}")
+def get_reference(name: str):
+    """Serve a markdown reference doc (e.g. the Python syntax cheatsheet).
+
+    `name` is restricted to a safe slug so it can never escape REFERENCE_DIR.
+    """
+    if not re.fullmatch(r"[a-z0-9-]+", name):
+        raise HTTPException(status_code=404, detail="reference not found")
+    path = REFERENCE_DIR / f"{name}.md"
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="reference not found")
+    return {"name": name, "markdown": path.read_text()}
 
 
 def _build_chat_context(req: ChatRequest) -> str:

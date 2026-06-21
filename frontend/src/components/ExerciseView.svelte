@@ -4,6 +4,7 @@
   import { view, chapters, goLesson, goExercise, refreshProgressAndDiagram } from "../lib/stores.js";
   import CodeEditor from "./CodeEditor.svelte";
   import ResultsPanel from "./ResultsPanel.svelte";
+  import Cheatsheet from "./Cheatsheet.svelte";
 
   let exercise = $state(null);
   let code = $state("");
@@ -12,7 +13,9 @@
   let error = $state(null);
   let loadedId = $state(null);
   let selectedChoice = $state(null); // for quiz exercises
+  let showCheat = $state(false);
   let isQuiz = $derived(exercise?.type === "quiz");
+  let syntaxHints = $derived(exercise?.syntax_hints || []);
 
   // Prev/Next within the chapter, derived from the chapter's exercise order.
   let chapter = $derived($chapters.find((c) => c.id === $view.chapterId));
@@ -82,6 +85,25 @@
         {/each}
       </div>
     {:else}
+      {#if syntaxHints.length || exercise.type === "python"}
+        <div class="syntaxbar">
+          {#if syntaxHints.length}
+            <details class="syntax" open>
+              <summary>🧱 Syntax you'll need <span class="dim">— the building blocks, not the answer</span></summary>
+              <ul>
+                {#each syntaxHints as h}
+                  <li><code>{h.code}</code>{#if h.note}<span class="note">{h.note}</span>{/if}</li>
+                {/each}
+              </ul>
+            </details>
+          {:else}
+            <span class="syntax-spacer"></span>
+          {/if}
+          {#if exercise.type === "python"}
+            <button class="cheatbtn" onclick={() => (showCheat = true)}>📘 Cheatsheet</button>
+          {/if}
+        </div>
+      {/if}
       <CodeEditor {code} language={exercise.type === "sql" ? "sql" : "python"}
                   onChange={(v) => (code = v)} />
     {/if}
@@ -124,6 +146,8 @@
   {/if}
 </div>
 
+<Cheatsheet open={showCheat} onClose={() => (showCheat = false)} />
+
 <style>
   .exercise { max-width: 820px; }
   .back {
@@ -148,6 +172,28 @@
   .hints summary { cursor: pointer; }
   .hints ul { margin: 6px 0 0; color: #8aa0bd; }
   .loading, .err { color: #8aa0bd; }
+
+  .syntaxbar { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .syntax { flex: 1; background: #0f141d; border: 1px solid #232d3e; border-radius: 10px; padding: 4px 12px; }
+  .syntax-spacer { flex: 1; }
+  .syntax summary { cursor: pointer; color: #cfe0f5; font-size: 13px; font-weight: 700; padding: 8px 0; list-style: none; }
+  .syntax summary::-webkit-details-marker { display: none; }
+  .syntax summary::before { content: "▸ "; color: #4a5a72; }
+  .syntax[open] summary::before { content: "▾ "; }
+  .syntax summary .dim { color: #6b7d96; font-weight: 400; font-size: 12px; }
+  .syntax ul { list-style: none; margin: 4px 0 10px; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .syntax li { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .syntax code {
+    background: #0b0f16; border: 1px solid #1f2735; color: #8fd0ff;
+    padding: 3px 8px; border-radius: 6px; font-size: 12.5px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre;
+  }
+  .syntax .note { color: #8aa0bd; font-size: 12.5px; }
+  .cheatbtn {
+    flex-shrink: 0; background: #161d29; border: 1px solid #2a3344; color: #9cc4ff;
+    padding: 9px 13px; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600;
+  }
+  .cheatbtn:hover { border-color: #2f6df6; color: #cfe0f5; }
 
   .options { display: flex; flex-direction: column; gap: 10px; }
   .option {

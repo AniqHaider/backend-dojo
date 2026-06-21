@@ -9,10 +9,33 @@
     "Return the result — qty * unit."
   ],
   "tests": [
-    {"call": "total_price(3, 50)", "expect": 150},
-    {"call": "total_price(0, 99)", "expect": 0}
+    {
+      "call": "total_price(3, 50)",
+      "expect": 150
+    },
+    {
+      "call": "total_price(0, 99)",
+      "expect": 0
+    }
   ],
   "reference_solution": "def total_price(qty, unit):\n    return qty * unit\n",
   "xp": 10,
-  "concept_tags": ["arithmetic", "functions"]
+  "concept_tags": [
+    "arithmetic",
+    "functions"
+  ],
+  "syntax_hints": [
+    {
+      "code": "def total_price(qty, unit):",
+      "note": "two parameters"
+    },
+    {
+      "code": "qty * unit",
+      "note": "multiply with the * operator"
+    },
+    {
+      "code": "    return ...",
+      "note": "return the result"
+    }
+  ]
 }

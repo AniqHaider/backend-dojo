@@ -9,12 +9,51 @@
     "For each order, read order.get('qty', 0) and order.get('price', 0), multiply them, and add to the total. .get with a default of 0 avoids crashing on missing keys."
   ],
   "tests": [
-    {"call": "order_total([{'name': 'Mug', 'qty': 2, 'price': 50}, {'name': 'Pen', 'qty': 3, 'price': 10}])", "expect": 130},
-    {"call": "order_total([])", "expect": 0},
-    {"call": "order_total([{'name': 'Hat', 'price': 20}])", "expect": 0},
-    {"call": "order_total([{'name': 'Box', 'qty': 4, 'price': 25}])", "expect": 100}
+    {
+      "call": "order_total([{'name': 'Mug', 'qty': 2, 'price': 50}, {'name': 'Pen', 'qty': 3, 'price': 10}])",
+      "expect": 130
+    },
+    {
+      "call": "order_total([])",
+      "expect": 0
+    },
+    {
+      "call": "order_total([{'name': 'Hat', 'price': 20}])",
+      "expect": 0
+    },
+    {
+      "call": "order_total([{'name': 'Box', 'qty': 4, 'price': 25}])",
+      "expect": 100
+    }
   ],
   "reference_solution": "def order_total(orders):\n    total = 0\n    for order in orders:\n        total += order.get('qty', 0) * order.get('price', 0)\n    return total\n",
   "xp": 20,
-  "concept_tags": ["dicts", "lists", "loops", "capstone"]
+  "concept_tags": [
+    "dicts",
+    "lists",
+    "loops",
+    "capstone"
+  ],
+  "syntax_hints": [
+    {
+      "code": "total = 0",
+      "note": "running total"
+    },
+    {
+      "code": "for order in orders:",
+      "note": "loop the list of dicts"
+    },
+    {
+      "code": "order.get(\"qty\", 0)",
+      "note": "read a key, 0 if missing"
+    },
+    {
+      "code": "total += ... * ...",
+      "note": "accumulate qty * price"
+    },
+    {
+      "code": "    return total",
+      "note": "return the sum"
+    }
+  ]
 }

@@ -9,10 +9,33 @@
     "Sort the unique values (sorted(...) returns a list) and pick the second-from-last item with index [-2]."
   ],
   "tests": [
-    {"call": "second_largest([3, 1, 2])", "expect": 2},
-    {"call": "second_largest([5, 5, 3])", "expect": 3}
+    {
+      "call": "second_largest([3, 1, 2])",
+      "expect": 2
+    },
+    {
+      "call": "second_largest([5, 5, 3])",
+      "expect": 3
+    }
   ],
   "reference_solution": "def second_largest(nums):\n    unique = sorted(set(nums))\n    return unique[-2]\n",
   "xp": 15,
-  "concept_tags": ["lists", "sorting"]
+  "concept_tags": [
+    "lists",
+    "sorting"
+  ],
+  "syntax_hints": [
+    {
+      "code": "set(nums)",
+      "note": "drop duplicate values"
+    },
+    {
+      "code": "sorted(values)",
+      "note": "return a new sorted list"
+    },
+    {
+      "code": "lst[-2]",
+      "note": "second-from-last item"
+    }
+  ]
 }

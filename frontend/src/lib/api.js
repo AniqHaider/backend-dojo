@@ -23,6 +23,7 @@ export const api = {
   runExercise: (id, code) => post(`/exercises/${id}/run`, { code }),
   getProgress: () => get("/progress"),
   getDiagram: () => get("/diagram-state"),
+  getReference: (name) => get(`/reference/${name}`),
   chat: (question, mode, currentExerciseId, model) =>
     post("/chat", { question, mode, current_exercise_id: currentExerciseId, model }),
 

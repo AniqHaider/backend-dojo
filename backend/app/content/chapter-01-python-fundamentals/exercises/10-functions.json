@@ -9,11 +9,46 @@
     "Loop over sorted(params.items()) to get key/value pairs in a stable order, build 'key=value' strings, and '&'.join(...) them. Prepend base + '?'."
   ],
   "tests": [
-    {"call": "make_url('/api', b=2, a=1)", "expect": "/api?a=1&b=2"},
-    {"call": "make_url('/api')", "expect": "/api"},
-    {"call": "make_url('/search', q='shoes')", "expect": "/search?q=shoes"}
+    {
+      "call": "make_url('/api', b=2, a=1)",
+      "expect": "/api?a=1&b=2"
+    },
+    {
+      "call": "make_url('/api')",
+      "expect": "/api"
+    },
+    {
+      "call": "make_url('/search', q='shoes')",
+      "expect": "/search?q=shoes"
+    }
   ],
   "reference_solution": "def make_url(base, **params):\n    if not params:\n        return base\n    pairs = [f'{k}={v}' for k, v in sorted(params.items())]\n    return base + '?' + '&'.join(pairs)\n",
   "xp": 15,
-  "concept_tags": ["functions", "kwargs", "defaults"]
+  "concept_tags": [
+    "functions",
+    "kwargs",
+    "defaults"
+  ],
+  "syntax_hints": [
+    {
+      "code": "def make_url(base, **params):",
+      "note": "collect extra keyword args into a dict"
+    },
+    {
+      "code": "if not params:",
+      "note": "an empty dict is falsy"
+    },
+    {
+      "code": "sorted(params.items())",
+      "note": "(key, value) pairs in a stable order"
+    },
+    {
+      "code": "f\"{k}={v}\"",
+      "note": "format one key=value pair"
+    },
+    {
+      "code": "\"&\".join(pairs)",
+      "note": "join the pairs with &"
+    }
+  ]
 }

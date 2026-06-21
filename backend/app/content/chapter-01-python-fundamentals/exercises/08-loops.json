@@ -9,11 +9,41 @@
     "Inside the loop, if n % 2 == 0, add n to the total."
   ],
   "tests": [
-    {"call": "sum_evens([1, 2, 3, 4])", "expect": 6},
-    {"call": "sum_evens([])", "expect": 0},
-    {"call": "sum_evens([7, 7, 7])", "expect": 0}
+    {
+      "call": "sum_evens([1, 2, 3, 4])",
+      "expect": 6
+    },
+    {
+      "call": "sum_evens([])",
+      "expect": 0
+    },
+    {
+      "call": "sum_evens([7, 7, 7])",
+      "expect": 0
+    }
   ],
   "reference_solution": "def sum_evens(nums):\n    total = 0\n    for n in nums:\n        if n % 2 == 0:\n            total += n\n    return total\n",
   "xp": 10,
-  "concept_tags": ["loops", "accumulation"]
+  "concept_tags": [
+    "loops",
+    "accumulation"
+  ],
+  "syntax_hints": [
+    {
+      "code": "total = 0",
+      "note": "start a running total"
+    },
+    {
+      "code": "for n in nums:",
+      "note": "loop over each item"
+    },
+    {
+      "code": "if n % 2 == 0:",
+      "note": "is it even?"
+    },
+    {
+      "code": "total += n",
+      "note": "add to the running total"
+    }
+  ]
 }

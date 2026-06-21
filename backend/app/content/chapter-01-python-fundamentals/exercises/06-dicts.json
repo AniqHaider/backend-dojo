@@ -9,11 +9,33 @@
     "Return catalog.get(item, default)."
   ],
   "tests": [
-    {"call": "price_of({'mug': 50, 'pen': 10}, 'mug')", "expect": 50},
-    {"call": "price_of({'mug': 50, 'pen': 10}, 'hat')", "expect": 0},
-    {"call": "price_of({'mug': 50}, 'hat', 99)", "expect": 99}
+    {
+      "call": "price_of({'mug': 50, 'pen': 10}, 'mug')",
+      "expect": 50
+    },
+    {
+      "call": "price_of({'mug': 50, 'pen': 10}, 'hat')",
+      "expect": 0
+    },
+    {
+      "call": "price_of({'mug': 50}, 'hat', 99)",
+      "expect": 99
+    }
   ],
   "reference_solution": "def price_of(catalog, item, default=0):\n    return catalog.get(item, default)\n",
   "xp": 15,
-  "concept_tags": ["dicts", "defaults"]
+  "concept_tags": [
+    "dicts",
+    "defaults"
+  ],
+  "syntax_hints": [
+    {
+      "code": "def price_of(catalog, item, default=0):",
+      "note": "default parameter value"
+    },
+    {
+      "code": "catalog.get(key, default)",
+      "note": "read a key, fall back if missing"
+    }
+  ]
 }

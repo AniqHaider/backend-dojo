@@ -7,13 +7,15 @@ CREATE TABLE exercise_progress (
                     solved_at   TEXT,
                     best_code   TEXT
                 );
-INSERT INTO exercise_progress VALUES('ch1-ex01-greeting','solved',1,'2026-06-01T08:07:51.261148+00:00',unistr('def greet(name):\u000a    return f"Hello, {name}!"'));
+INSERT INTO exercise_progress VALUES('ch1-ex01-greeting','solved',22,'2026-06-01T08:07:51.261148+00:00',unistr('def greet(name):\u000a  return f"Hello, {name}!"'));
 INSERT INTO exercise_progress VALUES('ch1-ex08-loops','unsolved',13,NULL,unistr('def sum_evens(nums):\u000a    pass\u000a'));
-INSERT INTO exercise_progress VALUES('ch1-ex02-types','solved',45,'2026-06-01T16:47:36.998269+00:00',unistr('def to_int(s):\u000a  return int(s)'));
-INSERT INTO exercise_progress VALUES('ch1-ex03-arithmetic','solved',10,'2026-06-02T03:36:03.428909+00:00',unistr('def total_price(qty, unit):\u000a    i = qty * unit\u000a    return i\u000a\u000a\u000a# def total_price(qty, unit):\u000a#    return qty * unit\u000a   \u000a'));
-INSERT INTO exercise_progress VALUES('ch1-ex04-strings','unsolved',4,NULL,unistr('def initials(full_name):\u000a    for(i=0, i<full_name.length, i++)\u000a        arr = []\u000a        arr.append[full_name[0]]\u000a        if : full_name[i] == '' ''\u000a            arr.append[full_name[i+1]]\u000a\u000a\u000a     return arr\u000a          \u000a        '));
-INSERT INTO exercise_progress VALUES('ch12-ex01-idempotency-duplicate-payment','solved',1,'2026-06-02T08:37:47.419699+00:00','0');
+INSERT INTO exercise_progress VALUES('ch1-ex02-types','solved',46,'2026-06-01T16:47:36.998269+00:00',unistr('def to_int(s):\u000a  return int(s)'));
+INSERT INTO exercise_progress VALUES('ch1-ex03-arithmetic','solved',11,'2026-06-02T03:36:03.428909+00:00',unistr('def total_price(qty, unit):\u000a    i = qty * unit\u000a    return i\u000a\u000a\u000a# def total_price(qty, unit):\u000a#    return qty * unit\u000a   \u000a'));
+INSERT INTO exercise_progress VALUES('ch1-ex04-strings','unsolved',7,NULL,unistr('def initials(full_name):\u000a    for(i==0, i<full_name.length, i++)\u000a        arr = []\u000a        arr.append[full_name[0]]\u000a        if : full_name[i] == '' ''\u000a            arr.append[full_name[i+1]]\u000a\u000a\u000a     return arr\u000a          \u000a        '));
+INSERT INTO exercise_progress VALUES('ch12-ex01-idempotency-duplicate-payment','solved',6,'2026-06-02T08:37:47.419699+00:00','0');
 INSERT INTO exercise_progress VALUES('ch3-ex01-select','solved',1,'2026-06-02T13:22:48.411879+00:00','SELECT id, title FROM movies;');
+INSERT INTO exercise_progress VALUES('ch12-ex02-explain-analyze-slow-query','solved',1,'2026-06-05T12:19:28.254578+00:00','1');
+INSERT INTO exercise_progress VALUES('ch12-ex03-caching-invalidation-tradeoff','solved',1,'2026-06-05T12:20:05.090009+00:00','2');
 CREATE TABLE mistakes_log (
                     id             INTEGER PRIMARY KEY AUTOINCREMENT,
                     exercise_id    TEXT NOT NULL,
@@ -81,6 +83,31 @@ INSERT INTO mistakes_log VALUES(57,'ch1-ex04-strings','2026-06-02T03:46:58.95970
 INSERT INTO mistakes_log VALUES(58,'ch1-ex04-strings','2026-06-02T03:47:18.461904+00:00','syntax_error',unistr('File "/tmp/claude-501/tmpplrr9dh5/submission.py", line 2\u000a    for(i:=0, i<full_name.length, i++)\u000a                                     ^\u000aSyntaxError: invalid syntax'));
 INSERT INTO mistakes_log VALUES(59,'ch1-ex04-strings','2026-06-02T03:47:26.597413+00:00','syntax_error',unistr('File "/tmp/claude-501/tmpl7w35ssv/submission.py", line 2\u000a    for(i=0, i<full_name.length, i++)\u000a        ^^^\u000aSyntaxError: invalid syntax. Maybe you meant ''=='' or '':='' instead of ''=''?'));
 INSERT INTO mistakes_log VALUES(60,'ch1-ex04-strings','2026-06-02T03:52:27.031786+00:00','syntax_error',unistr('File "/tmp/claude-501/tmplkzyer21/submission.py", line 2\u000a    for(i=0, i<full_name.length, i++)\u000a        ^^^\u000aSyntaxError: invalid syntax. Maybe you meant ''=='' or '':='' instead of ''=''?'));
+INSERT INTO mistakes_log VALUES(61,'ch12-ex01-idempotency-duplicate-payment','2026-06-05T12:18:23.220342+00:00','wrong_choice','That''s not the best answer — read the explanation and try again.');
+INSERT INTO mistakes_log VALUES(62,'ch12-ex01-idempotency-duplicate-payment','2026-06-05T12:19:00.021288+00:00','wrong_choice','That''s not the best answer — read the explanation and try again.');
+INSERT INTO mistakes_log VALUES(63,'ch12-ex01-idempotency-duplicate-payment','2026-06-05T12:19:04.449950+00:00','wrong_choice','That''s not the best answer — read the explanation and try again.');
+INSERT INTO mistakes_log VALUES(64,'ch1-ex01-greeting','2026-06-19T13:55:42.350843+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpa2r4vmpp/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(65,'ch1-ex01-greeting','2026-06-19T13:56:06.442034+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpk5xdd_6c/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(66,'ch1-ex01-greeting','2026-06-19T13:56:07.019516+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpabxw_981/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(67,'ch1-ex01-greeting','2026-06-19T13:56:41.664567+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpqva2qkdu/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(68,'ch1-ex01-greeting','2026-06-19T13:56:42.158985+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpsv61u3pw/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(69,'ch1-ex01-greeting','2026-06-19T13:56:42.697130+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpqsezsol8/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(70,'ch1-ex01-greeting','2026-06-19T13:56:42.905367+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpc_9sdc5l/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(71,'ch1-ex01-greeting','2026-06-19T13:56:43.101701+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmplacpvscm/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(72,'ch1-ex01-greeting','2026-06-19T13:56:43.263976+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpy73f75m9/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(73,'ch1-ex01-greeting','2026-06-19T13:56:43.404791+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmp05jgtr_v/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(74,'ch1-ex01-greeting','2026-06-19T13:56:43.600711+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmp8kkjmjkj/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(75,'ch1-ex01-greeting','2026-06-19T13:56:43.729275+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpaxpi4w6p/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(76,'ch1-ex01-greeting','2026-06-19T13:57:13.969960+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmp_fih9k41/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(77,'ch1-ex01-greeting','2026-06-19T13:57:14.540160+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpr69vml8t/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(78,'ch1-ex01-greeting','2026-06-19T13:57:14.923422+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpfjvmyfhm/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(79,'ch1-ex01-greeting','2026-06-19T13:57:15.108768+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmp9_am9_1e/submission.py", line 1\u000a    def greet(name)\u000a                   ^\u000aSyntaxError: expected '':'''));
+INSERT INTO mistakes_log VALUES(80,'ch1-ex01-greeting','2026-06-19T13:57:19.710544+00:00','wrong_output','greet(''Asha'') -> expected ''Hello, Asha!'', got ''Hello, greet(name)!''');
+INSERT INTO mistakes_log VALUES(81,'ch1-ex01-greeting','2026-06-19T13:57:47.011473+00:00','wrong_output','greet(''Asha'') -> expected ''Hello, Asha!'', got ''Hello, greetAsha!''');
+INSERT INTO mistakes_log VALUES(82,'ch1-ex01-greeting','2026-06-19T13:57:48.269926+00:00','wrong_output','greet(''Asha'') -> expected ''Hello, Asha!'', got ''Hello, greetAsha!''');
+INSERT INTO mistakes_log VALUES(83,'ch1-ex04-strings','2026-06-19T14:14:12.579634+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpnaqmptj7/submission.py", line 2\u000a    for(i=0, i<full_name.length, i++)\u000a        ^^^\u000aSyntaxError: invalid syntax. Maybe you meant ''=='' or '':='' instead of ''=''?'));
+INSERT INTO mistakes_log VALUES(84,'ch1-ex04-strings','2026-06-19T14:14:57.410063+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmpwt8up0b7/submission.py", line 2\u000a    for(i==0, i<full_name.length, i++)\u000a                                     ^\u000aSyntaxError: invalid syntax'));
+INSERT INTO mistakes_log VALUES(85,'ch1-ex04-strings','2026-06-19T14:22:43.296453+00:00','syntax_error',unistr('File "/var/folders/h7/5lp02wtn26d3y7p8rvfdq6q00000gn/T/tmp36rr4b7_/submission.py", line 2\u000a    for(i==0, i<full_name.length, i++)\u000a                                     ^\u000aSyntaxError: invalid syntax'));
 CREATE TABLE stats (
                     id              INTEGER PRIMARY KEY CHECK (id = 1),
                     xp              INTEGER NOT NULL DEFAULT 0,
@@ -89,7 +116,7 @@ CREATE TABLE stats (
                     longest_streak  INTEGER NOT NULL DEFAULT 0,
                     last_active_date TEXT
                 );
-INSERT INTO stats VALUES(1,65,1,2,2,'2026-06-02');
+INSERT INTO stats VALUES(1,105,2,1,2,'2026-06-05');
 CREATE TABLE diagram_state (
                     component_id TEXT PRIMARY KEY,
                     unlocked     INTEGER NOT NULL DEFAULT 0,
@@ -98,5 +125,5 @@ CREATE TABLE diagram_state (
 INSERT INTO diagram_state VALUES('py-runtime',1,'2026-06-01T08:07:51.266656+00:00');
 INSERT INTO diagram_state VALUES('load-balancer',1,'2026-06-02T08:37:47.430945+00:00');
 INSERT INTO diagram_state VALUES('postgres-db',1,'2026-06-02T13:22:48.439596+00:00');
-INSERT INTO sqlite_sequence VALUES('mistakes_log',60);
+INSERT INTO sqlite_sequence VALUES('mistakes_log',85);
 COMMIT;

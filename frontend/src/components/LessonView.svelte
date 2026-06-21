@@ -1,8 +1,8 @@
 <script>
-  import { onMount } from "svelte";
   import { marked } from "marked";
   import { api } from "../lib/api.js";
   import { view, goExercise, goDashboard } from "../lib/stores.js";
+  import ExerciseCallout from "./ExerciseCallout.svelte";
 
   let chapter = $state(null);
   let error = $state(null);
@@ -14,6 +14,29 @@
   }
 
   $effect(() => { if ($view.name === "lesson") load($view.chapterId); });
+
+  // Interleave theory with inline "Ready to try" cards. Theory authored with
+  // [[exercise:ID]] markers gets split into prose + callout segments. Chapters
+  // without markers collapse to a single prose segment (unchanged behaviour).
+  function buildSegments(md, exercises) {
+    const byId = new Map((exercises || []).map((e) => [e.id, e]));
+    const re = /\[\[exercise:([A-Za-z0-9_-]+)\]\]/g;
+    const segs = [];
+    let last = 0, m;
+    while ((m = re.exec(md))) {
+      const chunk = md.slice(last, m.index);
+      if (chunk.trim()) segs.push({ type: "md", html: marked.parse(chunk) });
+      const ex = byId.get(m[1]);
+      if (ex) segs.push({ type: "ex", ex });
+      last = re.lastIndex;
+    }
+    const tail = md.slice(last);
+    if (tail.trim()) segs.push({ type: "md", html: marked.parse(tail) });
+    return segs;
+  }
+
+  let segments = $derived(buildSegments(chapter?.theory_md || "", chapter?.exercises));
+  let hasInline = $derived(segments.some((s) => s.type === "ex"));
 </script>
 
 <div class="lesson">
@@ -32,9 +55,20 @@
   {:else}
     <h1>{chapter.title}</h1>
     <div class="layout">
-      <article class="theory">{@html marked.parse(chapter.theory_md || "")}</article>
+      <article class="theory">
+        {#each segments as seg}
+          {#if seg.type === "md"}
+            {@html seg.html}
+          {:else}
+            <ExerciseCallout ex={seg.ex} chapterId={chapter.id} />
+          {/if}
+        {/each}
+      </article>
       <aside class="exlist">
-        <h3>Exercises</h3>
+        <h3>{hasInline ? "All exercises" : "Exercises"}</h3>
+        {#if hasInline}
+          <p class="exhint">Cards appear in the reading as you reach each one — or jump from here.</p>
+        {/if}
         {#each chapter.exercises as ex, i}
           <button class="exitem" class:solved={ex.solved}
                   onclick={() => goExercise(chapter.id, ex.id)}>
@@ -65,6 +99,7 @@
   .theory :global(blockquote) { border-left: 3px solid #2f6df6; margin: 12px 0; padding: 4px 14px; color: #aebfd6; background: #11161f; border-radius: 0 8px 8px 0; }
   .exlist { background: #11161f; border: 1px solid #1f2735; border-radius: 14px; padding: 14px; position: sticky; top: 80px; }
   .exlist h3 { color: #aebfd6; font-size: 14px; margin: 0 0 10px; }
+  .exhint { color: #6b7d96; font-size: 11.5px; line-height: 1.45; margin: 0 0 12px; }
   .exitem {
     width: 100%; display: flex; align-items: center; gap: 10px; text-align: left;
     background: #0f141d; border: 1px solid #1f2735; border-radius: 9px;

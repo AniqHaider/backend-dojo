@@ -9,11 +9,37 @@
     "Catch the specific error with except ZeroDivisionError: return None."
   ],
   "tests": [
-    {"call": "safe_div(6, 3)", "expect": 2.0},
-    {"call": "safe_div(1, 0)", "expect": null},
-    {"call": "safe_div(10, 4)", "expect": 2.5}
+    {
+      "call": "safe_div(6, 3)",
+      "expect": 2.0
+    },
+    {
+      "call": "safe_div(1, 0)",
+      "expect": null
+    },
+    {
+      "call": "safe_div(10, 4)",
+      "expect": 2.5
+    }
   ],
   "reference_solution": "def safe_div(a, b):\n    try:\n        return a / b\n    except ZeroDivisionError:\n        return None\n",
   "xp": 15,
-  "concept_tags": ["errors", "try-except"]
+  "concept_tags": [
+    "errors",
+    "try-except"
+  ],
+  "syntax_hints": [
+    {
+      "code": "try:\n    ...\nexcept ZeroDivisionError:\n    ...",
+      "note": "catch a specific error"
+    },
+    {
+      "code": "a / b",
+      "note": "division (always a float)"
+    },
+    {
+      "code": "return None",
+      "note": "explicit \"nothing\""
+    }
+  ]
 }
