@@ -2,6 +2,8 @@
   import { onMount, onDestroy } from "svelte";
   import { EditorView, basicSetup } from "codemirror";
   import { EditorState } from "@codemirror/state";
+  import { keymap } from "@codemirror/view";
+  import { indentWithTab } from "@codemirror/commands";
   import { python } from "@codemirror/lang-python";
   import { sql } from "@codemirror/lang-sql";
   import { oneDark } from "@codemirror/theme-one-dark";
@@ -18,6 +20,7 @@
       state: EditorState.create({
         doc: code,
         extensions: [
+          keymap.of([indentWithTab]),
           basicSetup,
           langExt,
           oneDark,
