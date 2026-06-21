@@ -16,5 +16,10 @@
   ],
   "reference_solution": "def double(n: int) -> int:\n    return n * 2\n",
   "xp": 10,
-  "concept_tags": ["typing"]
+  "concept_tags": ["typing"],
+  "syntax_hints": [
+    {"code": "def f(n: int) -> int:", "note": "annotate the param type and the return type"},
+    {"code": "x: str = \"hi\"", "note": "the `: type` syntax also works on variables"},
+    {"code": "return n * 2", "note": "hints are documentation only — the body is normal Python"}
+  ]
 }

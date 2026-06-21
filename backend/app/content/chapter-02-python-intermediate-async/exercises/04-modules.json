@@ -16,5 +16,10 @@
   ],
   "reference_solution": "import math\n\ndef circle_area(r):\n    return round(math.pi * r * r, 2)\n",
   "xp": 10,
-  "concept_tags": ["modules", "stdlib"]
+  "concept_tags": ["modules", "stdlib"],
+  "syntax_hints": [
+    {"code": "import math", "note": "pull in a standard-library module"},
+    {"code": "math.pi", "note": "access a constant from the module"},
+    {"code": "round(x, 2)", "note": "built-in: round to 2 decimal places"}
+  ]
 }

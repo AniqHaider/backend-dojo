@@ -14,6 +14,8 @@ There is also a correctness trap. Suppose the charge succeeds but the email send
 
 The fix is **asynchronous work**: do the minimum needed to answer the user *right now*, and push the slow/risky parts into the background to run later. The request becomes "record that this checkout should happen, enqueue the work, return fast." The user gets a quick response; the heavy lifting happens out of band.
 
+[[exercise:ch10-ex09-why-background-job]]
+
 ## Message queues & background workers
 
 The standard tool for "do this later" is a **message queue** (RabbitMQ, AWS SQS, Redis-backed queues like those behind Celery or BullMQ). The pattern has two sides:
@@ -38,18 +40,28 @@ The cure is to make your worker **idempotent**: running the same job twice produ
 
 Idempotency is not optional decoration; with at-least-once queues it is a *requirement* for correctness. (Exercise 06 models exactly this "skip if already done" worker.)
 
+[[exercise:ch10-ex11-at-least-once]]
+
+[[exercise:ch10-ex06-run-jobs]]
+
 ## Retries with exponential backoff (+ jitter)
 
 The payment API just returned `503 Service Unavailable`. It is probably a transient hiccup — overloaded for a moment. The right move is usually to **retry**, not to give up. But naive retries make things worse.
 
 If the service is struggling and every client instantly retries in a tight loop, you slam it with even *more* traffic and keep it down — a self-inflicted denial of service. So we space retries out and grow the gap each time: **exponential backoff.** Wait 1s, then 2s, then 4s, then 8s. Each attempt doubles the delay (`delay = base * 2 ** attempt`), giving the dependency room to recover. (Exercises 01 and 02 implement this, including a cap so you do not wait absurdly long.)
 
+[[exercise:ch10-ex01-backoff-delays]]
+
 Two important refinements:
 
 - **Cap the delay.** Without a ceiling, doubling reaches minutes. Clamp it: `min(cap, base * 2 ** attempt)`.
 - **Add jitter.** If a thousand clients all failed at the same instant and all back off by exactly 1s, 2s, 4s..., they retry in synchronized waves — a "thundering herd." Adding a small random amount to each delay spreads them out.
 
+[[exercise:ch10-ex02-capped-backoff]]
+
 And know **what** to retry. Retry on transient errors: timeouts, `429 Too Many Requests`, and `5xx` server errors. Do *not* retry on `4xx` client errors like `400` or `404` — those mean *you* sent something wrong, and retrying will fail identically forever. (Exercise 03 encodes this rule.) Always cap the number of attempts so a request cannot retry endlessly.
+
+[[exercise:ch10-ex03-should-retry]]
 
 ## Circuit breakers & timeouts
 
@@ -63,14 +75,26 @@ A **circuit breaker** is a guard that watches recent calls and trips when failur
 
 (Exercises 04 and 05 model the closed/open/half-open decision logic.)
 
+[[exercise:ch10-ex12-circuit-breaker-purpose]]
+
+[[exercise:ch10-ex04-circuit-state]]
+
+[[exercise:ch10-ex05-breaker-allows]]
+
 A circuit breaker only works if calls actually *fail* in a bounded time, which is why every outbound call needs a **timeout**. Never make a network call without one. A call with no timeout can hang for minutes, and a hung call is worse than a failed one — it holds a worker hostage and never gives the breaker a failure to count. Set an explicit deadline (e.g. 2 seconds); if it is exceeded, treat it as a failure and move on. (Exercise 08 models the timeout decision.)
 
+[[exercise:ch10-ex08-with-timeout]]
+
 Together: **timeout → retry with backoff → circuit breaker.** Timeouts bound each attempt, backoff spaces out retries of transient failures, and the breaker cuts off a sustained outage so it does not drag down everything else. This trio is the standard answer to "the third-party API is flaky."
+
+[[exercise:ch10-ex10-flaky-api-combo]]
 
 ## Dead-letter queues
 
 Some jobs just will not succeed. The payment is permanently declined, the data is malformed, or you exhausted all retries. You do not want a poison job retrying forever and clogging the queue, but you also must not silently drop it — that is lost money or lost work no one notices.
 
 The answer is a **dead-letter queue (DLQ)**: a separate queue where you park jobs that failed terminally. After N failed attempts, the job is moved to the DLQ instead of being retried again. Now the main queue keeps flowing, and a human (or an alert) can inspect the DLQ later, fix the underlying issue, and replay those jobs. It is your safety net for "we tried everything and it still failed" — the failure is *captured*, not lost. (Exercise 07 splits results into succeeded vs failed, the core idea behind routing failures to a DLQ.)
+
+[[exercise:ch10-ex07-partition]]
 
 Put it all together and the flaky-payment endpoint becomes robust: the request enqueues a job and returns instantly; an idempotent worker processes it with a timeout, retries transient failures with capped backoff, trips a circuit breaker during a sustained outage, and dead-letters anything that ultimately cannot succeed. The user gets a fast response, and no charge is ever lost or duplicated.

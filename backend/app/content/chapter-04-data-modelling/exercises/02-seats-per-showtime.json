@@ -18,5 +18,10 @@
   "order_sensitive": false,
   "reference_solution": "SELECT showtime_id, COUNT(*)::int AS seat_count FROM seats GROUP BY showtime_id;",
   "xp": 15,
-  "concept_tags": ["group-by", "aggregate", "count"]
+  "concept_tags": ["group-by", "aggregate", "count"],
+  "syntax_hints": [
+    {"code": "GROUP BY showtime_id", "note": "one result row per distinct value"},
+    {"code": "COUNT(*)", "note": "count the rows in each group"},
+    {"code": "COUNT(*)::int AS seat_count", "note": "cast to plain int and rename"}
+  ]
 }

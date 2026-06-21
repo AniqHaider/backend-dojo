@@ -15,5 +15,10 @@
   ],
   "reference_solution": "def first_writer_wins(attempts):\n    winner = min(attempts, key=lambda a: (a[\"ts\"], a[\"id\"]))\n    return winner[\"id\"]\n",
   "xp": 20,
-  "concept_tags": ["race-condition", "first-wins", "tie-break"]
+  "concept_tags": ["race-condition", "first-wins", "tie-break"],
+  "syntax_hints": [
+    {"code": "min(attempts, key=lambda a: a[\"ts\"])", "note": "pick the smallest by a chosen field"},
+    {"code": "key=lambda a: (a[\"ts\"], a[\"id\"])", "note": "tuple key: tie-break on id when ts is equal"},
+    {"code": "winner[\"id\"]", "note": "return the id, not the whole dict"}
+  ]
 }

@@ -17,5 +17,10 @@
   "order_sensitive": false,
   "reference_solution": "SELECT user_id, COUNT(*)::int AS bookings FROM bookings GROUP BY user_id;",
   "xp": 15,
-  "concept_tags": ["aggregate", "count", "group-by"]
+  "concept_tags": ["aggregate", "count", "group-by"],
+  "syntax_hints": [
+    {"code": "SELECT user_id, COUNT(*)::int AS bookings", "note": "count rows; ::int casts to a plain integer"},
+    {"code": "FROM bookings", "note": "the table to summarize"},
+    {"code": "GROUP BY user_id", "note": "one group (one result row) per user"}
+  ]
 }

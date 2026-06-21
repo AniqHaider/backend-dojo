@@ -15,5 +15,9 @@
   "order_sensitive": false,
   "reference_solution": "SELECT id, label FROM seats WHERE id = 3 FOR UPDATE;",
   "xp": 20,
-  "concept_tags": ["pessimistic-lock", "for-update", "locking"]
+  "concept_tags": ["pessimistic-lock", "for-update", "locking"],
+  "syntax_hints": [
+    {"code": "SELECT col_a, col_b FROM t WHERE id = ?", "note": "ordinary read of the row"},
+    {"code": "SELECT ... WHERE id = 3 FOR UPDATE", "note": "FOR UPDATE goes at the end; locks matched rows until commit"}
+  ]
 }

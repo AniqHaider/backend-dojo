@@ -17,5 +17,9 @@
   "order_sensitive": false,
   "reference_solution": "SELECT DISTINCT movie_id FROM showtimes;",
   "xp": 15,
-  "concept_tags": ["distinct", "foreign-key"]
+  "concept_tags": ["distinct", "foreign-key"],
+  "syntax_hints": [
+    {"code": "SELECT DISTINCT movie_id", "note": "drop duplicate rows from the result"},
+    {"code": "FROM showtimes", "note": "read the foreign-key column from this table"}
+  ]
 }

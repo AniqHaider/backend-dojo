@@ -16,5 +16,10 @@
   ],
   "reference_solution": "import asyncio\n\nasync def slow_double(n):\n    await asyncio.sleep(0)\n    return n * 2\n",
   "xp": 15,
-  "concept_tags": ["async", "asyncio", "io-bound"]
+  "concept_tags": ["async", "asyncio", "io-bound"],
+  "syntax_hints": [
+    {"code": "async def slow_double(n):", "note": "the coroutine you are completing"},
+    {"code": "await asyncio.sleep(0)", "note": "simulate an I/O wait; yields to the event loop"},
+    {"code": "return n * 2", "note": "resume after the await and return the result"}
+  ]
 }

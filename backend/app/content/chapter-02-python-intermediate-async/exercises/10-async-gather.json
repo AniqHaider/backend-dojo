@@ -14,5 +14,11 @@
   ],
   "reference_solution": "import asyncio\n\nasync def fetch_all():\n    async def one():\n        return 1\n    async def two():\n        return 2\n    async def three():\n        return 3\n    results = await asyncio.gather(one(), two(), three())\n    return results\n",
   "xp": 15,
-  "concept_tags": ["async", "asyncio", "gather"]
+  "concept_tags": ["async", "asyncio", "gather"],
+  "syntax_hints": [
+    {"code": "import asyncio", "note": "gather lives in the asyncio module"},
+    {"code": "async def one(): return 1", "note": "a tiny coroutine helper"},
+    {"code": "await asyncio.gather(one(), two(), three())", "note": "run coroutines concurrently (like Promise.all)"},
+    {"code": "return results", "note": "gather already gives back a list of results"}
+  ]
 }

@@ -30,6 +30,12 @@ The last-seat problem, step by step:
 
 Two customers, two confirmation emails, one seat. The root cause is **not** a typo or a slow server — it's that the read and the write weren't protected as one indivisible unit. The fix is to make "check it's free AND book it" happen together, so a second racer can't slip in between.
 
+[[exercise:ch8-ex09-quiz-last-seat-race]]
+
+When several requests do race for the same resource and you have a record of each attempt, a clean tie-breaking rule is **first writer wins**: whoever arrived earliest (the smallest timestamp) gets it, and if two tie on time you fall back to the smallest id. It's a deterministic way to pick a single winner after the fact.
+
+[[exercise:ch8-ex08-first-writer-wins]]
+
 ## Transactions & atomic conditional updates
 
 A **transaction** groups several database statements so they either *all* happen or *none* do — and while it runs, the database keeps other transactions from corrupting it. This is the database doing the hard concurrency work for you.
@@ -45,7 +51,15 @@ RETURNING id;
 
 The `WHERE ... AND booked_by IS NULL` says "only book it *if it's still free*." The database guarantees this runs as one indivisible step, so two requests can't both pass the check. The loser's `UPDATE` simply matches **0 rows**.
 
+[[exercise:ch8-ex01-atomic-guarded-update]]
+
 That "0 rows affected" is the heartbeat of safe backends. **One row changed = you won. Zero rows changed = someone beat you to it** — show the user "seat just taken," don't error out. You'll practice both the winning update and the no-op update in the exercises.
+
+[[exercise:ch8-ex02-update-noop-someone-won]]
+
+Sometimes claiming a resource is an **insert**, not an update — you add a fresh `bookings` row for the seat. Use `INSERT ... RETURNING` to get back exactly what you just claimed, and in a real system you'd add a uniqueness rule (e.g. on `seat_id`) so a second insert for the same seat fails instead of double-booking.
+
+[[exercise:ch8-ex03-claim-seat-insert]]
 
 ## Optimistic vs pessimistic locking
 
@@ -59,6 +73,10 @@ SELECT id, label FROM seats WHERE id = 3 FOR UPDATE;
 
 `SELECT ... FOR UPDATE` locks the selected rows. Any other transaction that tries to touch them **waits in line** until you commit. Safe and simple, but it makes others wait — so it's best when contention is genuinely high (the last seat to a sold-out show).
 
+[[exercise:ch8-ex04-select-for-update]]
+
+[[exercise:ch8-ex12-quiz-select-for-update]]
+
 **Optimistic locking** assumes conflicts are *rare*, so you don't lock — you just *check at the end* that nothing changed underneath you, usually with a `version` number:
 
 1. Read the row and its `version` (say, 5).
@@ -67,7 +85,11 @@ SELECT id, label FROM seats WHERE id = 3 FOR UPDATE;
 
 If someone else wrote first, `version` is no longer 5, your update hits **0 rows**, and you retry. No waiting, no locks held — cheap and fast **when collisions are uncommon**. That's the sweet spot for optimistic locking: low contention, a quick version check, no one blocked.
 
+[[exercise:ch8-ex06-optimistic-lock]]
+
 Rule of thumb: **low contention → optimistic; high contention → pessimistic.**
+
+[[exercise:ch8-ex10-quiz-optimistic-vs-pessimistic]]
 
 ## Idempotency keys (the duplicate-payment fix)
 
@@ -82,7 +104,15 @@ The fix is an **idempotency key**. *Idempotent* means "doing it again has no ext
 
 So the first request charges; every retry returns the original outcome **without a second charge**. The client can retry as much as it likes, safely. You'll implement exactly this `process_payments` logic in the exercises — first-time keys charge, repeated keys return the same result with `charged: false`.
 
+[[exercise:ch8-ex05-idempotency]]
+
 This is why payment APIs (Stripe and friends) require an idempotency key on charge requests. It's not optional polish — it's the difference between a happy customer and a chargeback.
+
+[[exercise:ch8-ex11-quiz-double-submit-payment]]
+
+The same idea shows up for any event stream with **at-least-once delivery**: a message broker may hand you the *same* event more than once. The cure is the same shape — track the ids you've already processed and drop later duplicates, keeping only the **first occurrence** (in order). That's deduping by id.
+
+[[exercise:ch8-ex07-dedupe-by-id]]
 
 ## Reservation / hold patterns with expiry
 

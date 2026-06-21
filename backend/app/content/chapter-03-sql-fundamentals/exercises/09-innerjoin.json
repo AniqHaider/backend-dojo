@@ -18,5 +18,10 @@
   "order_sensitive": false,
   "reference_solution": "SELECT b.id AS booking_id, u.name FROM bookings b JOIN users u ON b.user_id = u.id;",
   "xp": 20,
-  "concept_tags": ["join", "inner-join"]
+  "concept_tags": ["join", "inner-join"],
+  "syntax_hints": [
+    {"code": "SELECT b.id AS booking_id, u.name", "note": "pick columns from both tables via aliases"},
+    {"code": "FROM bookings b", "note": "give the table a short alias b"},
+    {"code": "JOIN users u ON b.user_id = u.id", "note": "match each booking to its user"}
+  ]
 }

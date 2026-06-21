@@ -61,9 +61,17 @@ That says: "give me the `title` column, from the `movies` table, but only rows w
 
 - `SELECT` — which columns you want (`*` means all columns).
 - `FROM` — which table.
+
+[[exercise:ch3-ex01-select]]
+
 - `WHERE` — a filter; only rows matching the condition come back.
+
+[[exercise:ch3-ex02-where]]
+
 - `ORDER BY column DESC` — sort results (DESC = high to low, ASC = low to high).
 - `LIMIT n` — return at most `n` rows (great for "top 5").
+
+[[exercise:ch3-ex03-orderlimit]]
 
 A query always returns a **result set** — itself a little table of rows and columns. You can rename an output column with `AS`, e.g. `SELECT COUNT(*) AS total`.
 
@@ -75,9 +83,15 @@ Reading is only half the job. Three commands change data:
 - `UPDATE movies SET rating = 8.0 WHERE id = 3;` — change existing rows that match the `WHERE`.
 - `DELETE FROM seats WHERE id = 9;` — remove rows that match the `WHERE`.
 
+In Postgres you can add `RETURNING` to see what changed, e.g. `UPDATE movies SET rating = 8.0 WHERE id = 3 RETURNING title, rating;` hands back the rows it touched. Handy for confirming — and we use it in the exercises so your work is checkable.
+
+[[exercise:ch3-ex04-insert]]
+
 A giant warning that every backend engineer learns once (painfully): **`UPDATE` and `DELETE` without a `WHERE` clause hit every row in the table.** `DELETE FROM seats;` empties the whole table. Always include a `WHERE`.
 
-In Postgres you can add `RETURNING` to see what changed, e.g. `UPDATE movies SET rating = 8.0 WHERE id = 3 RETURNING title, rating;` hands back the rows it touched. Handy for confirming — and we use it in the exercises so your work is checkable.
+[[exercise:ch3-ex05-update]]
+
+[[exercise:ch3-ex06-delete]]
 
 ## Combining tables (JOINs) & summarizing (GROUP BY)
 
@@ -91,14 +105,43 @@ JOIN users u ON b.user_id = u.id;
 
 This matches each booking to its user by lining up `b.user_id` with `u.id`. (`b` and `u` are short *aliases* for the table names.) This is an **INNER JOIN**: it only keeps rows that have a match on both sides.
 
+[[exercise:ch3-ex09-innerjoin]]
+
 A **LEFT JOIN** keeps *every* row from the left table even if there's no match on the right — the missing side comes back as `NULL` (SQL's "no value"). Use it for questions like "every movie *and* how many showtimes it has, including movies with zero."
+
+[[exercise:ch3-ex10-leftjoin]]
+
+You can also **chain JOINs** to hop across more than two tables. A booking points at a showtime, and a showtime points at a movie, so `FROM bookings b JOIN showtimes s ON b.showtime_id = s.id JOIN movies m ON s.movie_id = m.id` walks the whole path from a booking to its movie. Each `JOIN ... ON ...` links one table's foreign key to the next table's primary key.
+
+[[exercise:ch3-ex11-multijoin]]
 
 To **summarize**, use aggregate functions with `GROUP BY`:
 
 - `COUNT(*)` — how many rows.
 - `AVG(col)`, `SUM(col)`, `MIN`, `MAX` — math over a column.
 
-`GROUP BY user_id` collapses rows into one group per user, so `COUNT(*)` becomes "bookings per user." To filter *groups* (not rows), use `HAVING` instead of `WHERE` — e.g. "only users with more than 1 booking."
+`GROUP BY user_id` collapses rows into one group per user, so `COUNT(*)` becomes "bookings per user." One Postgres quirk: `COUNT(*)` comes back as a big-integer type, so we tack on `::int` (a **cast** that changes a value's type) to get a plain integer — `COUNT(*)::int AS bookings`.
+
+[[exercise:ch3-ex07-aggregate]]
+
+To filter *groups* (not rows), use `HAVING` instead of `WHERE` — e.g. "only users with more than 1 booking." `WHERE` runs *before* grouping (on individual rows); `HAVING` runs *after* (on the grouped results).
+
+[[exercise:ch3-ex08-having]]
+
+## Subqueries (a query inside a query)
+
+Sometimes the filter you want depends on the answer to *another* question. A **subquery** is a `SELECT` nested inside parentheses whose result feeds the outer query. The most common shape pairs it with `IN` / `NOT IN`:
+
+```sql
+SELECT label FROM seats
+WHERE id NOT IN (SELECT seat_id FROM bookings);
+```
+
+The inner `SELECT seat_id FROM bookings` produces the list of booked seat ids; the outer `NOT IN (...)` then keeps only seats whose id is *not* in that list — i.e. the seats nobody has booked yet. You can scope the subquery further with its own `WHERE` (e.g. `... FROM bookings WHERE showtime_id = 3`) to ask "unbooked *for this showtime*."
+
+[[exercise:ch3-ex12-subquery]]
+
+[[exercise:ch3-ex13-capstone]]
 
 ## Why backends rely on this
 

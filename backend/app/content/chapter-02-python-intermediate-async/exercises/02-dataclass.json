@@ -15,5 +15,12 @@
   ],
   "reference_solution": "from dataclasses import dataclass\n\n@dataclass\nclass User:\n    name: str\n    age: int\n\ndef user_label(name, age):\n    u = User(name, age)\n    return f\"{u.name} ({u.age})\"\n",
   "xp": 10,
-  "concept_tags": ["dataclass", "typing"]
+  "concept_tags": ["dataclass", "typing"],
+  "syntax_hints": [
+    {"code": "from dataclasses import dataclass", "note": "import the decorator first"},
+    {"code": "@dataclass", "note": "put this line directly above `class User:`"},
+    {"code": "name: str", "note": "declare a field as a type-hinted line inside the class"},
+    {"code": "u = User(\"Aniq\", 30)", "note": "the constructor is auto-generated from the fields"},
+    {"code": "f\"{u.name} ({u.age})\"", "note": "read fields with dot access in an f-string"}
+  ]
 }

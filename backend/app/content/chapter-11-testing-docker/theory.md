@@ -10,7 +10,15 @@ Think about the last time you refactored a tangled component. If it had a solid 
 
 Tests also serve as **executable documentation**. A test named `test_redact_email_replaces_at_tokens` tells the next engineer exactly what the function is supposed to do — and unlike a comment, it cannot silently go out of date, because CI will fail the moment behavior drifts from the test.
 
-A useful mental model: a test is a tiny program that *uses* your code the way a real caller would, then asserts the result is what you expect. If the assertion holds, the test passes. If not, you get a precise failure message pointing at the gap.
+[[exercise:ch11-ex12-why-test]]
+
+A useful mental model: a test is a tiny program that *uses* your code the way a real caller would, then asserts the result is what you expect. If the assertion holds, the test passes. If not, you get a precise failure message pointing at the gap. At its core every assertion is just comparing what you **got** against what you **want** — and reporting a clear message when they differ.
+
+[[exercise:ch11-ex01-assert-equal]]
+
+Once you can check a single case, a tiny **test runner** is the natural next step: feed it a list of cases, run each one, and tally how many passed and how many failed. That pass/fail count is the green-or-red signal every test framework ultimately produces.
+
+[[exercise:ch11-ex02-run-cases]]
 
 ## Unit vs integration tests; the arrange-act-assert shape
 
@@ -20,6 +28,8 @@ Tests come in layers. The two you will write most are:
 - **Integration tests** exercise several pieces working *together*, crossing a real boundary — they actually hit a database, call a real HTTP endpoint, or read a file. They are slower and a bit flakier, but they catch the bugs unit tests miss: wrong SQL, mismatched serialization, broken wiring between layers. The frontend analogy is an end-to-end Cypress/Playwright test that drives a real browser against a running app.
 
 A common rule of thumb is the *test pyramid*: many fast unit tests at the bottom, fewer integration tests in the middle, and a handful of slow end-to-end tests at the top.
+
+[[exercise:ch11-ex09-unit-vs-integration]]
 
 Almost every good test follows the **Arrange-Act-Assert** shape:
 
@@ -48,6 +58,10 @@ def test_add_two_numbers():
 
 Run the whole suite with `pytest`. It discovers your test files, runs every `test_` function, and prints a green dot per pass or a detailed traceback per failure.
 
+This is also the heart of **test-driven development (TDD)**: write the tests first so they describe the behavior you want, then write the smallest implementation that turns them green. The tests *are* the spec — you read the expected results and make them true.
+
+[[exercise:ch11-ex03-add]]
+
 When several tests need the same setup — a database connection, a sample user, a temp directory — you use a **fixture**. A fixture is a function decorated with `@pytest.fixture` that produces a reusable piece of setup; any test that lists the fixture name as a parameter receives it. This is pytest's version of `beforeEach` in Jest, but more composable: fixtures can depend on other fixtures, and they can clean up after themselves with `yield`.
 
 ```python
@@ -59,7 +73,9 @@ def test_user_is_active(sample_user):
     assert sample_user["active"] is True
 ```
 
-You will also lean on **parametrization** (`@pytest.mark.parametrize`) to run the same test body across many input/expected pairs — perfect for edge-case tables like palindrome checks.
+You will also lean on **parametrization** (`@pytest.mark.parametrize`) to run the same test body across many input/expected pairs — perfect for edge-case tables like palindrome checks. The real value of such a table is that it forces you to cover the *tricky edges* — mixed case, empty input, near-misses — not just the happy path.
+
+[[exercise:ch11-ex04-is-palindrome]]
 
 ## Docker: shipping a consistent environment
 
@@ -78,14 +94,28 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 Each line is a layer; Docker caches them, so rebuilds are fast when only your code changed. `docker build -t myapi .` produces the image; `docker run -p 8000:8000 myapi` starts a container. The frontend parallel is shipping a locked `package-lock.json` plus a known Node version — Docker just takes that idea all the way down to the operating system. When you need several services together (your API, a Postgres database, Redis), `docker-compose` wires them into one reproducible stack with a single `docker compose up`.
 
+[[exercise:ch11-ex10-docker-problem]]
+
 ## Observability: logs, metrics, traces & health checks
 
 Once your service runs in production where you cannot attach a debugger, you need to *observe* it from the outside. Observability rests on **three pillars**:
 
-- **Logs** — timestamped text records of discrete events ("user 42 logged in", "payment failed: card declined"). Like `console.log`, but structured (often JSON) and centralized so you can search across all instances. Each log line carries a **level** — `DEBUG`, `INFO`, `WARNING`, `ERROR` — so you can filter noise from alarms.
-- **Metrics** — numeric measurements aggregated over time: requests per second, error rate, p95 latency, memory usage. These power dashboards and alerts ("page me if error rate > 1%"). Think of them as the Web Vitals of your backend.
+- **Logs** — timestamped text records of discrete events ("user 42 logged in", "payment failed: card declined"). Like `console.log`, but structured (often JSON) and centralized so you can search across all instances. Each log line carries a **level** — `DEBUG`, `INFO`, `WARNING`, `ERROR` — usually written in brackets at the front of the line (`[INFO] started`), so the first thing many log tools do is *parse the level token* back out of the line.
+- **Metrics** — numeric measurements aggregated over time: requests per second, error rate, p95 latency, memory usage. These power dashboards and alerts ("page me if error rate > 1%"). Think of them as the Web Vitals of your backend. The simplest metric of all is a **count** — for example, tallying how many log lines arrived at each level.
 - **Traces** — the path of a single request as it hops through multiple services, with timing at each step. When one request is slow, a trace shows you *which* hop ate the time — the backend cousin of the browser performance/network waterfall.
 
+[[exercise:ch11-ex11-observability-pillars]]
+
+Because logs are searched and stored centrally, they must **never leak personal data**. A basic safeguard is a redaction pass that scrubs anything that looks like an email (or other PII) and replaces it with a placeholder before the line is written.
+
+[[exercise:ch11-ex05-parse-level]]
+
+[[exercise:ch11-ex06-count-levels]]
+
+[[exercise:ch11-ex07-redact-email]]
+
 A close companion is the **health check**: a tiny endpoint (commonly `/health` or `/healthz`) that returns `200 OK` when the service and its critical dependencies are alive. Load balancers and orchestrators poll it constantly; if it stops returning healthy, traffic is routed away or the container is restarted. A good health check reports not just "I'm up" but *which* dependency is failing, so on-call engineers know where to look.
+
+[[exercise:ch11-ex08-healthcheck]]
 
 Put together: tests give you confidence to change code, Docker guarantees the code runs the same everywhere, and observability tells you what that code is actually doing once real users hit it. These three habits are what separate a hobby script from a production backend service.

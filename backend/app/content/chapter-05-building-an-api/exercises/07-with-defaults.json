@@ -16,5 +16,9 @@
   ],
   "reference_solution": "def with_defaults(query, defaults):\n    return {**defaults, **query}\n",
   "xp": 15,
-  "concept_tags": ["query-params", "defaults"]
+  "concept_tags": ["query-params", "defaults"],
+  "syntax_hints": [
+    {"code": "{**defaults, **query}", "note": "merge dicts; later keys override earlier"},
+    {"code": "return {**a, **b}", "note": "new dict, neither input mutated"}
+  ]
 }

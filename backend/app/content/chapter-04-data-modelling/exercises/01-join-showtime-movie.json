@@ -18,5 +18,10 @@
   "order_sensitive": false,
   "reference_solution": "SELECT s.id AS showtime_id, m.title, s.screen FROM showtimes s JOIN movies m ON s.movie_id = m.id;",
   "xp": 15,
-  "concept_tags": ["join", "foreign-key"]
+  "concept_tags": ["join", "foreign-key"],
+  "syntax_hints": [
+    {"code": "FROM showtimes s", "note": "give a table a short alias"},
+    {"code": "JOIN movies m ON s.movie_id = m.id", "note": "match foreign key to primary key"},
+    {"code": "SELECT s.id AS showtime_id", "note": "rename a column in the output"}
+  ]
 }

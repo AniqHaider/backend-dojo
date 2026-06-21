@@ -16,5 +16,11 @@
   ],
   "reference_solution": "def first_n_squares(n):\n    def gen():\n        for i in range(n):\n            yield i * i\n    return list(gen())\n",
   "xp": 15,
-  "concept_tags": ["generators"]
+  "concept_tags": ["generators"],
+  "syntax_hints": [
+    {"code": "def gen():", "note": "define an inner generator function"},
+    {"code": "yield i * i", "note": "`yield` produces one value lazily, then pauses"},
+    {"code": "for i in range(n):", "note": "loop the counter inside the generator"},
+    {"code": "list(gen())", "note": "pull all yielded values into a concrete list"}
+  ]
 }

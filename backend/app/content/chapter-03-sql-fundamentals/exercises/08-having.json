@@ -15,5 +15,10 @@
   "order_sensitive": false,
   "reference_solution": "SELECT user_id, COUNT(*)::int AS bookings FROM bookings GROUP BY user_id HAVING COUNT(*) > 1;",
   "xp": 15,
-  "concept_tags": ["having", "group-by", "count"]
+  "concept_tags": ["having", "group-by", "count"],
+  "syntax_hints": [
+    {"code": "SELECT user_id, COUNT(*)::int AS bookings", "note": "count rows per group"},
+    {"code": "GROUP BY user_id", "note": "one group per user"},
+    {"code": "HAVING COUNT(*) > 1", "note": "filter the GROUPS (WHERE filters rows)"}
+  ]
 }

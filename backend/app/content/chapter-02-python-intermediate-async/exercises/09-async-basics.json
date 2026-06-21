@@ -14,5 +14,10 @@
   ],
   "reference_solution": "async def solve():\n    async def get_value():\n        return 42\n    value = await get_value()\n    return value\n",
   "xp": 15,
-  "concept_tags": ["async", "await"]
+  "concept_tags": ["async", "await"],
+  "syntax_hints": [
+    {"code": "async def get_value():", "note": "declare a coroutine (like an async fn in JS)"},
+    {"code": "value = await get_value()", "note": "`await` pauses and unwraps the result"},
+    {"code": "return value", "note": "an async fn returns its value like a normal fn"}
+  ]
 }

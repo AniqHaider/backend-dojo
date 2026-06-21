@@ -13,5 +13,9 @@
   "order_sensitive": false,
   "reference_solution": "UPDATE movies SET rating = 8.0 WHERE id = 1 AND rating < 8.0 RETURNING title;",
   "xp": 20,
-  "concept_tags": ["conditional-update", "rows-affected", "race-condition"]
+  "concept_tags": ["conditional-update", "rows-affected", "race-condition"],
+  "syntax_hints": [
+    {"code": "UPDATE t SET col = ? WHERE id = 1 AND col < 8.0", "note": "guard fails when the row already exceeds the threshold"},
+    {"code": "RETURNING title", "note": "matches 0 rows -> empty result = you lost the race"}
+  ]
 }

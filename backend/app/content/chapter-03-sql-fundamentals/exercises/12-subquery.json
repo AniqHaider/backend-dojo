@@ -16,5 +16,11 @@
   "order_sensitive": true,
   "reference_solution": "SELECT label FROM seats WHERE showtime_id = 1 AND id NOT IN (SELECT seat_id FROM bookings) ORDER BY label;",
   "xp": 20,
-  "concept_tags": ["subquery", "not-in"]
+  "concept_tags": ["subquery", "not-in"],
+  "syntax_hints": [
+    {"code": "SELECT label FROM seats", "note": "the outer query reads seat labels"},
+    {"code": "WHERE showtime_id = 1", "note": "limit to this showtime's seats"},
+    {"code": "AND id NOT IN (SELECT seat_id FROM bookings)", "note": "exclude ids the subquery lists as booked"},
+    {"code": "ORDER BY label", "note": "sort the results predictably"}
+  ]
 }

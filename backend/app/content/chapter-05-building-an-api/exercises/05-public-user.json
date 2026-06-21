@@ -16,5 +16,10 @@
   ],
   "reference_solution": "def public_user(user):\n    copy = {**user}\n    copy.pop(\"password\", None)\n    return copy\n",
   "xp": 15,
-  "concept_tags": ["responses", "security"]
+  "concept_tags": ["responses", "security"],
+  "syntax_hints": [
+    {"code": "copy = {**user}", "note": "shallow-copy a dict (don't mutate the input)"},
+    {"code": "copy.pop(\"password\", None)", "note": "remove a key; None default = no KeyError"},
+    {"code": "return copy", "note": "hand back the copy, not the original"}
+  ]
 }

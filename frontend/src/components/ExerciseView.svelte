@@ -16,6 +16,12 @@
   let showCheat = $state(false);
   let isQuiz = $derived(exercise?.type === "quiz");
   let syntaxHints = $derived(exercise?.syntax_hints || []);
+  let hasCheat = $derived(exercise?.type === "python" || exercise?.type === "sql");
+  let cheat = $derived(
+    exercise?.type === "sql"
+      ? { name: "sql-cheatsheet", title: "SQL" }
+      : { name: "python-cheatsheet", title: "Python" }
+  );
 
   // Prev/Next within the chapter, derived from the chapter's exercise order.
   let chapter = $derived($chapters.find((c) => c.id === $view.chapterId));
@@ -85,7 +91,7 @@
         {/each}
       </div>
     {:else}
-      {#if syntaxHints.length || exercise.type === "python"}
+      {#if syntaxHints.length || hasCheat}
         <div class="syntaxbar">
           {#if syntaxHints.length}
             <details class="syntax" open>
@@ -99,8 +105,8 @@
           {:else}
             <span class="syntax-spacer"></span>
           {/if}
-          {#if exercise.type === "python"}
-            <button class="cheatbtn" onclick={() => (showCheat = true)}>📘 Cheatsheet</button>
+          {#if hasCheat}
+            <button class="cheatbtn" onclick={() => (showCheat = true)}>📘 {cheat.title} cheatsheet</button>
           {/if}
         </div>
       {/if}
@@ -146,7 +152,7 @@
   {/if}
 </div>
 
-<Cheatsheet open={showCheat} onClose={() => (showCheat = false)} />
+<Cheatsheet open={showCheat} name={cheat.name} title={cheat.title} onClose={() => (showCheat = false)} />
 
 <style>
   .exercise { max-width: 820px; }

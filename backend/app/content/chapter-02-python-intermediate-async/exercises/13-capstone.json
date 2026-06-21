@@ -16,5 +16,12 @@
   ],
   "reference_solution": "import asyncio\n\nasync def fetch_dashboard():\n    async def get_user():\n        return {\"id\": 1, \"name\": \"Aniq\"}\n    async def get_orders():\n        return [{\"id\": 101}, {\"id\": 102}]\n    async def get_order_count():\n        return 2\n    user, orders, count = await asyncio.gather(\n        get_user(), get_orders(), get_order_count()\n    )\n    return {\"user\": user, \"orders\": orders, \"order_count\": count}\n\nasync def dashboard_order_count():\n    data = await fetch_dashboard()\n    return data[\"order_count\"]\n",
   "xp": 20,
-  "concept_tags": ["async", "asyncio", "gather", "capstone"]
+  "concept_tags": ["async", "asyncio", "gather", "capstone"],
+  "syntax_hints": [
+    {"code": "async def get_user(): return {...}", "note": "define each async helper returning its value"},
+    {"code": "a, b, c = await asyncio.gather(get_user(), get_orders(), get_order_count())", "note": "run all three concurrently and unpack the results"},
+    {"code": "{\"user\": user, \"orders\": orders, \"order_count\": count}", "note": "assemble the aggregated response dict"},
+    {"code": "data = await fetch_dashboard()", "note": "one coroutine can await another"},
+    {"code": "return data[\"order_count\"]", "note": "read a single key out of the dict"}
+  ]
 }

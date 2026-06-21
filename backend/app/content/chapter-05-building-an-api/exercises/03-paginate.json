@@ -17,5 +17,9 @@
   ],
   "reference_solution": "def paginate(items, page, size):\n    start = (page - 1) * size\n    return items[start:start + size]\n",
   "xp": 15,
-  "concept_tags": ["pagination", "query-params"]
+  "concept_tags": ["pagination", "query-params"],
+  "syntax_hints": [
+    {"code": "start = (page - 1) * size", "note": "1-based page -> 0-based offset"},
+    {"code": "items[start:start + size]", "note": "slice a list; out-of-range -> []"}
+  ]
 }

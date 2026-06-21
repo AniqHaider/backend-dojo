@@ -23,11 +23,25 @@ Your frontend already validates forms — required fields, email format, max len
 Treat every incoming request as potentially hostile or malformed. Validate:
 
 - **Presence** — are all required fields there? (`validate(payload, required)` in this chapter)
+
+[[exercise:ch6-ex03-validate-required]]
+
 - **Type** — is `age` actually a number, not the string `"twelve"`?
 - **Shape/format** — does the email look like an email? Is the enum value one you allow?
+
+[[exercise:ch6-ex02-is-valid-email]]
+
 - **Range/limits** — clamp a page size to a sane maximum so nobody requests 10 million rows.
 
+[[exercise:ch6-ex05-clamp]]
+
+Validation also covers **normalizing** the inputs you *do* accept. A list endpoint might take `?sort=-created`, where a leading `-` means "descending." Parse that raw string into a structured, trusted form (e.g. `{"field": "created", "dir": "desc"}`) once, at the boundary, so the rest of your code never re-parses it.
+
+[[exercise:ch6-ex06-normalize-sort]]
+
 Frameworks like FastAPI do a lot of this for you via Pydantic models: declare the shape once, and malformed requests are rejected automatically before your code runs. But the *principle* — never trust the client — is yours to own.
+
+[[exercise:ch6-ex10-quiz-trust-client]]
 
 ## Error handling & consistent error shapes
 
@@ -42,7 +56,13 @@ The fix is a **consistent error envelope** — every response, success or failur
 
 (See the `envelope(ok, data)` exercise.) Why is this worth it? Because the *consumer* — your own frontend — can write **one** response handler instead of guessing the shape per endpoint. Check `ok`, branch once, done. It's the same reason a design system beats bespoke buttons everywhere: predictability scales.
 
+[[exercise:ch6-ex04-envelope]]
+
+[[exercise:ch6-ex12-quiz-error-envelope]]
+
 Internally, services should **raise** errors (e.g. `raise PermissionError(...)`) rather than returning ad-hoc dictionaries. A single central handler then maps each error type to a status code and a clean envelope. That mapping (`error_to_status` in this chapter) is the glue between "something went wrong in business logic" and "what the HTTP layer tells the client."
+
+[[exercise:ch6-ex01-error-to-status]]
 
 ## HTTP status codes for errors (400/401/403/404/422/500)
 
@@ -56,6 +76,22 @@ Status codes are a contract. The frontend reads them to decide what to do (retry
 - **500 Internal Server Error** — *we* broke, not you. An unexpected exception. The client can't fix this; it's a signal for your logs and alerts.
 
 Quick mental model: **4xx = the caller's fault, 5xx = the server's fault.** 400 vs 422 trips people up: 400 means "I couldn't understand the request at all," while 422 means "I understood it perfectly, but the values don't satisfy the rules."
+
+[[exercise:ch6-ex11-quiz-400-vs-422]]
+
+## Shaping the response: derived & computed columns
+
+An API rarely hands back raw table rows untouched. The response schema often exposes **derived fields** — values computed from the underlying data rather than stored as-is. Computing them in your query (or service) keeps the rule in one place instead of forcing every frontend to re-implement it.
+
+Two common moves, done right in SQL:
+
+- A **computed/aliased column** — apply a function to a column and name the output with `AS`, e.g. `UPPER(screen) AS screen` or `length(title) AS title_len`. The frontend gets a clean, ready-to-display value.
+
+[[exercise:ch6-ex07-computed-column]]
+
+- A **`CASE` label** — SQL's if/else, used to turn a raw number into a human-friendly tier: `CASE WHEN rating >= 8.0 THEN 'Top Rated' ELSE 'Good' END AS tier`. The business rule lives in one query, not scattered across clients.
+
+[[exercise:ch6-ex08-case-label]]
 
 ## Schema migrations (evolving the DB safely)
 
@@ -71,6 +107,8 @@ A **migration** is a small, ordered, version-controlled script that describes a 
 - **Coordination** — in a team, hand-edited databases drift apart. Migrations keep everyone in lockstep.
 
 The analogy: migrations are to your database what git history is to your code — an auditable, replayable sequence of changes that any environment can fast-forward to. Never edit production tables by hand; write a migration, review it, run it.
+
+[[exercise:ch6-ex09-quiz-migrations]]
 
 ---
 

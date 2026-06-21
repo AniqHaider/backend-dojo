@@ -2,32 +2,35 @@
   import { marked } from "marked";
   import { api } from "../lib/api.js";
 
-  let { open = false, onClose } = $props();
+  let { open = false, onClose, name = "python-cheatsheet", title = "Python" } = $props();
 
-  let loaded = $state(false);
+  let loadedName = $state(null);
+  let loading = $state(false);
   let error = $state(null);
   let intro = $state("");
   let sections = $state([]); // [{ title, body }]
   let query = $state("");
 
-  async function ensureLoaded() {
-    if (loaded || error) return;
+  async function load(sheet) {
+    loading = true; error = null;
     try {
-      const { markdown } = await api.getReference("python-cheatsheet");
+      const { markdown } = await api.getReference(sheet);
       const parts = markdown.split(/\n## /);
       intro = parts[0].replace(/^# .*\n/, "").trim();
       sections = parts.slice(1).map((chunk) => {
         const nl = chunk.indexOf("\n");
         return { title: chunk.slice(0, nl).trim(), body: chunk.slice(nl + 1).trim() };
       });
-      loaded = true;
+      loadedName = sheet;
     } catch (e) {
       error = e.message;
+    } finally {
+      loading = false;
     }
   }
 
-  // load on first open
-  $effect(() => { if (open) ensureLoaded(); });
+  // (re)load whenever opened with a different cheatsheet
+  $effect(() => { if (open && name !== loadedName && !loading) load(name); });
 
   let filtered = $derived(
     query.trim()
@@ -43,9 +46,9 @@
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div class="overlay" onclick={onClose} role="presentation">
-    <div class="sheet" onclick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Python cheatsheet">
+    <div class="sheet" onclick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="{title} cheatsheet" tabindex="-1">
       <div class="head">
-        <h2>📘 Python syntax cheatsheet</h2>
+        <h2>📘 {title} syntax cheatsheet</h2>
         <button class="close" onclick={onClose} aria-label="Close">✕</button>
       </div>
 
@@ -55,7 +58,7 @@
       <div class="content">
         {#if error}
           <p class="err">Couldn't load cheatsheet: {error}</p>
-        {:else if !loaded}
+        {:else if loadedName !== name}
           <p class="dim">Loading…</p>
         {:else}
           {#if !query.trim() && intro}

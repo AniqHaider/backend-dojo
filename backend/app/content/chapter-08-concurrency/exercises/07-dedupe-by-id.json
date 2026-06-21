@@ -15,5 +15,10 @@
   ],
   "reference_solution": "def dedupe_by_id(items):\n    seen = set()\n    out = []\n    for item in items:\n        if item[\"id\"] not in seen:\n            seen.add(item[\"id\"])\n            out.append(item)\n    return out\n",
   "xp": 20,
-  "concept_tags": ["dedupe", "idempotency", "first-wins"]
+  "concept_tags": ["dedupe", "idempotency", "first-wins"],
+  "syntax_hints": [
+    {"code": "seen = set()", "note": "track ids already kept"},
+    {"code": "if item[\"id\"] not in seen:", "note": "keep only the first occurrence"},
+    {"code": "seen.add(item[\"id\"]); out.append(item)", "note": "record the id and keep the item, preserving order"}
+  ]
 }

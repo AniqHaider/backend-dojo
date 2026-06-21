@@ -15,5 +15,10 @@
   "order_sensitive": false,
   "reference_solution": "DELETE FROM seats WHERE id = 9 RETURNING label;",
   "xp": 15,
-  "concept_tags": ["delete", "returning"]
+  "concept_tags": ["delete", "returning"],
+  "syntax_hints": [
+    {"code": "DELETE FROM table", "note": "remove rows from a table"},
+    {"code": "WHERE id = 9", "note": "limit to matching rows (never skip this!)"},
+    {"code": "RETURNING label", "note": "hand back the deleted row"}
+  ]
 }

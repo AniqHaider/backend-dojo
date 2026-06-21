@@ -15,5 +15,10 @@
   "order_sensitive": false,
   "reference_solution": "UPDATE movies SET rating = 9.0 WHERE id = 3 AND rating < 9.0 RETURNING title, rating;",
   "xp": 20,
-  "concept_tags": ["transactions", "atomic-update", "conditional-update"]
+  "concept_tags": ["transactions", "atomic-update", "conditional-update"],
+  "syntax_hints": [
+    {"code": "UPDATE t SET col = ? WHERE ...", "note": "change rows that match the WHERE"},
+    {"code": "WHERE id = 3 AND col < 9.0", "note": "fold the guard into the WHERE clause"},
+    {"code": "RETURNING title, rating", "note": "echo back the row(s) you changed"}
+  ]
 }

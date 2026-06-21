@@ -16,5 +16,10 @@
   ],
   "reference_solution": "def word_lengths(words):\n    return {word: len(word) for word in words}\n",
   "xp": 10,
-  "concept_tags": ["comprehensions"]
+  "concept_tags": ["comprehensions"],
+  "syntax_hints": [
+    {"code": "{key: value for item in iterable}", "note": "the shape of a dict comprehension"},
+    {"code": "len(word)", "note": "length of a string (the value here)"},
+    {"code": "for word in words", "note": "loops over the input list inside the braces"}
+  ]
 }

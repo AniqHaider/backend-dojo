@@ -17,5 +17,10 @@
   "order_sensitive": false,
   "reference_solution": "SELECT showtime_id, COUNT(*)::int AS seat_count FROM seats GROUP BY showtime_id HAVING COUNT(*) > 2;",
   "xp": 15,
-  "concept_tags": ["group-by", "having", "aggregate"]
+  "concept_tags": ["group-by", "having", "aggregate"],
+  "syntax_hints": [
+    {"code": "GROUP BY showtime_id", "note": "form the groups first"},
+    {"code": "HAVING COUNT(*) > 2", "note": "filter groups by an aggregate (not WHERE)"},
+    {"code": "COUNT(*)::int AS seat_count", "note": "cast and rename the count"}
+  ]
 }

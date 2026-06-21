@@ -18,5 +18,11 @@
   "order_sensitive": false,
   "reference_solution": "SELECT b.id AS booking_id, m.title FROM bookings b JOIN showtimes s ON b.showtime_id = s.id JOIN movies m ON s.movie_id = m.id;",
   "xp": 20,
-  "concept_tags": ["join", "multi-join"]
+  "concept_tags": ["join", "multi-join"],
+  "syntax_hints": [
+    {"code": "FROM bookings b", "note": "start from bookings"},
+    {"code": "JOIN showtimes s ON b.showtime_id = s.id", "note": "first hop: booking to showtime"},
+    {"code": "JOIN movies m ON s.movie_id = m.id", "note": "second hop: showtime to movie"},
+    {"code": "SELECT b.id AS booking_id, m.title", "note": "pull columns from the ends of the chain"}
+  ]
 }

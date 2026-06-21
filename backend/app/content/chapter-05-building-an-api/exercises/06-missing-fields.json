@@ -17,5 +17,10 @@
   ],
   "reference_solution": "def missing_fields(payload, required):\n    missing = [key for key in required if payload.get(key) is None]\n    return sorted(missing)\n",
   "xp": 15,
-  "concept_tags": ["validation", "request-body"]
+  "concept_tags": ["validation", "request-body"],
+  "syntax_hints": [
+    {"code": "payload.get(key) is None", "note": "true if key absent OR value is None"},
+    {"code": "[k for k in required if ...]", "note": "list comprehension to collect keys"},
+    {"code": "return sorted(missing)", "note": "alphabetical, deterministic output"}
+  ]
 }

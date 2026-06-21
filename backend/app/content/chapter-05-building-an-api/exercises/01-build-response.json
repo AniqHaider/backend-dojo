@@ -16,5 +16,9 @@
   ],
   "reference_solution": "def build_response(data):\n    return {\"status\": 200, \"body\": data}\n",
   "xp": 15,
-  "concept_tags": ["http", "responses"]
+  "concept_tags": ["http", "responses"],
+  "syntax_hints": [
+    {"code": "return {\"key\": value}", "note": "build and return a dict literal"},
+    {"code": "{\"status\": 200, \"body\": data}", "note": "fixed int key + the passed-in value"}
+  ]
 }

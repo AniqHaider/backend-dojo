@@ -17,5 +17,10 @@
   ],
   "reference_solution": "import math\n\ndef page_meta(total, page, size):\n    return {\n        \"page\": page,\n        \"size\": size,\n        \"total\": total,\n        \"pages\": math.ceil(total / size),\n    }\n",
   "xp": 15,
-  "concept_tags": ["pagination", "responses"]
+  "concept_tags": ["pagination", "responses"],
+  "syntax_hints": [
+    {"code": "import math", "note": "already imported in the starter code"},
+    {"code": "math.ceil(total / size)", "note": "divide and round up to whole pages"},
+    {"code": "return {\"page\": page, \"size\": size}", "note": "assemble the metadata dict"}
+  ]
 }

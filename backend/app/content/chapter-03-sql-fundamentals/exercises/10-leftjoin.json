@@ -17,5 +17,11 @@
   "order_sensitive": false,
   "reference_solution": "SELECT m.title, COUNT(s.id)::int AS showtimes FROM movies m LEFT JOIN showtimes s ON s.movie_id = m.id GROUP BY m.title;",
   "xp": 20,
-  "concept_tags": ["join", "left-join", "group-by"]
+  "concept_tags": ["join", "left-join", "group-by"],
+  "syntax_hints": [
+    {"code": "FROM movies m", "note": "the left table — every row is kept"},
+    {"code": "LEFT JOIN showtimes s ON s.movie_id = m.id", "note": "keep movies even with no showtimes"},
+    {"code": "COUNT(s.id)::int AS showtimes", "note": "count s.id so no-match movies score 0"},
+    {"code": "GROUP BY m.title", "note": "one result row per movie"}
+  ]
 }

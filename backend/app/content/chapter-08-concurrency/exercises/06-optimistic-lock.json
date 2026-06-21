@@ -15,5 +15,10 @@
   ],
   "reference_solution": "def try_update(stored_version, expected_version, new_value):\n    if stored_version == expected_version:\n        return {\"ok\": True, \"version\": stored_version + 1, \"value\": new_value}\n    return {\"ok\": False, \"version\": stored_version}\n",
   "xp": 20,
-  "concept_tags": ["optimistic-lock", "versioning", "concurrency"]
+  "concept_tags": ["optimistic-lock", "versioning", "concurrency"],
+  "syntax_hints": [
+    {"code": "if stored_version == expected_version:", "note": "the version check stands in for WHERE version = ?"},
+    {"code": "return {\"ok\": True, \"version\": stored_version + 1, ...}", "note": "success: bump the version"},
+    {"code": "return {\"ok\": False, \"version\": stored_version}", "note": "rejected: nothing changes"}
+  ]
 }

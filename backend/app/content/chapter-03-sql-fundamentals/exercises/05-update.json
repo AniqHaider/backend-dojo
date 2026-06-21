@@ -15,5 +15,10 @@
   "order_sensitive": false,
   "reference_solution": "UPDATE movies SET rating = 8.0 WHERE id = 3 RETURNING title, rating;",
   "xp": 15,
-  "concept_tags": ["update", "returning"]
+  "concept_tags": ["update", "returning"],
+  "syntax_hints": [
+    {"code": "UPDATE table SET col = value", "note": "change a column's value"},
+    {"code": "WHERE id = 3", "note": "limit to matching rows (never skip this!)"},
+    {"code": "RETURNING title, rating", "note": "hand back the rows you changed"}
+  ]
 }

@@ -15,5 +15,10 @@
   "order_sensitive": false,
   "reference_solution": "INSERT INTO bookings (id, user_id, showtime_id, seat_id, created_at) VALUES (5, 2, 1, 3, '2026-06-03 10:00:00') RETURNING id, seat_id;",
   "xp": 20,
-  "concept_tags": ["insert", "returning", "claim"]
+  "concept_tags": ["insert", "returning", "claim"],
+  "syntax_hints": [
+    {"code": "INSERT INTO t (col_a, col_b) VALUES (?, ?)", "note": "list columns, then matching values in the same order"},
+    {"code": "VALUES (5, 2, 1, 3, '2026-06-03 10:00:00')", "note": "quote timestamp/text values"},
+    {"code": "RETURNING id, seat_id", "note": "confirm exactly what got claimed"}
+  ]
 }

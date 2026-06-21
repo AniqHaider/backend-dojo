@@ -15,5 +15,11 @@
   ],
   "reference_solution": "def process_payments(requests):\n    seen = set()\n    out = []\n    for r in requests:\n        key = r[\"key\"]\n        charged = key not in seen\n        if charged:\n            seen.add(key)\n        out.append({\"key\": key, \"amount\": r[\"amount\"], \"charged\": charged})\n    return out\n",
   "xp": 20,
-  "concept_tags": ["idempotency", "duplicate-payment", "dedupe"]
+  "concept_tags": ["idempotency", "duplicate-payment", "dedupe"],
+  "syntax_hints": [
+    {"code": "seen = set()", "note": "remember which keys you've already charged"},
+    {"code": "charged = key not in seen", "note": "True only the first time a key appears"},
+    {"code": "seen.add(key)", "note": "mark a new key as charged"},
+    {"code": "out.append({...}); return out", "note": "build the result list in order"}
+  ]
 }

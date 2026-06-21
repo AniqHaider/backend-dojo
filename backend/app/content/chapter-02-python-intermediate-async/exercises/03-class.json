@@ -16,5 +16,12 @@
   ],
   "reference_solution": "class Counter:\n    def __init__(self):\n        self.value = 0\n    def inc(self):\n        self.value += 1\n\ndef count_to(n):\n    c = Counter()\n    for _ in range(n):\n        c.inc()\n    return c.value\n",
   "xp": 10,
-  "concept_tags": ["classes", "oop"]
+  "concept_tags": ["classes", "oop"],
+  "syntax_hints": [
+    {"code": "class Counter:", "note": "define a class"},
+    {"code": "def __init__(self):", "note": "the constructor; `self` is like `this`"},
+    {"code": "self.value = 0", "note": "set an attribute on the instance"},
+    {"code": "def inc(self):", "note": "methods take `self` as the first parameter"},
+    {"code": "c = Counter()", "note": "instantiate, then call `c.inc()`"}
+  ]
 }

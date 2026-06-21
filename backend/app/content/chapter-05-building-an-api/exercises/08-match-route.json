@@ -17,5 +17,9 @@
   ],
   "reference_solution": "def match_route(routes, path):\n    return routes.get(path, \"404\")\n",
   "xp": 15,
-  "concept_tags": ["routing", "http"]
+  "concept_tags": ["routing", "http"],
+  "syntax_hints": [
+    {"code": "routes.get(path)", "note": "dict lookup; None if the key is absent"},
+    {"code": "routes.get(path, \"404\")", "note": "second arg is the fallback value"}
+  ]
 }

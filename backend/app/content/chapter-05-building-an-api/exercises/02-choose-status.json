@@ -17,5 +17,10 @@
   ],
   "reference_solution": "def choose_status(method, found):\n    if method == \"GET\":\n        return 200 if found else 404\n    if method == \"POST\":\n        return 201\n    if method == \"DELETE\":\n        return 204\n",
   "xp": 15,
-  "concept_tags": ["http", "status-codes"]
+  "concept_tags": ["http", "status-codes"],
+  "syntax_hints": [
+    {"code": "if method == \"GET\":", "note": "branch on a string value"},
+    {"code": "return 200 if found else 404", "note": "ternary: value depending on a bool"},
+    {"code": "return 201", "note": "return a plain int status code"}
+  ]
 }

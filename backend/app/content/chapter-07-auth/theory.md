@@ -13,6 +13,8 @@ Analogy: authentication is showing your ID at the door of an office building. Au
 
 Authentication always comes first: you can't decide what someone may do until you know who they are.
 
+[[exercise:ch7-ex09-quiz-authn-vs-authz]]
+
 ## Never store plaintext passwords (hashing + salt)
 
 The single most important rule in this chapter: **never store a password as plaintext**, and never store it in a form you can reverse (like encryption with a key you hold). If your database leaks — and databases leak — every plaintext or reversible password is instantly compromised, and because people reuse passwords, you've also handed attackers their bank and email logins.
@@ -21,7 +23,13 @@ Instead you store a **hash**. A cryptographic hash function (like SHA-256) is a 
 
 But a plain hash isn't enough. Two users with the same password get the *same* hash, and attackers precompute giant lookup tables ("rainbow tables") mapping common passwords to their hashes. The fix is a **salt**: a random value mixed into each password before hashing. Now identical passwords produce different hashes, and the attacker's precomputed tables are worthless because they didn't include your salt.
 
+[[exercise:ch7-ex11-quiz-salt]]
+
 You also want the hash to be **slow on purpose**. Fast hashes let attackers try billions of guesses per second. Purpose-built **password hashing** algorithms — **bcrypt**, **argon2**, and **PBKDF2** — are deliberately expensive (they iterate thousands of times), which barely affects one honest login but cripples brute-force attacks. In this chapter you'll use `hashlib.pbkdf2_hmac` with 100,000 iterations. In real production code, reach for bcrypt or argon2 via a library like `passlib` — and let it manage a unique random salt per user (we use a fixed salt only to make exercises reproducible).
+
+[[exercise:ch7-ex01-hash-password]]
+
+[[exercise:ch7-ex10-quiz-store-passwords]]
 
 ## Sessions vs tokens (JWT) — and how a signed token works
 
@@ -32,17 +40,37 @@ Once a user is authenticated, the server must *remember* them across requests, b
 
 How does the signature work? It's a **keyed fingerprint** of the payload using a secret only the server knows (an HMAC). You compute `signature = HMAC(secret, payload)` and send `payload.signature`. When the token comes back, you recompute the signature over the payload with your secret and check it matches. If anyone tampers with the payload (say, flips `role:member` to `role:admin`), the signature no longer matches and you reject it. Crucially, the signature proves *authenticity*, not secrecy — a JWT payload is readable by anyone, so **never put secrets in it**. The exercises here build a tiny "mini-JWT" exactly this way: `sign(payload, secret)` and `verify(token, secret)`.
 
+[[exercise:ch7-ex03-sign-verify-token]]
+
 The tradeoff: because a stateless token is trusted purely on its signature, you **can't easily revoke it before it expires**. With a server session you delete the row; with a JWT, until it expires the server will keep honoring it (unless you build extra machinery like a denylist, which gives back the statefulness you were trying to avoid). That's why JWTs carry short expiry times.
+
+[[exercise:ch7-ex12-quiz-jwt-tradeoff]]
 
 ## Role-based access control (RBAC)
 
 Authorization needs a model. The most common is **role-based access control**: each user has one or more **roles** (`member`, `editor`, `admin`), and a **policy** maps roles to allowed **actions**. Checking permission becomes a lookup: "does this user's role include the action they're attempting?" You'll implement this as `can(role, action, policy)` and `is_allowed(user_roles, required_roles)`.
 
+[[exercise:ch7-ex04-can-rbac]]
+
 Why roles instead of checking individual users? The same reason you use CSS classes instead of inline styles on every element: roles let you change the rule in one place. Grant "editors can delete drafts" once, and every editor gets it — no per-user edits.
+
+A user often holds *several* roles, and a route may accept *any* of several roles ("editors **or** admins may access this"). That's an "OR" membership check: `is_allowed(user_roles, required_roles)` returns `True` when any of the user's roles appears in the required set.
+
+[[exercise:ch7-ex05-is-allowed]]
 
 ## Common pitfalls (timing attacks, leaking secrets in responses)
 
 - **Timing attacks.** When you compare a secret (a password hash, a token signature) with `==`, Python often stops at the first differing byte — so a wrong guess that shares a longer prefix takes measurably longer. An attacker can exploit those microsecond differences to recover the secret byte by byte. The fix is a **constant-time compare** that always examines every byte: `hmac.compare_digest`. You'll use it in `safe_equal` and in password/token verification.
+
+[[exercise:ch7-ex02-safe-equal]]
 - **Leaking secrets in responses.** It's shockingly easy to serialize a whole user object — including its `password` hash or active `token` — straight into a JSON response. Always **redact** sensitive fields before returning data (the `redact(user)` exercise), and return a *copy* so you never accidentally mutate your stored record. Treat password hashes, tokens, and secret keys as things that must never appear in any response, log line, or error message.
+
+[[exercise:ch7-ex08-redact]]
+
+Two more gaps the theory above hasn't named explicitly. First, tokens don't arrive bare — they ride in the HTTP `Authorization` header as `Bearer <token>`, and the backend must **parse** that header (rejecting the wrong scheme or an empty token) before it can verify anything: `parse_bearer(header)`. Second, never trust the client to have enforced your rules — the backend re-validates everything, including **password strength** (a minimum length, at least one digit, at least one letter): `is_strong_password(pw)`.
+
+[[exercise:ch7-ex06-parse-bearer]]
+
+[[exercise:ch7-ex07-is-strong-password]]
 
 Keep these straight — authn before authz, hash-with-salt, sign-don't-trust, compare in constant time, redact on the way out — and you've got the backbone of safe auth.

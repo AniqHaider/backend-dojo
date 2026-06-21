@@ -16,5 +16,11 @@
   ],
   "reference_solution": "class ValidationError(Exception):\n    pass\n\nasync def safe_parse(s):\n    try:\n        return int(s)\n    except ValueError:\n        return -1\n",
   "xp": 15,
-  "concept_tags": ["async", "exceptions", "error-handling"]
+  "concept_tags": ["async", "exceptions", "error-handling"],
+  "syntax_hints": [
+    {"code": "class ValidationError(Exception):", "note": "custom exceptions subclass Exception"},
+    {"code": "try:\n    ...\nexcept ValueError:\n    ...", "note": "catch a specific error type"},
+    {"code": "int(s)", "note": "raises ValueError on non-numeric strings like \"x\""},
+    {"code": "return -1", "note": "return a fallback from inside the except block"}
+  ]
 }

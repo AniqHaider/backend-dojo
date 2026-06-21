@@ -16,5 +16,10 @@
   "order_sensitive": true,
   "reference_solution": "SELECT title FROM movies ORDER BY rating DESC LIMIT 2;",
   "xp": 15,
-  "concept_tags": ["order-by", "limit"]
+  "concept_tags": ["order-by", "limit"],
+  "syntax_hints": [
+    {"code": "SELECT title FROM movies", "note": "read the title column"},
+    {"code": "ORDER BY rating DESC", "note": "sort high to low (ASC = low to high)"},
+    {"code": "LIMIT 2", "note": "keep only the first 2 rows after sorting"}
+  ]
 }

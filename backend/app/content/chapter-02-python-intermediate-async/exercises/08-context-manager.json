@@ -16,5 +16,11 @@
   ],
   "reference_solution": "import io\n\ndef count_lines(text):\n    count = 0\n    with io.StringIO(text) as f:\n        for line in f:\n            if line.strip():\n                count += 1\n    return count\n",
   "xp": 15,
-  "concept_tags": ["context-managers"]
+  "concept_tags": ["context-managers"],
+  "syntax_hints": [
+    {"code": "with io.StringIO(text) as f:", "note": "open an in-memory text stream via a context manager"},
+    {"code": "for line in f:", "note": "iterate the stream line by line"},
+    {"code": "line.strip()", "note": "trims whitespace/newline; empty string is falsy"},
+    {"code": "count += 1", "note": "increment a running counter"}
+  ]
 }

@@ -16,5 +16,9 @@
   "order_sensitive": false,
   "reference_solution": "SELECT title FROM movies WHERE rating > 8.0;",
   "xp": 15,
-  "concept_tags": ["where", "filter"]
+  "concept_tags": ["where", "filter"],
+  "syntax_hints": [
+    {"code": "SELECT title FROM movies", "note": "read the title column"},
+    {"code": "WHERE rating > 8.0", "note": "keep only rows matching the condition"}
+  ]
 }
