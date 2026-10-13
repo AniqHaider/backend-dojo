@@ -1,5 +1,7 @@
 # Backend Dojo ⛩️
 
+> **Windows?** See **[SETUP-WINDOWS.md](SETUP-WINDOWS.md)**. (Want it with no setup at all? The *Kata* app in the `prep-pocket` repo bundles this whole Dojo running in the browser/on a phone.)
+
 A playful, local dashboard for learning backend engineering by doing. Solve
 in-browser exercises and watch your **TicketPay** architecture diagram grow from an
 empty machine into a real `Client → FastAPI → PostgreSQL` backend. A built-in Claude
